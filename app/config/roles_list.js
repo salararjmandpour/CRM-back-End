@@ -1,0 +1,25 @@
+const ROLES_LIST = [
+  { name: "کاربر آزمایشی", nameEN: "TestUser", role: 1000 },
+  { name: "مدیر ارشد", nameEN: "SeniorManager", role: 1001 },
+  { name: "دستیار ", nameEN: "Assistant", role: 1002 },
+  { name: "مدیر لوجتیک", nameEN: "LogisticsManager", role: 1003 },
+  { name: "کارشناس لوجتیک", nameEN: "LogisticsSpecialist", role: 1004 },
+  { name: "مدیر محتوا", nameEN: "ContentManager", role: 1005 },
+  { name: "کارشناس محتوا", nameEN: "ContentSpecialist", role: 1006 },
+  { name: "مدیر فروش", nameEN: "SalesManager", role: 1007 },
+  { name: "کارشناس فروش", nameEN: "SalesSpecialist", role: 1008 },
+  { name: "مدیر مالی", nameEN: "FinanceManager", role: 1009 },
+  { name: "مدیر حسابداری", nameEN: "AccountingManager", role: 1010 },
+  { name: "کمک حسابدار", nameEN: "AccountingAssistant", role: 1011 },
+  { name: "حسابدار", nameEN: "Accountant", role: 1012 },
+  { name: "کارشناس CRM", nameEN: "CRMSpecialist", role: 1013 },
+  { name: "مدیر CRM", nameEN: "CRMManager", role: 1014 },
+  { name: "مدیر بازرگانی", nameEN: "BusinessManager", role: 1015 },
+  { name: "کارشناس بازرگانی", nameEN: "BusinessSpecialist", role: 1016 },
+  { name: "مدیر انبار", nameEN: "WarehouseManager", role: 1017 },
+  { name: "کارشناس انبار", nameEN: "WarehouseSpecialist", role: 1018 },
+  { name: "مدیر HR", nameEN: "HrManager", role: 1019 },
+  { name: "کارشناس HR", nameEN: "HrSpecialist", role: 1020 },
+];
+
+module.exports = ROLES_LIST;
