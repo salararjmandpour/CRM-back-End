@@ -2641,9 +2641,9 @@ const getCities = (req, res) => {
       });
       break;
     default:
-        res.status(409).json({
-          message: "Send a valid state name with `state` parameter",
-        });
+      res.status(409).json({
+        message: "Send a valid state name with `state` parameter",
+      });
       break;
   }
 };
