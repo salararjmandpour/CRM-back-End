@@ -2,6 +2,7 @@ const User = require("app/models/User");
 const Clues = require("app/models/Clue");
 const NoteClues = require("app/models/NoteClues");
 const ActivityCluesMeetOpen = require("app/models/ActivityCluesMeetOpen");
+const ActivityCluesTellOpen = require("app/models/ActivityCluesTellOpen");
 const ROLES_LIST = require("app/config/roles_list");
 
 //>---------- encrypt data sending
@@ -102,6 +103,9 @@ const createHandler = async (req, res) => {
       activityNote,
       activityLocation,
       activityTime,
+      activityTellSubject,
+      activityTellNote,
+      activityTellTime,
     } = dataDecrypt;
 
     if (noteSubject) {
@@ -140,6 +144,31 @@ const createHandler = async (req, res) => {
           activityNote: activityNote,
           activityLocation: activityLocation,
           activityTime: activityTime,
+          userId: expertDecrypt,
+          clueId: clueDecrypt,
+        });
+
+        res.sendStatus(201);
+      } catch (err) {
+        console.log(err.message);
+        return res.status(500).json({ message: err });
+      }
+    } else if (activityTellSubject && activityTellNote) {
+      if (
+        !activityTellSubject ||
+        !activityTellNote ||
+        !activityTellTime ||
+        !clueDecrypt ||
+        !expertDecrypt
+      )
+        return res.status(400);
+
+      try {
+        //>----------- create model for data  activity clue tell open
+        await ActivityCluesTellOpen.create({
+          activityTellSubject: activityTellSubject,
+          activityTellNote: activityTellNote,
+          activityTellTime: activityTellTime,
           userId: expertDecrypt,
           clueId: clueDecrypt,
         });
@@ -196,17 +225,49 @@ const getOneAndAllHandler = async (req, res) => {
 
   const noteClue = await NoteClues.find({ clueId: decryptUserId });
 
-  if ((clue && noteClue.length == 0) || !noteClue) {
+  const activityCluesMeetOpen = await ActivityCluesMeetOpen.find({
+    clueId: decryptUserId,
+  });
+
+  const activityCluesTellOpen = await ActivityCluesTellOpen.find({
+    clueId: decryptUserId,
+  });
+
+  if (
+    (clue &&
+      noteClue.length == 0 &&
+      activityCluesMeetOpen.length == 0 &&
+      activityCluesTellOpen.length == 0) ||
+    !noteClue
+  ) {
     if (!clue || clue.length == 0) {
       return res.status(304).send("سرنخی ثبت نشده است");
     }
     const encryptData = cerateCipher.encrypt(JSON.stringify(clue), Key);
     return res.status(202).json({ encryptData });
   } else {
-    if (noteClue.length == 0) return res.status(304).send("یاداشت یافت نشد");
+    if (
+      noteClue.length == 0 &&
+      activityCluesMeetOpen.length == 0 &&
+      activityCluesTellOpen.length == 0
+    )
+      return res.status(304).send("چیزی یافت نشد");
     const encryptData = cerateCipher.encrypt(JSON.stringify(clue), Key);
     const encryptNoteClue = cerateCipher.encrypt(JSON.stringify(noteClue), Key);
-    return res.status(202).json({ encryptData, encryptNoteClue });
+    const encryptActivityCluesMeetOpen = cerateCipher.encrypt(
+      JSON.stringify(activityCluesMeetOpen),
+      Key
+    );
+    const encryptActivityCluesTellOpen = cerateCipher.encrypt(
+      JSON.stringify(activityCluesTellOpen),
+      Key
+    );
+    return res.status(202).json({
+      encryptData,
+      encryptNoteClue,
+      encryptActivityCluesMeetOpen,
+      encryptActivityCluesTellOpen,
+    });
   }
 };
 
@@ -233,6 +294,13 @@ const updateOneClue = async (req, res) => {
     address,
     noteSubject,
     noteBody,
+    activitySubject,
+    activityNote,
+    activityLocation,
+    activityTime,
+    activityTellSubject,
+    activityTellNote,
+    activityTellTime,
   } = dataDecrypt;
 
   if (subject && mobile) {
@@ -262,7 +330,8 @@ const updateOneClue = async (req, res) => {
   }
 
   //>---------- update note clue
-  else {
+
+  if (noteSubject && noteBody) {
     try {
       const updateNoteClue = await NoteClues.findOneAndUpdate(
         { _id: decryptId },
@@ -273,7 +342,50 @@ const updateOneClue = async (req, res) => {
       );
       await updateNoteClue.save();
 
-      res.sendStatus(202);
+      return res.sendStatus(202);
+    } catch (err) {
+      console.log(err.message);
+      return res.status(500).json({ message: err });
+    }
+  }
+
+  //>---------- update activity meet clue
+  if (activitySubject && activityNote) {
+    try {
+      const updateActivityCluesMeetOpen =
+        await ActivityCluesMeetOpen.findOneAndUpdate(
+          { _id: decryptId },
+          {
+            activitySubject: activitySubject,
+            activityNote: activityNote,
+            activityLocation: activityLocation,
+            activityTime: activityTime,
+          }
+        );
+      await updateActivityCluesMeetOpen.save();
+
+      return res.sendStatus(202);
+    } catch (err) {
+      console.log(err.message);
+      return res.status(500).json({ message: err });
+    }
+  }
+
+  //>---------- update activity tell clue
+  if (activityTellSubject && activityTellNote) {
+    try {
+      const updateActivityCluesTellOpen =
+        await ActivityCluesTellOpen.findOneAndUpdate(
+          { _id: decryptId },
+          {
+            activityTellSubject: activityTellSubject,
+            activityTellNote: activityTellNote,
+            activityTellTime: activityTellTime,
+          }
+        );
+      await updateActivityCluesTellOpen.save();
+
+      return res.sendStatus(202);
     } catch (err) {
       console.log(err.message);
       return res.status(500).json({ message: err });
@@ -294,6 +406,10 @@ const deleteOneClue = async (req, res) => {
     await NoteClues.findOneAndDelete({ _id: decryptId });
     //>----------- delete model for data clue
     await Clues.findOneAndDelete({ _id: decryptId });
+    //>----------- delete model for data  activity clues meet open
+    await ActivityCluesMeetOpen.findOneAndDelete({ _id: decryptId });
+    //>----------- delete model for data  activity clues tell open
+    await ActivityCluesTellOpen.findOneAndDelete({ _id: decryptId });
 
     return res.sendStatus(200);
   } catch (err) {
