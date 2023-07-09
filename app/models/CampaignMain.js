@@ -70,6 +70,7 @@ const CampaignMainSchema = new Schema(
       required: true,
       trim: true,
     },
+    clues: [String],
     userId: {
       type: String,
       required: true,

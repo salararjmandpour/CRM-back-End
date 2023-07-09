@@ -51,8 +51,7 @@ const createHandler = async (req, res) => {
   }
 
   try {
-
-    //>----------- create model for data campaign 
+    //>----------- create model for data campaign
 
     await CampaignMain.create({
       campaignName: campaignName,
@@ -67,7 +66,7 @@ const createHandler = async (req, res) => {
       campaignCost: campaignCost,
       campaignGoal: campaignGoal,
       campaignNote: campaignNote,
-      userFullName:expertFullName,
+      userFullName: expertFullName,
       userId: expertDecrypt,
     });
 
@@ -78,31 +77,97 @@ const createHandler = async (req, res) => {
   }
 };
 
-//>---------- get data campaign all 
+//>---------- get data campaign all
 
 const getSingleAndAllHandler = async (req, res) => {
-  const campaignMain = await CampaignMain.find({});
+  //>---------- get clues by id for set selective campaign
 
-  const strIds = req.query.id.toString();
-      const strIdsNew = strIds.replaceAll(" ", "+");
-  const decryptClueIds = JSON.parse(cerateCipher.decrypt(strIdsNew, Key));
-  console.log(decryptClueIds);
+  if (req.query.id && req.query.idCamp) {
+    const strIds = req.query.id.toString();
+    const strIdsNew = strIds.replaceAll(" ", "+");
+    const strIdCamp = req.query.idCamp.toString();
+    const strIdCampNew = strIdCamp.replaceAll(" ", "+");
+    const decryptIdCamp = cerateCipher.decrypt(strIdCampNew, Key);
+    const decryptClueIds = JSON.parse(cerateCipher.decrypt(strIdsNew, Key));
 
-//   const clues = await Clues.find({
-//     _id: decryptClueIds,
-//   });
+    try {
+      const updateCamp = await CampaignMain.findOneAndUpdate(
+        {
+          _id: decryptIdCamp,
+        },
+        {
+          clues: decryptClueIds,
+        }
+      );
+      await updateCamp.save();
 
-// console.log(clues);
+      const clues = await Clues.find({
+        _id: decryptClueIds,
+      });
 
+      const campaignMain = await CampaignMain.find({ _id: decryptIdCamp });
+      const encryptClues = cerateCipher.encrypt(JSON.stringify(clues), Key);
+      const encryptData = cerateCipher.encrypt(
+        JSON.stringify(campaignMain),
+        Key
+      );
+      return res.status(202).json({
+        encryptData,
+        encryptClues,
+      });
+    } catch (err) {
+      console.log(err.message);
+      return res.status(500).json({ message: err });
+    }
+  }
 
-  if (!campaignMain || campaignMain.length == 0)
-    return res.status(304).send("هیچ کمپینی وجود ندارد");
+  //>---------- get single campaign and get clues for campaign
 
-  const encryptData = cerateCipher.encrypt(JSON.stringify(campaignMain), Key);
-  return res.status(202).json({
-    encryptData,
-  });
+  if (req.query.idCamp) {
+    try {
+      const strIdCamp = req.query.idCamp.toString();
+      const strIdCampNew = strIdCamp.replaceAll(" ", "+");
+      const decryptIdCamp = cerateCipher.decrypt(strIdCampNew, Key);
+      const campaignMain = await CampaignMain.find({ _id: decryptIdCamp });
+
+      if (!campaignMain.clues || campaignMain[0].clues.length == 0)
+        res.status(304).send("هیچ سرنخی ثبت نشده است");
+
+      const clues = await Clues.find({
+        _id: campaignMain.clues || campaignMain[0].clues,
+      });
+
+      const encryptClues = cerateCipher.encrypt(JSON.stringify(clues), Key);
+      const encryptData = cerateCipher.encrypt(
+        JSON.stringify(campaignMain),
+        Key
+      );
+      return res.status(202).json({
+        encryptData,
+        encryptClues,
+      });
+    } catch (err) {
+      console.log(err.message);
+      return res.status(500).json({ message: err });
+    }
+  }
+
+  //>----------- get all campaign
+
+  if (!req.query.id && !req.query.idCamp) {
+    const campaignMain = await CampaignMain.find({});
+
+    if (!campaignMain || campaignMain.length == 0)
+      return res.status(304).send("هیچ کمپینی وجود ندارد");
+
+    const encryptData = cerateCipher.encrypt(JSON.stringify(campaignMain), Key);
+
+    return res.status(202).json({
+      encryptData,
+    });
+  }
 };
+
 //>------------ export method
 
 module.exports = { createHandler, getSingleAndAllHandler };
