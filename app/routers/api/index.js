@@ -44,6 +44,9 @@ router.use("/api/v1/profile", userRouter);
 const clueRouter = require("./v1/clue");
 router.use("/api/v1/clue", clueRouter);
 
+const campaignRouter = require("./v1/campaign");
+router.use("/api/v1/campaign", campaignRouter);
+
 const mailRouter = require("./v1/mail");
 router.use("/api/v1/mail", mailRouter);
 
