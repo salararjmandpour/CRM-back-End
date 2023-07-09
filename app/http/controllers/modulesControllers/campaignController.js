@@ -47,7 +47,7 @@ const createHandler = async (req, res) => {
     !campaignGoal ||
     !campaignNote
   ) {
-    return res.status(400);
+    return res.sendStatus(400);
   }
 
   try {
