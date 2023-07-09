@@ -11,7 +11,7 @@ const verifyJWT = require("app/http/middleware/authMiddleware/verifyJWT");
 
 //>----------- create route for campaign
 
-router.get("/", verifyJWT, campaignController.getHandler);
+router.get("/", verifyJWT, campaignController.getSingleAndAllHandler);
 
 router.post("/", verifyJWT, campaignController.createHandler);
 

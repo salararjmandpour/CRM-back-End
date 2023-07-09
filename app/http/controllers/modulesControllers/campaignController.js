@@ -80,8 +80,20 @@ const createHandler = async (req, res) => {
 
 //>---------- get data campaign all 
 
-const getHandler = async (req, res) => {
+const getSingleAndAllHandler = async (req, res) => {
   const campaignMain = await CampaignMain.find({});
+
+  const strIds = req.query.id.toString();
+      const strIdsNew = strIds.replaceAll(" ", "+");
+  const decryptClueIds = JSON.parse(cerateCipher.decrypt(strIdsNew, Key));
+  console.log(decryptClueIds);
+
+//   const clues = await Clues.find({
+//     _id: decryptClueIds,
+//   });
+
+// console.log(clues);
+
 
   if (!campaignMain || campaignMain.length == 0)
     return res.status(304).send("هیچ کمپینی وجود ندارد");
@@ -93,4 +105,4 @@ const getHandler = async (req, res) => {
 };
 //>------------ export method
 
-module.exports = { createHandler, getHandler };
+module.exports = { createHandler, getSingleAndAllHandler };
