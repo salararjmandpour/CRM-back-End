@@ -67,6 +67,7 @@ const createHandler = async (req, res) => {
       campaignCost: campaignCost,
       campaignGoal: campaignGoal,
       campaignNote: campaignNote,
+      userFullName:expertFullName,
       userId: expertDecrypt,
     });
 
