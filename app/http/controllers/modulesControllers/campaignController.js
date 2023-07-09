@@ -130,9 +130,6 @@ const getSingleAndAllHandler = async (req, res) => {
       const decryptIdCamp = cerateCipher.decrypt(strIdCampNew, Key);
       const campaignMain = await CampaignMain.find({ _id: decryptIdCamp });
 
-      if (!campaignMain.clues || campaignMain[0].clues.length == 0)
-        res.status(304).send("هیچ سرنخی ثبت نشده است");
-
       const clues = await Clues.find({
         _id: campaignMain.clues || campaignMain[0].clues,
       });
