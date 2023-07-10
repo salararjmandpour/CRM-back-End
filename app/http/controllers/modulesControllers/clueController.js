@@ -270,6 +270,8 @@ const getOneAndAllHandler = async (req, res) => {
 
       console.log(decryptStrIdCampsNew);
 
+      //>---------- start update clue and campaign
+
       const updateClue = await Clues.findOneAndUpdate(
         {
           _id: decryptUserId,
@@ -292,6 +294,8 @@ const getOneAndAllHandler = async (req, res) => {
       );
 
       await updateCampaign.save();
+
+      //>---------- end update clue and campaign
 
       const campaignMain = await CampaignMain.find({
         _id: decryptStrIdCampsNew,
