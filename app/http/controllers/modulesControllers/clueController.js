@@ -1,5 +1,6 @@
 const User = require("app/models/User");
 const Clues = require("app/models/Clue");
+const CampaignMain = require("app/models/CampaignMain");
 const NoteClues = require("app/models/NoteClues");
 const ActivityCluesMeetOpen = require("app/models/ActivityCluesMeetOpen");
 const ActivityCluesTellOpen = require("app/models/ActivityCluesTellOpen");
@@ -234,24 +235,79 @@ const getOneAndAllHandler = async (req, res) => {
   });
 
   if (
-    (clue &&
-      noteClue.length == 0 &&
-      activityCluesMeetOpen.length == 0 &&
-      activityCluesTellOpen.length == 0) ||
-    !noteClue
+    clue &&
+    !req.query.idCamps &&
+    !clue.campaign &&
+    !noteClue &&
+    !req.query.idCamps &&
+    clue.campaign.length == 0 &&
+    noteClue.length == 0
   ) {
     if (!clue || clue.length == 0) {
       return res.status(304).send("سرنخی ثبت نشده است");
     }
     const encryptData = cerateCipher.encrypt(JSON.stringify(clue), Key);
+    console.log("test");
     return res.status(202).json({ encryptData });
   } else {
     if (
       noteClue.length == 0 &&
       activityCluesMeetOpen.length == 0 &&
-      activityCluesTellOpen.length == 0
+      activityCluesTellOpen.length == 0 &&
+      !req.query.idCamps &&
+      !clue
     )
       return res.status(304).send("چیزی یافت نشد");
+
+    if (req.query.id && req.query.idCamps) {
+      console.log(decryptUserId);
+
+      const strIdCamps = req.query.idCamps.toString();
+      const strIdCampsNew = strIdCamps.replaceAll(" ", "+");
+      const decryptStrIdCampsNew = JSON.parse(
+        cerateCipher.decrypt(strIdCampsNew, Key)
+      );
+
+      console.log(decryptStrIdCampsNew);
+
+      const updateClue = await Clues.findOneAndUpdate(
+        {
+          _id: decryptUserId,
+        },
+        {
+          $push: { campaign: decryptStrIdCampsNew },
+        }
+      );
+
+      console.log(updateClue);
+      await updateClue.save();
+
+      const updateCampaign = await CampaignMain.findOneAndUpdate(
+        {
+          _id: decryptStrIdCampsNew,
+        },
+        {
+          $push: { clues: decryptUserId },
+        }
+      );
+
+      await updateCampaign.save();
+
+      const campaignMain = await CampaignMain.find({
+        _id: decryptStrIdCampsNew,
+      });
+
+      return res.sendStatus(201);
+    }
+
+    const campaignMain = await CampaignMain.find({
+      _id: clue.campaign || clue[0].campaign,
+    });
+
+    const encryptCampaignMain = cerateCipher.encrypt(
+      JSON.stringify(campaignMain),
+      Key
+    );
     const encryptData = cerateCipher.encrypt(JSON.stringify(clue), Key);
     const encryptNoteClue = cerateCipher.encrypt(JSON.stringify(noteClue), Key);
     const encryptActivityCluesMeetOpen = cerateCipher.encrypt(
@@ -262,11 +318,23 @@ const getOneAndAllHandler = async (req, res) => {
       JSON.stringify(activityCluesTellOpen),
       Key
     );
+
+    if (campaignMain.length == 0) {
+      return res.status(202).json({
+        status: 304,
+        encryptData,
+        encryptNoteClue,
+        encryptActivityCluesMeetOpen,
+        encryptActivityCluesTellOpen,
+      });
+    }
+
     return res.status(202).json({
       encryptData,
       encryptNoteClue,
       encryptActivityCluesMeetOpen,
       encryptActivityCluesTellOpen,
+      encryptCampaignMain,
     });
   }
 };

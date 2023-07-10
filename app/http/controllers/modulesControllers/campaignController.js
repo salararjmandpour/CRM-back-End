@@ -96,10 +96,20 @@ const getSingleAndAllHandler = async (req, res) => {
           _id: decryptIdCamp,
         },
         {
-          clues: decryptClueIds,
+          $push: { clues: decryptClueIds },
         }
       );
       await updateCamp.save();
+
+      const updateClue = await Clues.findOneAndUpdate(
+        {
+          _id: decryptClueIds,
+        },
+        {
+          $push: { campaign: decryptIdCamp },
+        }
+      );
+      await updateClue.save();
 
       const clues = await Clues.find({
         _id: decryptClueIds,
@@ -139,6 +149,15 @@ const getSingleAndAllHandler = async (req, res) => {
         JSON.stringify(campaignMain),
         Key
       );
+
+      //>----------- get campaign is not clues
+
+      if (clues.length == 0) {
+        return res.status(202).json({
+          status: 304,
+          encryptData,
+        });
+      }
       return res.status(202).json({
         encryptData,
         encryptClues,
