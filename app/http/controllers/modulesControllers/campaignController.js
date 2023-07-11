@@ -91,6 +91,16 @@ const getSingleAndAllHandler = async (req, res) => {
     const decryptClueIds = JSON.parse(cerateCipher.decrypt(strIdsNew, Key));
 
     try {
+      const campaign = await CampaignMain.findOne({
+        clues: decryptClueIds,
+      });
+
+      if (campaign)
+        return res.status(304).json({
+          massage: "رکورد مورد نظر تکراری میباشد",
+          status: 304,
+        });
+
       const updateCamp = await CampaignMain.findOneAndUpdate(
         {
           _id: decryptIdCamp,

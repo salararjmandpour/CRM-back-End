@@ -260,43 +260,52 @@ const getOneAndAllHandler = async (req, res) => {
       return res.status(304).send("چیزی یافت نشد");
 
     if (req.query.id && req.query.idCamps) {
-      console.log(decryptUserId);
-
       const strIdCamps = req.query.idCamps.toString();
       const strIdCampsNew = strIdCamps.replaceAll(" ", "+");
       const decryptStrIdCampsNew = JSON.parse(
         cerateCipher.decrypt(strIdCampsNew, Key)
       );
 
-      console.log(decryptStrIdCampsNew);
-
       //>---------- start update clue and campaign
 
-      const updateClue = await Clues.findOneAndUpdate(
-        {
-          _id: decryptUserId,
-        },
-        {
-          $push: { campaign: decryptStrIdCampsNew },
-        }
+      //>------------ search campaign in clue
+      const result = clue.campaign.some((item) =>
+        decryptStrIdCampsNew.includes(item)
       );
 
-      console.log(updateClue);
-      await updateClue.save();
+      if (result)
+        return res.status(304).json({
+          massage: "رکورد مورد نظر تکراری میباشد",
+          status: 304,
+        });
 
-      const updateCampaign = await CampaignMain.findOneAndUpdate(
-        {
-          _id: decryptStrIdCampsNew,
-        },
-        {
-          $push: { clues: decryptUserId },
-        }
-      );
+      //>---------- end search
+      if (!result) {
+        const updateClue = await Clues.findOneAndUpdate(
+          {
+            _id: decryptUserId,
+          },
+          {
+            $push: { campaign: decryptStrIdCampsNew },
+          }
+        );
 
-      await updateCampaign.save();
+        // console.log(updateClue);
+        await updateClue.save();
 
-      //>---------- end update clue and campaign
+        const updateCampaign = await CampaignMain.findOneAndUpdate(
+          {
+            _id: decryptStrIdCampsNew,
+          },
+          {
+            $push: { clues: decryptUserId },
+          }
+        );
 
+        await updateCampaign.save();
+
+        //>---------- end update clue and campaign
+      }
       const campaignMain = await CampaignMain.find({
         _id: decryptStrIdCampsNew,
       });
