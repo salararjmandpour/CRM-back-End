@@ -293,6 +293,7 @@ const getOneAndAllHandler = async (req, res) => {
         });
 
       //>---------- end search
+
       if (!result) {
         const updateClue = await Clues.findOneAndUpdate(
           {
@@ -304,26 +305,27 @@ const getOneAndAllHandler = async (req, res) => {
         );
 
         // console.log(updateClue);
+
         await updateClue.save();
+        for (let index = 0; index < decryptStrIdCampsNew.length; index++) {
+          const updateCampaign = await CampaignMain.findOneAndUpdate(
+            {
+              _id: decryptStrIdCampsNew[index],
+            },
+            {
+              $push: { clues: decryptUserId },
+            }
+          );
 
-        const updateCampaign = await CampaignMain.findOneAndUpdate(
-          {
-            _id: decryptStrIdCampsNew,
-          },
-          {
-            $push: { clues: decryptUserId },
-          }
-        );
-
-        await updateCampaign.save();
-
+          await updateCampaign.save();
+        }
         //>---------- end update clue and campaign
-      }
-      const campaignMain = await CampaignMain.find({
-        _id: decryptStrIdCampsNew,
-      });
+        const campaignMain = await CampaignMain.find({
+          _id: decryptStrIdCampsNew,
+        });
 
-      return res.sendStatus(201);
+        return res.sendStatus(201);
+      }
     }
 
     const campaignMain = await CampaignMain.find({
