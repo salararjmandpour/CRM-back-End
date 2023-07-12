@@ -8,7 +8,7 @@ const nodeMailer = require("nodemailer");
 const cerateCipher = require("app/http/middleware/cerateCipher");
 const Key = config.encryptionKey;
 
-//>------------ method set setting mail 
+//>------------ method set setting mail
 
 const settingMail = async (req, res, next) => {
   const mailDecrypt = await JSON.parse(
@@ -62,24 +62,22 @@ const settingMail = async (req, res, next) => {
   }
 };
 
-
-//>------------ method get setting mail 
+//>------------ method get setting mail
 
 const getSettingMail = async (req, res) => {
-
-
   try {
     const getDataMail = await SettingMail.find({}).exec();
 
-
     if (!getDataMail)
-      return res.status(304).send("تنظیماتی برای ایمیل شما ثبت نشده است");
+      return res.status(404).json({
+        status:404,
+        message:"تنظیماتی برای ارسل ایمیل شما ثبت نشده است"
+      });
 
     const encryptData = await cerateCipher.encrypt(
       JSON.stringify(getDataMail),
       Key
     );
-
 
     return res.status(200).json({ encryptData });
   } catch (err) {

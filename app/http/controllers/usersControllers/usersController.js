@@ -1,6 +1,5 @@
 const User = require("app/models/User");
 
-
 //>---------- encrypt data sending
 
 const cerateCipher = require("../../middleware/cerateCipher");
@@ -12,25 +11,23 @@ const getAllUsers = async (req, res) => {
   const users = await User.find();
   if (!users) return res.status(204).json({ message: "کاربری پیدا نشد" });
 
-const encryptData = cerateCipher.encrypt(JSON.stringify(users), Key);
+  const encryptData = cerateCipher.encrypt(JSON.stringify(users), Key);
   res.json({ encryptData });
 };
 
-
 //>---------- method get single user for profile
 
-const getSingleUser = async (req, res , next) =>{
-  
+const getSingleUser = async (req, res, next) => {
   let singleUser = cerateCipher.decrypt(req.body.userNameActive, Key);
-  singleUser = await User.findOne({ username: parseInt(singleUser)});
-  if(!singleUser) return res.sendStatus(204);
-  
+  singleUser = await User.findOne({ username: parseInt(singleUser) });
+  if (!singleUser) return res.sendStatus(204);
+
   // console.log(singleUser);
-  
+
   const encryptData = cerateCipher.encrypt(JSON.stringify(singleUser), Key);
 
-  res.status(200).json({encryptData,});
+  res.status(200).json({ encryptData });
   next();
-}
+};
 
 module.exports = { getAllUsers, getSingleUser };

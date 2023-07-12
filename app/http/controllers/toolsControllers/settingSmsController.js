@@ -8,7 +8,7 @@ const PanelSms = require("app/models/PanelSms");
 const cerateCipher = require("../../middleware/cerateCipher");
 const Key = config.encryptionKey;
 
-//>------------ method set setting sms 
+//>------------ method set setting sms
 
 const setSettingSms = async (req, res, next) => {
   const panelSms = req.query.name.toString();
@@ -67,22 +67,22 @@ const setSettingSms = async (req, res, next) => {
   }
 };
 
-//>------------ method get setting sms 
+//>------------ method get setting sms
 
 const getSettingSms = async (req, res) => {
-
   try {
-
     const getDataSms = await PanelSms.find({}).exec();
 
-
-    if (!getDataSms) return res.status(304).send("پنل پیامکی ثبت نشده است");
+    if (!getDataSms)
+      return res.status(404).json({
+        status: 404,
+        message: "پنل پیامکی ثبت نشده است",
+      });
 
     const encryptData = await cerateCipher.encrypt(
       JSON.stringify(getDataSms),
       Key
     );
-
 
     return res.status(200).json({ encryptData });
   } catch (err) {
@@ -91,7 +91,6 @@ const getSettingSms = async (req, res) => {
   }
 };
 
-
 //>---------- module exports
 
-module.exports = { setSettingSms , getSettingSms};
+module.exports = { setSettingSms, getSettingSms };

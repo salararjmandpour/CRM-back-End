@@ -321,7 +321,7 @@ const getCities = (req, res) => {
           },
           {
             name: "ورزقان",
-            latitude: "38.3048",
+            latitude: "38.4048",
             longitude: "46.3931",
             id: 16,
           },
@@ -393,7 +393,7 @@ const getCities = (req, res) => {
           {
             name: "ماكو",
             latitude: "39.1734",
-            longitude: "44.3040",
+            longitude: "44.4040",
             id: 3,
           },
           {
@@ -559,7 +559,7 @@ const getCities = (req, res) => {
           },
           {
             name: "نطنز",
-            latitude: "33.3049",
+            latitude: "33.4049",
             longitude: "51.5455",
             id: 5,
           },

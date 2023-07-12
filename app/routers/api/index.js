@@ -56,7 +56,10 @@ router.use("/api/v1/sms", smsRouter);
 //>---------- not found route
 
 app.all("*", (req, res) => {
-  res.status(404);
+  res.status(404).json({
+    status: 404,
+    message: "صفحه مورد نظر یافت نشد ):",
+  });
   if (req.accepts("json")) {
     res.json({ error: "404 Not Found" });
   } else {

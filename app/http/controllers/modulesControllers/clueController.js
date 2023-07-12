@@ -192,14 +192,18 @@ const getOneAndAllHandler = async (req, res) => {
     const strRoleNew = strRole.replaceAll(" ", "+");
     const strIdNew = strId.replaceAll(" ", "+");
 
-    if (!strIdNew && !strRoleNew) return res.sensStatus(304);
+    if (!strIdNew && !strRoleNew) return res.sensStatus(404);
 
     const decryptUserRole = cerateCipher.decrypt(strRoleNew, Key);
     const decryptUserId = cerateCipher.decrypt(strIdNew, Key);
 
     if (ROLES_LIST[1].role == decryptUserRole) {
       const clues = await Clues.find({});
-      if (clues.length == 0) return res.status(304).send("سرنخی ثبت نشده است");
+      if (clues.length == 0)
+        return res.status(404).json({
+          status: 404,
+          message: "سرنخی ثبت نشده است",
+        });
       const encryptData = cerateCipher.encrypt(JSON.stringify(clues), Key);
       return res.status(202).json({ encryptData });
     }
@@ -210,7 +214,10 @@ const getOneAndAllHandler = async (req, res) => {
 
     if (clues) {
       if (!clues || clues.length == 0)
-        return res.status(304).send("سرنخی ثبت نشده است");
+        return res.status(404).json({
+          status: 404,
+          message: "سرنخی ثبت نشده است",
+        });
 
       const encryptData = cerateCipher.encrypt(JSON.stringify(clues), Key);
 
@@ -244,7 +251,10 @@ const getOneAndAllHandler = async (req, res) => {
     noteClue.length == 0
   ) {
     if (!clue || clue.length == 0) {
-      return res.status(304).send("سرنخی ثبت نشده است");
+      return res.status(404).json({
+        status: 404,
+        message: "سرنخی ثبت نشده است",
+      });
     }
     const encryptData = cerateCipher.encrypt(JSON.stringify(clue), Key);
     console.log("test");
@@ -257,7 +267,10 @@ const getOneAndAllHandler = async (req, res) => {
       !req.query.idCamps &&
       !clue
     )
-      return res.status(304).send("چیزی یافت نشد");
+      return res.status(404).json({
+        status: 404,
+        message: "چیزی یافت نشد",
+      });
 
     if (req.query.id && req.query.idCamps) {
       const strIdCamps = req.query.idCamps.toString();
@@ -274,9 +287,9 @@ const getOneAndAllHandler = async (req, res) => {
       );
 
       if (result)
-        return res.status(304).json({
-          massage: "رکورد مورد نظر تکراری میباشد",
-          status: 304,
+        return res.status(404).json({
+          message: "رکورد مورد نظر تکراری میباشد",
+          status: 404,
         });
 
       //>---------- end search
@@ -334,7 +347,8 @@ const getOneAndAllHandler = async (req, res) => {
 
     if (campaignMain.length == 0) {
       return res.status(202).json({
-        status: 304,
+        status: 404,
+        message: "کمپین موجود نمی باشد",
         encryptData,
         encryptNoteClue,
         encryptActivityCluesMeetOpen,
@@ -360,7 +374,7 @@ const updateOneClue = async (req, res) => {
 
   const decryptId = cerateCipher.decrypt(strNew, Key);
 
-  if (!decryptId) return res.sendStatus(304);
+  if (!decryptId) return res.sendStatus(404);
 
   const dataDecrypt = await JSON.parse(
     cerateCipher.decrypt(req.body.dataEnc, Key)

@@ -91,42 +91,56 @@ const getSingleAndAllHandler = async (req, res) => {
     const decryptClueIds = JSON.parse(cerateCipher.decrypt(strIdsNew, Key));
 
     try {
-      //>------------ search campaign in clue
-
-      const updateCamp = await CampaignMain.findOneAndUpdate(
-        {
-          _id: decryptIdCamp,
-        },
-        {
-          $push: { clues: decryptClueIds },
-        }
+      //>------------ search clue in campaign
+      const campaign = await CampaignMain.findOne({ _id: decryptIdCamp });
+      const result = campaign.clues.some((item) =>
+        decryptClueIds.includes(item)
       );
-      await updateCamp.save();
 
-      const updateClue = await Clues.findOneAndUpdate(
-        {
+      if (result)
+        return res.status(404).json({
+          message: "رکورد مورد نظر تکراری میباشد",
+          status: 404,
+        });
+
+      //>---------- end search clue
+
+      if (!result) {
+        const updateCamp = await CampaignMain.findOneAndUpdate(
+          {
+            _id: decryptIdCamp,
+          },
+          {
+            $push: { clues: decryptClueIds },
+          }
+        );
+        await updateCamp.save();
+
+        const updateClue = await Clues.findOneAndUpdate(
+          {
+            _id: decryptClueIds,
+          },
+          {
+            $push: { campaign: decryptIdCamp },
+          }
+        );
+        await updateClue.save();
+
+        const clues = await Clues.find({
           _id: decryptClueIds,
-        },
-        {
-          $push: { campaign: decryptIdCamp },
-        }
-      );
-      await updateClue.save();
+        });
 
-      const clues = await Clues.find({
-        _id: decryptClueIds,
-      });
-
-      const campaignMain = await CampaignMain.find({ _id: decryptIdCamp });
-      const encryptClues = cerateCipher.encrypt(JSON.stringify(clues), Key);
-      const encryptData = cerateCipher.encrypt(
-        JSON.stringify(campaignMain),
-        Key
-      );
-      return res.status(202).json({
-        encryptData,
-        encryptClues,
-      });
+        const campaignMain = await CampaignMain.find({ _id: decryptIdCamp });
+        const encryptClues = cerateCipher.encrypt(JSON.stringify(clues), Key);
+        const encryptData = cerateCipher.encrypt(
+          JSON.stringify(campaignMain),
+          Key
+        );
+        return res.status(202).json({
+          encryptData,
+          encryptClues,
+        });
+      }
     } catch (err) {
       console.log(err.message);
       return res.status(500).json({ message: err });
@@ -156,7 +170,7 @@ const getSingleAndAllHandler = async (req, res) => {
 
       if (clues.length == 0) {
         return res.status(202).json({
-          status: 304,
+          status: 404,
           encryptData,
         });
       }
@@ -176,7 +190,10 @@ const getSingleAndAllHandler = async (req, res) => {
     const campaignMain = await CampaignMain.find({});
 
     if (!campaignMain || campaignMain.length == 0)
-      return res.status(304).send("هیچ کمپینی وجود ندارد");
+      return res.status(404).json({
+        status: 404,
+        message: "هیچ کمپینی وجود ندارد",
+      });
 
     const encryptData = cerateCipher.encrypt(JSON.stringify(campaignMain), Key);
 

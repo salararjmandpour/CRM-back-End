@@ -3,14 +3,12 @@ const FuckingPwd = require("app/models/FuckingPwd");
 const bcrypt = require("bcrypt");
 const generatePassword = require("app/helpers/generatePassword");
 
-
-
 const register = async (req, res) => {
-  const { fullName, phoneNumber, email, isActive, username, createdOn } = req.body;
+  const { fullName, phoneNumber, email, isActive, username, createdOn } =
+    req.body;
   const password = generatePassword();
   if (!username || !fullName || !phoneNumber || !email || !createdOn) {
-    return res
-      .status(400);
+    return res.status(400);
   }
 
   const duplicate = await User.findOne({ username }).exec();
@@ -20,7 +18,7 @@ const register = async (req, res) => {
   try {
     //>----------- create hashed PWD
 
-    const hashedPwd =  await bcrypt.hash(password, 10);
+    const hashedPwd = await bcrypt.hash(password, 10);
 
     //>----------- create model for data user
 
@@ -44,8 +42,7 @@ const register = async (req, res) => {
       user: fuckingUser._id,
     });
 
-    res
-      .sendStatus(201);
+    res.sendStatus(201);
   } catch (err) {
     return res.status(500).json({ message: err.message });
   }

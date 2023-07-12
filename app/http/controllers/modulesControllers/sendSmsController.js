@@ -32,7 +32,7 @@ const sendSms = async (req, res) => {
     },
     function (error, request, body) {
       if (!error && request.statusCode === 200) {
-        //YOU‌ CAN‌ CHECK‌ THE‌ RESPONSE‌ AND SEE‌ ERROR‌ OR‌ SUCCESS‌ MESSAGE
+        //YOU‌ CAN‌ CHECK‌ THE‌ RESPONSE‌ AND SEE‌ ERROR‌ OR‌ SUCCESS‌ message
         console.log(request.body);
         return res.sendStatus(200);
       } else {
