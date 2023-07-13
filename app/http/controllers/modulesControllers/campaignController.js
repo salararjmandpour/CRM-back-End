@@ -225,7 +225,7 @@ const deleteOneCampaign = async (req, res) => {
 
       await deleteCampaignOfClues.save();
     }
-    // await CampaignMain.findOneAndDelete({ _id: decryptId });
+    await CampaignMain.findOneAndDelete({ _id: decryptId });
 
     return res.sendStatus(200);
   } catch (err) {
