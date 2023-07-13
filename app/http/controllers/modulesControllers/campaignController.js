@@ -205,6 +205,43 @@ const getSingleAndAllHandler = async (req, res) => {
 
 //>---------- method delete campaign compleat
 
+const deleteOneCampaign = async (req, res) => {
+  const str = req.query.id.toString();
+  const strNew = str.replaceAll(" ", "+");
+  const decryptId = cerateCipher.decrypt(strNew, Key);
+  // const campaign = await CampaignMain.findOne({ _id: decryptId });
+  // console.log(campaign);
+  // const clue = await Clues.find({
+  //   _id: campaign.clues,
+  // });
+  const campaign = await CampaignMain.find({ _id: decryptId });
+  console.log("campaign", campaign);
+  const campLength = campaign[0].clues;
+  await console.log("clueId", campLength);
+  await console.log("decryptId", decryptId);
+  try {
+    //>----------- delete model for data clue
+    // for (let index = 0; index < campLength.length; index++) {
+    //   let campaignArray = await CampaignMain.findOne({ _id: decryptId });
+    //   console.log("test",campaignArray.clue);
+    //   await console.log("campaign.clues", campaignArray.clues);
+    //   const ss = await Clues.findOneAndUpdate(
+    //     { _id: campaignArray.clues },
+    //     { $pull: { campaign: { $in: decryptId } } },
+    //     { new: true }
+    //   );
+    //   console.log("sdad", ss);
+    //   await ss.save();
+    // }
+    // await CampaignMain.findOneAndDelete({ _id: decryptId });
+
+    return res.sendStatus(200);
+  } catch (err) {
+    console.log(err.message);
+    return res.status(500).json({ message: err });
+  }
+};
+
 //>------------ export method
 
-module.exports = { createHandler, getSingleAndAllHandler };
+module.exports = { createHandler, getSingleAndAllHandler, deleteOneCampaign };
