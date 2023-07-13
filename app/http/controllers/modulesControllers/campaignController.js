@@ -115,17 +115,17 @@ const getSingleAndAllHandler = async (req, res) => {
           }
         );
         await updateCamp.save();
-
-        const updateClue = await Clues.findOneAndUpdate(
-          {
-            _id: decryptClueIds,
-          },
-          {
-            $push: { campaign: decryptIdCamp },
-          }
-        );
-        await updateClue.save();
-
+        for (let index = 0; index < decryptClueIds.length; index++) {
+          const updateClue = await Clues.findOneAndUpdate(
+            {
+              _id: decryptClueIds[index],
+            },
+            {
+              $push: { campaign: decryptIdCamp },
+            }
+          );
+          await updateClue.save();
+        }
         const clues = await Clues.find({
           _id: decryptClueIds,
         });
@@ -202,6 +202,8 @@ const getSingleAndAllHandler = async (req, res) => {
     });
   }
 };
+
+//>---------- method delete campaign compleat
 
 //>------------ export method
 
