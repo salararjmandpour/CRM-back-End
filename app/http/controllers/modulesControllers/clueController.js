@@ -518,7 +518,7 @@ const deleteOneClue = async (req, res) => {
       await deleteClueOfCampaign.save();
     }
 
-    // await Clues.findOneAndDelete({ _id: decryptId });
+    await Clues.findOneAndDelete({ _id: decryptId });
 
     //>----------- delete model for data  activity clues meet open
     await ActivityCluesMeetOpen.findOneAndDelete({ _id: decryptId });
