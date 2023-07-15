@@ -398,6 +398,9 @@ const updateOneClue = async (req, res) => {
     activityTellSubject,
     activityTellNote,
     activityTellTime,
+    isActiveActivityNote,
+    isActiveActivityTellNote,
+    cancelationReason,
   } = dataDecrypt;
 
   if (subject && mobile) {
@@ -478,6 +481,46 @@ const updateOneClue = async (req, res) => {
             activityTellSubject: activityTellSubject,
             activityTellNote: activityTellNote,
             activityTellTime: activityTellTime,
+          }
+        );
+      await updateActivityCluesTellOpen.save();
+
+      return res.sendStatus(202);
+    } catch (err) {
+      console.log(err.message);
+      return res.status(500).json({ message: err });
+    }
+  }
+
+  //>---------- update activity is active meet clue
+  if (isActiveActivityNote && cancelationReason) {
+    try {
+      const updateActivityCluesMeetOpen =
+        await ActivityCluesMeetOpen.findOneAndUpdate(
+          { _id: decryptId },
+          {
+            isActive: isActiveActivityNote,
+            cancelationReason: cancelationReason,
+          }
+        );
+      await updateActivityCluesMeetOpen.save();
+
+      return res.sendStatus(202);
+    } catch (err) {
+      console.log(err.message);
+      return res.status(500).json({ message: err });
+    }
+  }
+  
+  //>---------- update activity is active Tell clue
+  if (isActiveActivityTellNote && cancelationReason) {
+    try {
+      const updateActivityCluesTellOpen =
+        await ActivityCluesTellOpen.findOneAndUpdate(
+          { _id: decryptId },
+          {
+            isActive: isActiveActivityTellNote,
+            cancelationReason: cancelationReason,
           }
         );
       await updateActivityCluesTellOpen.save();
