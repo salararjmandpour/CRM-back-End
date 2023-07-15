@@ -497,12 +497,28 @@ const deleteOneClue = async (req, res) => {
   const strNew = str.replaceAll(" ", "+");
 
   const decryptId = cerateCipher.decrypt(strNew, Key);
+  const clue = await Clues.findOne({ _id: decryptId });
+  const clueLength = clue[0].campaign;
 
   try {
     //>----------- delete model for data note clue
     await NoteClues.findOneAndDelete({ _id: decryptId });
-    //>----------- delete model for data clue
+
+    // >----------- delete model for data clue
+    for (let index = 0; index < clueLength.length; index++) {
+      const clueArray = await Clues.findOne({ _id: decryptId });
+      await console.log("clue.campaign", clueArray.campaign);
+      const deleteClueOfCampaign = await CampaignMain.findOneAndUpdate(
+        { _id: clueArray.campaign[index] },
+        { $pull: { clues: { $in: decryptId } } },
+        { new: true }
+      );
+
+      await deleteClueOfCampaign.save();
+    }
+
     await Clues.findOneAndDelete({ _id: decryptId });
+
     //>----------- delete model for data  activity clues meet open
     await ActivityCluesMeetOpen.findOneAndDelete({ _id: decryptId });
     //>----------- delete model for data  activity clues tell open
