@@ -209,8 +209,8 @@ const deleteOneCampaign = async (req, res) => {
   const str = req.query.id.toString();
   const strNew = str.replaceAll(" ", "+");
   const decryptId = cerateCipher.decrypt(strNew, Key);
-  const campaign = await CampaignMain.find({ _id: decryptId });
-  const campLength = campaign[0].clues;
+  const campaign = await CampaignMain.findOne({ _id: decryptId });
+  const campLength = campaign.clues;
   try {
     // >----------- delete model for data clue
     for (let index = 0; index < campLength.length; index++) {

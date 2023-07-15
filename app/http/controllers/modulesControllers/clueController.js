@@ -498,7 +498,8 @@ const deleteOneClue = async (req, res) => {
 
   const decryptId = cerateCipher.decrypt(strNew, Key);
   const clue = await Clues.findOne({ _id: decryptId });
-  const clueLength = clue[0].campaign;
+  const clueLength = clue.campaign;
+  console.log(clueLength);
 
   try {
     //>----------- delete model for data note clue
@@ -517,7 +518,7 @@ const deleteOneClue = async (req, res) => {
       await deleteClueOfCampaign.save();
     }
 
-    await Clues.findOneAndDelete({ _id: decryptId });
+    // await Clues.findOneAndDelete({ _id: decryptId });
 
     //>----------- delete model for data  activity clues meet open
     await ActivityCluesMeetOpen.findOneAndDelete({ _id: decryptId });
