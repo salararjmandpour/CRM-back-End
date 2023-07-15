@@ -25,6 +25,15 @@ const ActivityClueOpenSchema = new Schema(
       required: true,
       trim: true,
     },
+    isActive: {
+      type: Boolean,
+      default:false,
+    },
+    cancelationReason:{
+      type:String,
+      default:"",
+      trim:true
+    },
     clueId: {
       type: String,
       required: true,
