@@ -375,7 +375,7 @@ const updateOneClue = async (req, res) => {
   const strNew = str.replaceAll(" ", "+");
 
   const decryptId = cerateCipher.decrypt(strNew, Key);
-
+console.log(decryptId);
   if (!decryptId) return res.sendStatus(404);
 
   const dataDecrypt = await JSON.parse(
@@ -402,7 +402,7 @@ const updateOneClue = async (req, res) => {
     isActiveActivityTellNote,
     cancelationReason,
   } = dataDecrypt;
-
+console.log(dataDecrypt);
   if (subject && mobile) {
     if (!subject || !fullName || !mobile || !company || !email || !address)
       return res.sendStatus(400);
@@ -492,8 +492,9 @@ const updateOneClue = async (req, res) => {
     }
   }
 
-  //>---------- update activity is active meet clue
+  // >---------- update activity is active meet clue
   if (isActiveActivityNote && cancelationReason) {
+    console.log(isActiveActivityNote, cancelationReason);
     try {
       const updateActivityCluesMeetOpen =
         await ActivityCluesMeetOpen.findOneAndUpdate(
@@ -511,8 +512,8 @@ const updateOneClue = async (req, res) => {
       return res.status(500).json({ message: err });
     }
   }
-  
-  //>---------- update activity is active Tell clue
+
+  // >---------- update activity is active Tell clue
   if (isActiveActivityTellNote && cancelationReason) {
     try {
       const updateActivityCluesTellOpen =
