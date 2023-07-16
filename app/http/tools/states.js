@@ -29,6 +29,13 @@ const getStates = (req, res) => {
       id: 4,
     },
     {
+      name: "البرز",
+      center: "کرج",
+      latitude: "35.8400",
+      longitude: "50.9391",
+      id: 19,
+    },
+    {
       name: "ايلام",
       center: "ايلام",
       latitude: "33.380",
@@ -125,13 +132,6 @@ const getStates = (req, res) => {
       latitude: "34.380",
       longitude: "50.530",
       id: 18,
-    },
-    {
-      name: "البرز",
-      center: "کرج",
-      latitude: "35.8400",
-      longitude: "50.9391",
-      id: 19,
     },
     {
       name: "كردستان",
@@ -2648,6 +2648,481 @@ const getCities = (req, res) => {
   }
 };
 
+const getPhoneCode = (req, res) => {
+  switch (req.query.state) {
+    case "آذربايجان شرقی":
+      res.status(200).json({
+        name: "آذربايجان شرقی",
+        center: "تبریز",
+        latitude: "38.50",
+        longitude: "46.180",
+        phone: [
+          {
+            code: 41,
+            id: 1,
+          },
+        ],
+        id: 1,
+      });
+      break;
+    case "آذربايجان غربی":
+      res.status(200).json({
+        name: "آذربايجان غربی",
+        center: "ارومیه",
+        latitude: "37.320",
+        longitude: "45.40",
+        phone: [
+          {
+            code: 44,
+            id: 2,
+          },
+        ],
+        id: 2,
+      });
+      break;
+
+    case "اردبيل":
+      res.status(200).json({
+        name: "اردبيل",
+        center: "اردبیل",
+        latitude: "38.140",
+        longitude: "48.170",
+        phone: [
+          {
+            code: 45,
+            id: 3,
+          },
+        ],
+        id: 3,
+      });
+      break;
+    case "اصفهان":
+      res.status(200).json({
+        name: "اصفهان",
+        center: "اصفهان",
+        latitude: "32.390",
+        longitude: "51.400",
+        phone: [
+          {
+            code: 31,
+            id: 4,
+          },
+        ],
+        id: 4,
+      });
+      break;
+    case "ايلام":
+      res.status(200).json({
+        name: "ايلام",
+        center: "ايلام",
+        latitude: "33.380",
+        longitude: "46.250",
+        phone: [
+          {
+            code: 84,
+            id: 5,
+          },
+        ],
+        id: 5,
+      });
+      break;
+    case "بوشهر":
+      res.status(200).json({
+        name: "بوشهر",
+        center: "بوشهر",
+        latitude: "28.590",
+        longitude: "50.500",
+        phone: [
+          {
+            code: 77,
+            id: 6,
+          },
+        ],
+        id: 6,
+      });
+      break;
+    case "تهران":
+      res.status(200).json({
+        name: "تهران",
+        center: "تهران",
+        latitude: "35.410",
+        longitude: "51.240",
+        phone: [
+          {
+            code: 21,
+            id: 7,
+          },
+        ],
+        id: 7,
+      });
+      break;
+    case "چهارمحال بختیاری":
+      res.status(200).json({
+        name: "چهارمحال بختیاری",
+        center: "شهركرد",
+        latitude: "32.190",
+        longitude: "50.510",
+        phone: [
+          {
+            code: 38,
+            id: 8,
+          },
+        ],
+        id: 8,
+      });
+      break;
+    case "خراسان جنوبی":
+      res.status(200).json({
+        name: "خراسان جنوبی",
+        center: "بيرجند",
+        latitude: "32.5216",
+        longitude: "59.1315",
+        phone: [
+          {
+            code: 56,
+            id: 9,
+          },
+        ],
+        id: 9,
+      });
+      break;
+    case "خراسان رضوی":
+      res.status(200).json({
+        name: "خراسان رضوی",
+        center: "مشهد",
+        latitude: "36.170",
+        longitude: "59.350",
+        phone: [
+          {
+            code: 51,
+            id: 10,
+          },
+        ],
+        id: 10,
+      });
+      break;
+    case "خراسان شمالی":
+      res.status(200).json({
+        name: "خراسان شمالی",
+        center: "بجنورد",
+        latitude: "37.2835",
+        longitude: "57.1954",
+        phone: [
+          {
+            code: 58,
+            id: 11,
+          },
+        ],
+        id: 11,
+      });
+      break;
+    case "خوزستان":
+      res.status(200).json({
+        name: "خوزستان",
+        center: "اهواز",
+        latitude: "31.190",
+        longitude: "48.410",
+        phone: [
+          {
+            code: 61,
+            id: 12,
+          },
+        ],
+        id: 12,
+      });
+      break;
+    case "زنجان":
+      res.status(200).json({
+        name: "زنجان",
+        center: "زنجان",
+        latitude: "36.400",
+        longitude: "48.290",
+        phone: [
+          {
+            code: 24,
+            id: 13,
+          },
+        ],
+        id: 13,
+      });
+      break;
+    case "سمنان":
+      res.status(200).json({
+        name: "سمنان",
+        center: "سمنان",
+        latitude: "35.340",
+        longitude: "53.230",
+        phone: [
+          {
+            code: 23,
+            id: 14,
+          },
+        ],
+        id: 14,
+      });
+      break;
+    case "سيستان و بلوچستان":
+      res.status(200).json({
+        name: "سيستان و بلوچستان",
+        center: "زاهدان",
+        latitude: "29.320",
+        longitude: "60.540",
+        phone: [
+          {
+            code: 54,
+            id: 15,
+          },
+        ],
+        id: 15,
+      });
+      break;
+    case "فارس":
+      res.status(200).json({
+        name: "فارس",
+        center: "شيراز",
+        latitude: "29.360",
+        longitude: "52.310",
+        phone: [
+          {
+            code: 71,
+            id: 16,
+          },
+        ],
+        id: 16,
+      });
+      break;
+    case "قزوين":
+      res.status(200).json({
+        name: "قزوين",
+        center: "قزوين",
+        latitude: "36.167",
+        longitude: "50.010",
+        phone: [
+          {
+            code: 28,
+            id: 17,
+          },
+        ],
+        id: 17,
+      });
+      break;
+    case "قم":
+      res.status(200).json({
+        name: "قم",
+        center: "قم",
+        latitude: "34.380",
+        longitude: "50.530",
+        phone: [
+          {
+            code: 25,
+            id: 18,
+          },
+        ],
+        id: 18,
+      });
+      break;
+    case "البرز":
+      res.status(200).json({
+        name: "البرز",
+        center: "کرج",
+        latitude: "35.8400",
+        longitude: "50.9391",
+        phone: [
+          {
+            code: 26,
+            id: 19,
+          },
+        ],
+        id: 19,
+      });
+      break;
+    case "كردستان":
+      res.status(200).json({
+        name: "كردستان",
+        center: "سنندج",
+        latitude: "35.180",
+        longitude: "47.10",
+        phone: [
+          {
+            code: 87,
+            id: 20,
+          },
+        ],
+        id: 20,
+      });
+      break;
+    case "کرمان":
+      res.status(200).json({
+        name: "کرمان",
+        center: "کرمان",
+        latitude: "30.160",
+        longitude: "57.40",
+        phone: [
+          {
+            code: 34,
+            id: 21,
+          },
+        ],
+        id: 21,
+      });
+      break;
+    case "كرمانشاه":
+      res.status(200).json({
+        name: "كرمانشاه",
+        center: "كرمانشاه",
+        latitude: "34.180",
+        longitude: "47.30",
+        phone: [
+          {
+            code: 87,
+            id: 22,
+          },
+        ],
+        id: 22,
+      });
+      break;
+    case "كهكيلويه و بويراحمد":
+      res.status(200).json({
+        name: "كهكيلويه و بويراحمد",
+        center: "ياسوج",
+        latitude: "30.390",
+        longitude: "51.350",
+        phone: [
+          {
+            code: 74,
+            id: 23,
+          },
+        ],
+        id: 23,
+      });
+      break;
+    case "گلستان":
+      res.status(200).json({
+        name: "گلستان",
+        center: "گرگان",
+        latitude: "36.500",
+        longitude: "54.250",
+        phone: [
+          {
+            code: 17,
+            id: 24,
+          },
+        ],
+        id: 24,
+      });
+      break;
+    case "گيلان":
+      res.status(200).json({
+        name: "گيلان",
+        center: "رشت",
+        latitude: "37.160",
+        longitude: "49.350",
+        phone: [
+          {
+            code: 13,
+            id: 25,
+          },
+        ],
+        id: 25,
+      });
+      break;
+    case "لرستان":
+      res.status(200).json({
+        name: "لرستان",
+        center: "خرم آباد",
+        latitude: "33.290",
+        longitude: "48.210",
+        phone: [
+          {
+            code: 66,
+            id: 26,
+          },
+        ],
+        id: 26,
+      });
+      break;
+    case "مازندران":
+      res.status(200).json({
+        name: "مازندران",
+        center: "ساري",
+        latitude: "36.330",
+        longitude: "53.30",
+        phone: [
+          {
+            code: 11,
+            id: 27,
+          },
+        ],
+        id: 27,
+      });
+      break;
+    case "مرکزی":
+      res.status(200).json({
+        name: "مرکزی",
+        center: "اراک",
+        latitude: "34.50",
+        longitude: "49.410",
+        phone: [
+          {
+            code: 86,
+            id: 28,
+          },
+        ],
+        id: 28,
+      });
+      break;
+    case "هرمزگان":
+      res.status(200).json({
+        name: "هرمزگان",
+        center: "بندرعباس",
+        latitude: "56.266",
+        longitude: "27.18",
+        phone: [
+          {
+            code: 76,
+            id: 29,
+          },
+        ],
+        id: 29,
+      });
+      break;
+    case "همدان":
+      res.status(200).json({
+        name: "همدان",
+        center: "همدان",
+        latitude: "34.470",
+        longitude: "48.300",
+        phone: [
+          {
+            code: 81,
+            id: 30,
+          },
+        ],
+        id: 30,
+      });
+      break;
+    case "يزد":
+      res.status(200).json({
+        name: "يزد",
+        center: "يزد",
+        latitude: "31.530",
+        longitude: "54.210",
+        phone: [
+          {
+            code: 35,
+            id: 31,
+          },
+        ],
+        id: 31,
+      });
+      break;
+    default:
+      res.status(409).json({
+        message: "Send a valid state name with `state` parameter",
+      });
+      break;
+  }
+};
 //>----------- module export
 
-module.exports = { getStates, getCities };
+module.exports = { getStates, getCities, getPhoneCode };
