@@ -32,13 +32,6 @@ const clueSchema = new Schema(
       minlength: 10,
       maxLength: 12,
     },
-    webSite: {
-      type: String,
-      required: true,
-      trim: true,
-      minlength: 2,
-      maxLength: 25,
-    },
     industry: {
       type: String,
       required: true,
@@ -72,11 +65,6 @@ const clueSchema = new Schema(
       minlength: 9,
       maxLength: 12,
     },
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-    },
     address: {
       type: String,
       required: true,
@@ -84,11 +72,19 @@ const clueSchema = new Schema(
       minlength: 2,
       maxLength: 100,
     },
-    numberOfStaff: {
-      type: Number,
+    qualityCustomer: {
+      type: String,
       required: true,
       trim: true,
-      default: 0,
+      minlength: 2,
+      maxLength: 100,
+    },
+    callTime: {
+      type: String,
+      required: true,
+      trim: true,
+      minlength: 2,
+      maxLength: 100,
     },
     campaign: [String],
   },
