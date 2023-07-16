@@ -17,6 +17,8 @@ router.post("/", verifyJWT, campaignController.createHandler);
 
 router.delete("/", verifyJWT, campaignController.deleteOneCampaign);
 
+router.put("/", verifyJWT, campaignController.updateOneCampaign);
+
 //>----------- exports routers
 
 module.exports = router;
