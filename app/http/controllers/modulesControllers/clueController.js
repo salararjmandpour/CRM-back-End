@@ -31,13 +31,12 @@ const createHandler = async (req, res) => {
       fullName,
       role,
       mobile,
-      webSite,
+      qualityCustomer,
+      callTime,
       industry,
       company,
       phonNumber,
-      email,
       address,
-      numberOfStaff,
     } = dataDecrypt;
 
     if (
@@ -45,20 +44,19 @@ const createHandler = async (req, res) => {
       !fullName ||
       !role ||
       !mobile ||
-      !webSite ||
       !industry ||
       !expertDecrypt ||
       !expertFullName ||
       !company ||
       !phonNumber ||
-      !email ||
       !address ||
-      !numberOfStaff
+      !callTime ||
+      !qualityCustomer
     ) {
       return res.status(400);
     }
 
-    const duplicate = await Clues.findOne({ mobile, phonNumber, email }).exec();
+    const duplicate = await Clues.findOne({ mobile, phonNumber }).exec();
 
     if (duplicate) return res.status(409);
 
@@ -70,15 +68,14 @@ const createHandler = async (req, res) => {
         fullName: fullName,
         role: role,
         mobile: mobile,
-        webSite: webSite,
         industry: industry,
         expert: expertDecrypt,
         expertFullName: expertFullName,
         company: company,
         phonNumber: phonNumber,
-        email: email,
         address: address,
-        numberOfStaff: numberOfStaff,
+        qualityCustomer: qualityCustomer,
+        callTime: callTime,
       });
 
       res.sendStatus(201);
@@ -375,7 +372,7 @@ const updateOneClue = async (req, res) => {
   const strNew = str.replaceAll(" ", "+");
 
   const decryptId = cerateCipher.decrypt(strNew, Key);
-console.log(decryptId);
+  console.log(decryptId);
   if (!decryptId) return res.sendStatus(404);
 
   const dataDecrypt = await JSON.parse(
@@ -385,9 +382,13 @@ console.log(decryptId);
   const {
     subject,
     fullName,
+    role,
     mobile,
+    qualityCustomer,
+    callTime,
+    industry,
     company,
-    email,
+    phonNumber,
     address,
     noteSubject,
     noteBody,
@@ -402,21 +403,37 @@ console.log(decryptId);
     isActiveActivityTellNote,
     cancelationReason,
   } = dataDecrypt;
-console.log(dataDecrypt);
+  console.log(dataDecrypt);
   if (subject && mobile) {
-    if (!subject || !fullName || !mobile || !company || !email || !address)
+    if (
+      !subject ||
+      !fullName ||
+      !role ||
+      !mobile ||
+      !qualityCustomer||
+      !callTime||
+      !industry||
+      !company ||
+      !phonNumber||
+      !address 
+      
+    )
       return res.sendStatus(400);
     try {
       //>----------- update model for data clue
       const updateClue = await Clues.findOneAndUpdate(
         { _id: decryptId },
         {
-          subject: subject,
-          fullName: fullName,
-          mobile: mobile,
-          company: company,
-          email: email,
-          address: address,
+          subject,
+          fullName,
+          role,
+          mobile,
+          qualityCustomer,
+          callTime,
+          industry,
+          company,
+          phonNumber,
+          address,
         }
       );
 
