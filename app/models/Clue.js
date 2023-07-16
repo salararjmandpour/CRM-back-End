@@ -76,8 +76,6 @@ const clueSchema = new Schema(
       type: String,
       required: true,
       trim: true,
-      minlength: 2,
-      maxLength: 100,
     },
     callTime: {
       type: String,

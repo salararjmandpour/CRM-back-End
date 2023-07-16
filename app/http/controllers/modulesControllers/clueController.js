@@ -31,13 +31,14 @@ const createHandler = async (req, res) => {
       fullName,
       role,
       mobile,
-      qualityCustomer,
-      callTime,
       industry,
       company,
       phonNumber,
       address,
+      qualityCustomer,
+      callTime,
     } = dataDecrypt;
+
 
     if (
       !subject ||
@@ -105,6 +106,7 @@ const createHandler = async (req, res) => {
       activityTellNote,
       activityTellTime,
     } = dataDecrypt;
+    
 
     if (noteSubject) {
       if (!noteSubject || !dataDecrypt || !clueDecrypt || !expertDecrypt)
