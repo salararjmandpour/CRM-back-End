@@ -1784,12 +1784,12 @@ const getCities = (req, res) => {
             longitude: "50.4048",
             id: 5,
           },
-          {
-            name: "كرج",
-            latitude: "35.490",
-            longitude: "50.580",
-            id: 6,
-          },
+          // {
+          //   name: "كرج",
+          //   latitude: "35.490",
+          //   longitude: "50.580",
+          //   id: 6,
+          // },
           {
             name: "ماهدشت",
             latitude: "50.813",
