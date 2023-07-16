@@ -233,6 +233,86 @@ const deleteOneCampaign = async (req, res) => {
   }
 };
 
+//>----------- method update campaign
+
+const updateOneCampaign = async (req, res) => {
+  const str = req.query.id.toString();
+  const strNew = str.replaceAll(" ", "+");
+
+  const decryptId = cerateCipher.decrypt(strNew, Key);
+  console.log(decryptId);
+  if (!decryptId) return res.sendStatus(404);
+
+  const dataDecrypt = await JSON.parse(
+    cerateCipher.decrypt(req.body.dataEnc, Key)
+  );
+
+  const {
+    campaignName,
+    campaignStatus,
+    campaignTimeStart,
+    campaignTimeEnd,
+    campaignKind,
+    campaignNumberOfContacts,
+    campaignResponse,
+    campaignMoney,
+    campaignIncome,
+    campaignCost,
+    campaignGoal,
+    campaignNote,
+  } = dataDecrypt;
+
+  if (
+    !campaignName ||
+    !campaignStatus ||
+    !campaignTimeStart ||
+    !campaignTimeEnd ||
+    !campaignKind ||
+    !campaignNumberOfContacts ||
+    !campaignResponse ||
+    !expertFullName ||
+    !campaignMoney ||
+    !campaignIncome ||
+    !campaignCost ||
+    !campaignGoal ||
+    !campaignNote
+  ) {
+    return res.sendStatus(400);
+  }
+
+  try {
+    //>----------- update model for data campaign
+    const updateCampaign = await CampaignMain.findOneAndUpdate(
+      { _id: decryptId },
+      {
+        campaignName: campaignName,
+        campaignStatus: campaignStatus,
+        campaignTimeEnd: campaignTimeEnd,
+        campaignKind: campaignKind,
+        campaignNumberOfContacts: campaignNumberOfContacts,
+        campaignResponse: campaignResponse,
+        campaignMoney: campaignMoney,
+        campaignIncome: campaignIncome,
+        campaignCost: campaignCost,
+        campaignGoal: campaignGoal,
+        campaignNote: campaignNote,
+      }
+    );
+
+    await updateCampaign.save();
+
+    res.sendStatus(202);
+  } catch (err) {
+    console.log(err.message);
+    return res.status(500).json({ message: err });
+  }
+};
+
 //>------------ export method
 
-module.exports = { createHandler, getSingleAndAllHandler, deleteOneCampaign };
+module.exports = {
+  createHandler,
+  getSingleAndAllHandler,
+  deleteOneCampaign,
+  updateOneCampaign,
+};
