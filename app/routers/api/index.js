@@ -27,6 +27,9 @@ router.use("/api/v1/states", statesRouter);
 const citiesRouter = require("./v1/cities");
 router.use("/api/v1/cities", citiesRouter);
 
+const phoneCodeRouter = require("./v1/phoneCode");
+router.use("/api/v1/phoneCode", phoneCodeRouter);
+
 const testRouter = require("./v1/test");
 router.use("/api/v1/test", testRouter);
 
