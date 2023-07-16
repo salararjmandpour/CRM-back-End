@@ -68,8 +68,8 @@ module.exports = class Application {
 
   setSecurity() {
     const limiter = rateLimit({
-      windowMs: 25 * 60 * 1000,
-      max: 100,
+      windowMs: 250 * 60 * 1000,
+      max: 500,
     });
     //.........................//
     app.use(hpp());

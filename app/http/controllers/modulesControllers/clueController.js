@@ -374,7 +374,6 @@ const updateOneClue = async (req, res) => {
   const strNew = str.replaceAll(" ", "+");
 
   const decryptId = cerateCipher.decrypt(strNew, Key);
-  console.log(decryptId);
   if (!decryptId) return res.sendStatus(404);
 
   const dataDecrypt = await JSON.parse(
@@ -405,7 +404,6 @@ const updateOneClue = async (req, res) => {
     isActiveActivityTellNote,
     cancelationReason,
   } = dataDecrypt;
-  console.log(dataDecrypt);
   if (subject && mobile) {
     if (
       !subject ||
