@@ -34,11 +34,12 @@ const createHandler = async (req, res) => {
       industry,
       company,
       phonNumber,
+      state,
+      cities,
       address,
       qualityCustomer,
       callTime,
     } = dataDecrypt;
-
 
     if (
       !subject ||
@@ -50,6 +51,8 @@ const createHandler = async (req, res) => {
       !expertFullName ||
       !company ||
       !phonNumber ||
+      !state ||
+      !cities ||
       !address ||
       !callTime ||
       !qualityCustomer
@@ -74,6 +77,8 @@ const createHandler = async (req, res) => {
         expertFullName: expertFullName,
         company: company,
         phonNumber: phonNumber,
+        state: state,
+        cities: cities,
         address: address,
         qualityCustomer: qualityCustomer,
         callTime: callTime,
@@ -106,7 +111,6 @@ const createHandler = async (req, res) => {
       activityTellNote,
       activityTellTime,
     } = dataDecrypt;
-    
 
     if (noteSubject) {
       if (!noteSubject || !dataDecrypt || !clueDecrypt || !expertDecrypt)
@@ -390,6 +394,8 @@ const updateOneClue = async (req, res) => {
     industry,
     company,
     phonNumber,
+    state,
+    cities,
     address,
     noteSubject,
     noteBody,
@@ -410,13 +416,14 @@ const updateOneClue = async (req, res) => {
       !fullName ||
       !role ||
       !mobile ||
-      !qualityCustomer||
-      !callTime||
-      !industry||
+      !qualityCustomer ||
+      !callTime ||
+      !industry ||
       !company ||
-      !phonNumber||
-      !address 
-      
+      !phonNumber ||
+      !state ||
+      !cities ||
+      !address
     )
       return res.sendStatus(400);
     try {
@@ -433,6 +440,8 @@ const updateOneClue = async (req, res) => {
           industry,
           company,
           phonNumber,
+          state,
+          cities,
           address,
         }
       );
