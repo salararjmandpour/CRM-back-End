@@ -1,0 +1,10 @@
+{
+    "app":"my-0x0f",
+    "port":3005,
+    "disks":[
+        {
+            "name":"my-disk",
+            "mountTo":"upload"
+        }
+    ]
+}
