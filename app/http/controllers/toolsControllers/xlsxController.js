@@ -4,6 +4,18 @@ const multer = require("multer");
 const mkdirp = require("mkdirp");
 const fs = require("fs");
 const xlsx = require("xlsx");
+const User = require("app/models/User");
+
+
+
+
+//>---------- encrypt data sending
+
+const cerateCipher = require("../../middleware/cerateCipher");
+const Key = config.encryptionKey;
+
+
+
 
 let fullName = "";
 
