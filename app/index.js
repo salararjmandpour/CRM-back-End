@@ -15,13 +15,14 @@ const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
 const hpp = require("hpp");
 const xss = require("xss-clean");
+const path = require("path");
 
 //>----------------------module export
 
 module.exports = class Application {
   constructor() {
-    this.setSecurity(); // set config security [project]
     this.setConfig(); //set config project
+    this.setSecurity(); // set config security [project]
     this.setMongoConnection(); //set mongoDB connection
     this.setupExpress(); //set setup express.JS
     this.setConfigMorgan(); //set config PG morgan
@@ -93,13 +94,14 @@ module.exports = class Application {
   setConfig() {
     app.use(express.json());
     app.use(express.static(config.layout.public_drc)); // set static file in folder public(example image,...)
+    app.use("/upload", express.static("upload"));
     app.set("view engine", config.layout.view_engin); // template engine install ejs
     app.set("views", config.layout.view_drc); // set view file in folder views
     app.use(config.layout.ejs.expressLayouts); //set master page layouts
-    app.set("layout", config.layout.ejs.master); //set page layout
     app.set("layout extractScripts", config.layout.ejs.expressScripts);
     app.set("layout extractStyles", config.layout.ejs.expressStyles);
-
+    app.set("layout", config.layout.ejs.master); //set page layout
+    
     app.use(bodyParser.json()); //adjust the bodyParser
     app.use(bodyParser.urlencoded({ extended: true })); //set urlencoded : true
     app.use(validator()); //set middleware of validator
