@@ -65,6 +65,20 @@ const clueSchema = new Schema(
       minlength: 9,
       maxLength: 12,
     },
+    state: {
+      type: String,
+      required: true,
+      trim: true,
+      minlength: 2,
+      maxLength: 50,
+    },
+    cities: {
+      type: String,
+      required: true,
+      trim: true,
+      minlength: 2,
+      maxLength: 50,
+    },
     address: {
       type: String,
       required: true,
