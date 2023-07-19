@@ -12,8 +12,10 @@ const xlsxController = require("app/http/controllers/toolsControllers/xlsxContro
 
 const verifyJWT = require("app/http/middleware/authMiddleware/verifyJWT");
 
-router.post("/upload", xlsxController.uploadFile);
+router.post("/import", verifyJWT, xlsxController.importFile);
 
 router.get("/download", xlsxController.downloadFile);
+
+router.get("/export",  xlsxController.exportFile);
 
 module.exports = router;
