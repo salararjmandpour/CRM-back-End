@@ -59,6 +59,9 @@ router.use("/api/v1/sms", smsRouter);
 const xlsxRouter = require("./v1/xlsx");
 router.use("/api/v1/xlsx", xlsxRouter);
 
+const notificationsRouter = require("./v1/notifications");
+router.use("/api/v1/notifications", notificationsRouter);
+
 //>---------- not found route
 
 app.all("*", (req, res) => {
