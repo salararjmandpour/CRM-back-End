@@ -100,6 +100,8 @@ const createHandler = async (req, res) => {
       Key
     );
 
+    const clueName = await Clues.findOne({ _id: clueDecrypt });
+
     const {
       noteSubject,
       noteBody,
@@ -107,9 +109,11 @@ const createHandler = async (req, res) => {
       activityNote,
       activityLocation,
       activityTime,
+      activityDate,
       activityTellSubject,
       activityTellNote,
       activityTellTime,
+      activityTellDate,
     } = dataDecrypt;
 
     if (noteSubject) {
@@ -136,6 +140,7 @@ const createHandler = async (req, res) => {
         !activityNote ||
         !activityLocation ||
         !activityTime ||
+        !activityDate ||
         !clueDecrypt ||
         !expertDecrypt
       )
@@ -148,8 +153,10 @@ const createHandler = async (req, res) => {
           activityNote: activityNote,
           activityLocation: activityLocation,
           activityTime: activityTime,
+          activityDate: activityDate,
           userId: expertDecrypt,
           clueId: clueDecrypt,
+          clueName: clueName.fullName,
         });
 
         res.sendStatus(201);
@@ -163,6 +170,7 @@ const createHandler = async (req, res) => {
         !activityTellNote ||
         !activityTellTime ||
         !clueDecrypt ||
+        !activityTellDate ||
         !expertDecrypt
       )
         return res.status(400);
@@ -173,8 +181,10 @@ const createHandler = async (req, res) => {
           activityTellSubject: activityTellSubject,
           activityTellNote: activityTellNote,
           activityTellTime: activityTellTime,
+          activityTellDate: activityTellDate,
           userId: expertDecrypt,
           clueId: clueDecrypt,
+          clueName: clueName.fullName,
         });
 
         res.sendStatus(201);
@@ -260,7 +270,6 @@ const getOneAndAllHandler = async (req, res) => {
       });
     }
     const encryptData = cerateCipher.encrypt(JSON.stringify(clue), Key);
-    console.log("test");
     return res.status(202).json({ encryptData });
   } else {
     if (
