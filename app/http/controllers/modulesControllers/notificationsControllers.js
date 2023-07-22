@@ -36,8 +36,30 @@ const getNotifications = async (req, res) => {
       }
     );
 
-    const encryptData = cerateCipher.encrypt(JSON.stringify(findClueMeet), Key);
-    return res.status(200).json({ encryptData });
+    let findClueTell = await ActivityCluesTellOpen.find(
+      {
+        userId: decryptUserId,
+      },
+      {
+        _id: 0,
+        activityTellNote: 0,
+        createdAt: 0,
+        updatedAt: 0,
+        userId: 0,
+        __v: 0,
+      }
+    );
+
+    const encryptDataMeet = cerateCipher.encrypt(
+      JSON.stringify(findClueMeet),
+      Key
+    );
+    const encryptDataTell = cerateCipher.encrypt(
+      JSON.stringify(findClueTell),
+      Key
+    );
+
+    return res.status(200).json({ encryptDataMeet, encryptDataTell });
   } catch (err) {
     console.log(err.message);
     return res.status(500).json({ message: err });
