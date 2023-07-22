@@ -20,6 +20,11 @@ const ActivityClueTellOpenSchema = new Schema(
       required: true,
       trim: true,
     },
+    activityTellDate: {
+      type: String,
+      required: true,
+      trim: true,
+    },
     isActive: {
       type: Boolean,
       default: false,
@@ -30,6 +35,11 @@ const ActivityClueTellOpenSchema = new Schema(
       trim: true,
     },
     clueId: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    clueName: {
       type: String,
       required: true,
       trim: true,
