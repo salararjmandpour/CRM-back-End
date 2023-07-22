@@ -44,6 +44,8 @@ const getNotifications = async (req, res) => {
         _id: 0,
         activityTellNote: 0,
         createdAt: 0,
+        isActive: 0,
+        cancelationReason: 0,
         updatedAt: 0,
         userId: 0,
         __v: 0,
