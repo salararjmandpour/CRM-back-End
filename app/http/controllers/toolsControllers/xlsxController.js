@@ -79,7 +79,6 @@ const importFile = async (req, res, next) => {
 
       try {
         for (let index = 0; index < data.length; index++) {
-          console.log(`index : ${index}`, data[index]);
 
           const {
             subject,
@@ -121,7 +120,6 @@ const importFile = async (req, res, next) => {
 
           if (duplicate) return res.status(409);
 
-          console.log("subject :", subject);
           await Clues.create({
             subject: subject,
             fullName: fullName,
