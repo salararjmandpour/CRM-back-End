@@ -34,6 +34,11 @@ module.exports = class Application {
   setupExpress() {
     app.listen(config.port, () => {
       console.log(chalk.bgCyan(`Listening on port ${config.port}`));
+      console.log(
+        chalk.bgCyan(
+          new Date().toLocaleString("fa-IR", { timeZone: "Asia/Tehran" })
+        )
+      );
     });
   }
 
@@ -101,7 +106,7 @@ module.exports = class Application {
     app.set("layout extractScripts", config.layout.ejs.expressScripts);
     app.set("layout extractStyles", config.layout.ejs.expressStyles);
     app.set("layout", config.layout.ejs.master); //set page layout
-    
+
     app.use(bodyParser.json()); //adjust the bodyParser
     app.use(bodyParser.urlencoded({ extended: true })); //set urlencoded : true
     app.use(validator()); //set middleware of validator
