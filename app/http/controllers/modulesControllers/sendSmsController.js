@@ -17,6 +17,7 @@ const sendSms = async (req, res) => {
     cerateCipher.decrypt(req.body.dataEnc, Key)
   );
 
+  console.log(`${messageDecrypt.date} ${messageDecrypt.time}`);
   request.post(
     {
       url: panelSms[0].url,
@@ -27,6 +28,7 @@ const sendSms = async (req, res) => {
         message: messageDecrypt.message,
         from: panelSms[0].from,
         to: messageDecrypt.mobile,
+        // time: `${messageDecrypt.date} ${messageDecrypt.time}`,
       },
       json: true,
     },
@@ -43,3 +45,6 @@ const sendSms = async (req, res) => {
 };
 
 module.exports = { sendSms };
+
+// const d = new Date(getDates);
+// return Intl.DateTimeFormat("fa-IR").format(d);
