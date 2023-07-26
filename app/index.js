@@ -17,6 +17,8 @@ const hpp = require("hpp");
 const xss = require("xss-clean");
 const path = require("path");
 
+
+
 //>----------------------module export
 
 module.exports = class Application {
@@ -34,11 +36,13 @@ module.exports = class Application {
   setupExpress() {
     app.listen(config.port, () => {
       console.log(chalk.bgCyan(`Listening on port ${config.port}`));
+ console.log(chalk.bgGray("server UTC:", new Date()));
       console.log(
-        chalk.bgCyan(
+        chalk.bgGreen(
           new Date().toLocaleString("fa-IR", { timeZone: "Asia/Tehran" })
         )
       );
+      
     });
   }
 
