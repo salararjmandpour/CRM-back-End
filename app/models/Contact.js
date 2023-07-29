@@ -96,6 +96,10 @@ const contactSchema = new Schema(
       minlength: 9,
       maxLength: 12,
     },
+    isContactPrivate: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true, toJSON: { virtuals: true } }
 );
