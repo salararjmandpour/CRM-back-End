@@ -40,6 +40,7 @@ const createHandler = async (req, res) => {
       atmCard,
       fax,
       birthDay,
+      isContactPrivate,
     } = dataDecrypt;
 
     if (
@@ -60,7 +61,7 @@ const createHandler = async (req, res) => {
 
     try {
       //>----------- create model for data clue
-
+console.log(typeof isContactPrivate);
       await Contact.create({
         fullName: fullName,
         role: role,
@@ -75,6 +76,7 @@ const createHandler = async (req, res) => {
         address: address,
         atmCard: atmCard,
         fax: fax,
+        isContactPrivate: isContactPrivate,
         birthDay: birthDay,
       });
 
