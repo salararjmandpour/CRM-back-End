@@ -196,7 +196,7 @@ const createHandler = async (req, res) => {
   }
 };
 
-//>----------- get route single an d all clue
+//>----------- get route single and all clue
 
 const getOneAndAllHandler = async (req, res) => {
   if (req.query.role && req.query.id) {
