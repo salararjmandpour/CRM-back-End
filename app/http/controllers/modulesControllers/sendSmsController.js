@@ -16,27 +16,39 @@ const sendSms = async (req, res) => {
     cerateCipher.decrypt(req.body.dataEnc, Key)
   );
 
-  const time = `${messageDecrypt.date} ${messageDecrypt.time}:00`;
+  let utcTime = "";
 
-  //>---------- Example function to convert client's time to UTC
+  if (messageDecrypt.date && messageDecrypt.time) {
+    const time = `${messageDecrypt.date} ${messageDecrypt.time}:00`;
 
-  const convertToUTC = (clientTimeString, clientTimezone) => {
-    // const format = "YYYY-MM-DD HH:mm:ss";
+    //>---------- Example function to convert client's time to UTC
 
-    //>--------- Parse the client time string with the client timezone
+    const convertToUTC = (clientTimeString, clientTimezone) => {
+      // const format = "YYYY-MM-DD HH:mm:ss";
 
-    const clientDateTime = moment.tz(clientTimeString, clientTimezone);
+      //>--------- Parse the client time string with the client timezone
 
-    //>--------- Convert to UTC
+      const clientDateTime = moment.tz(clientTimeString, clientTimezone);
 
-    const utcDateTime = clientDateTime.clone().utc();
+      //>--------- Convert to UTC
 
-    //>--------- Return the UTC time in the desired format
+      const utcDateTime = clientDateTime.clone().utc();
 
-    return utcDateTime.format();
-  };
-  const clientTimezone = "Asia/Tehran";
-  const utcTime = convertToUTC(time, clientTimezone);
+      //>--------- Return the UTC time in the desired format
+
+      return utcDateTime.format();
+    };
+    const clientTimezone = "Asia/Tehran";
+    utcTime = convertToUTC(time, clientTimezone);
+  }
+
+  if (!messageDecrypt.date && !messageDecrypt.time) {
+    utcTime = new Date().toLocaleString("fa-IR", {
+      timeZone: "Asia/Tehran",
+    });
+  }
+
+  console.log(utcTime);
 
   const panelSms = await PanelSms.find({}).exec();
 
