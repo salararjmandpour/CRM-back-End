@@ -62,6 +62,9 @@ router.use("/api/v1/xlsx", xlsxRouter);
 const notificationsRouter = require("./v1/notifications");
 router.use("/api/v1/notifications", notificationsRouter);
 
+const contactRouter = require("./v1/contacts");
+router.use("/api/v1/contacts", contactRouter);
+
 //>---------- not found route
 
 app.all("*", (req, res) => {
