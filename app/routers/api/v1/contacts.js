@@ -19,4 +19,6 @@ router.put("/", verifyJWT, ContactController.updateOneContact);
 
 router.delete("/", verifyJWT, ContactController.deleteOneContact);
 
+router.patch("/", verifyJWT, ContactController.convertorContact);
+
 module.exports = router;
