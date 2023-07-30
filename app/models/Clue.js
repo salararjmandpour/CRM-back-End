@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const mongoosePaginate = require('mongoose-paginate');
 const Schema = mongoose.Schema;
 
 const clueSchema = new Schema(
@@ -102,5 +103,7 @@ const clueSchema = new Schema(
   },
   { timestamps: true, toJSON: { virtuals: true } }
 );
+
+clueSchema.plugin(mongoosePaginate);
 
 module.exports = mongoose.model("clue", clueSchema);
