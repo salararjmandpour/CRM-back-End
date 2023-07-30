@@ -13,7 +13,10 @@ const verifyJWT = require("app/http/middleware/authMiddleware/verifyJWT");
 
 router.post("/", verifyJWT, ContactController.createHandler);
 
-
 router.get("/", verifyJWT, ContactController.getAllHandler);
+
+router.put("/", verifyJWT, ContactController.updateOneContact);
+
+router.delete("/", verifyJWT, ContactController.deleteOneContact);
 
 module.exports = router;

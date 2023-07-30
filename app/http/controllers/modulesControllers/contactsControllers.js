@@ -61,7 +61,6 @@ const createHandler = async (req, res) => {
 
     try {
       //>----------- create model for data clue
-console.log(typeof isContactPrivate);
       await Contact.create({
         fullName: fullName,
         role: role,
@@ -114,9 +113,142 @@ const getAllHandler = async (req, res) => {
   }
 };
 
+//>----------- put route one Contact
+
+const updateOneContact = async (req, res) => {
+  const str = req.query.id.toString();
+  const strNew = str.replaceAll(" ", "+");
+
+  const decryptId = cerateCipher.decrypt(strNew, Key);
+  if (!decryptId) return res.sendStatus(404);
+
+  const dataDecrypt = await JSON.parse(
+    cerateCipher.decrypt(req.body.dataEnc, Key)
+  );
+
+  const {
+    fullName,
+    role,
+    mobile,
+    industry,
+    company,
+    phonNumber,
+    state,
+    cities,
+    address,
+    atmCard,
+    fax,
+    birthDay,
+  } = dataDecrypt;
+
+  if (fullName && mobile) {
+    if (
+      !fullName ||
+      !role ||
+      !mobile ||
+      !industry ||
+      !company ||
+      !address
+    ) {
+      return res.status(400);
+    }
+    try {
+      //>----------- create model for data clue
+      await Contact.findOneAndUpdate(
+        { _id: decryptId },
+        {
+          fullName: fullName,
+          role: role,
+          mobile: mobile,
+          industry: industry,
+          company: company,
+          phonNumber: phonNumber,
+          state: state,
+          cities: cities,
+          address: address,
+          atmCard: atmCard,
+          fax: fax,
+          birthDay: birthDay,
+        }
+      );
+
+      res.sendStatus(201);
+    } catch (err) {
+      console.log(err.message);
+      return res.status(500).json({ message: err });
+    }
+  }
+};
+
+//>----------- delete route one Contact
+
+const deleteOneContact = async (req, res) => {
+  const str = req.query.id.toString();
+  const strNew = str.replaceAll(" ", "+");
+
+  const decryptId = cerateCipher.decrypt(strNew, Key);
+
+  try {
+    await Contact.findOneAndDelete({ _id: decryptId });
+
+    return res.sendStatus(200);
+  } catch (err) {
+    console.log(err.message);
+    return res.status(500).json({ message: err });
+  }
+};
+
+const convertorContact = async (req, res) => {
+  const str = req.query.id.toString();
+  const strNew = str.replaceAll(" ", "+");
+
+  const decryptId = cerateCipher.decrypt(strNew, Key);
+
+  try {
+    const contact = await Contact.findOne({ _id: decryptId });
+
+    await Contact.findOneAndUpdate(
+      { _id: decryptId },
+      {
+        isActive: false,
+      }
+    );
+
+    try {
+      //>----------- create model for data clue
+
+      await Clues.create({
+        subject: "ندارد",
+        fullName: contact.fullName,
+        role: contact.role,
+        mobile: contact.mobile,
+        industry: contact.industry,
+        expert: contact.expertDecrypt,
+        expertFullName: contact.expertFullName,
+        company: contact.company,
+        phonNumber: contact.phonNumber,
+        state: contact.state,
+        cities: contact.cities,
+        address: contact.address,
+        qualityCustomer: "ندارد",
+        callTime: "ندارد",
+      });
+    } catch (err) {
+      console.log(err.message);
+    }
+
+    return res.sendStatus(200);
+  } catch (err) {
+    console.log(err.message);
+    return res.status(500).json({ message: err });
+  }
+};
 //>------------ export method
 
 module.exports = {
   createHandler,
   getAllHandler,
+  updateOneContact,
+  deleteOneContact,
+  convertorContact,
 };
