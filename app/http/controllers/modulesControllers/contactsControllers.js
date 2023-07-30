@@ -142,14 +142,7 @@ const updateOneContact = async (req, res) => {
   } = dataDecrypt;
 
   if (fullName && mobile) {
-    if (
-      !fullName ||
-      !role ||
-      !mobile ||
-      !industry ||
-      !company ||
-      !address
-    ) {
+    if (!fullName || !role || !mobile || !industry || !company || !address) {
       return res.status(400);
     }
     try {
@@ -207,6 +200,7 @@ const convertorContact = async (req, res) => {
   try {
     const contact = await Contact.findOne({ _id: decryptId });
 
+
     await Contact.findOneAndUpdate(
       { _id: decryptId },
       {
@@ -217,13 +211,17 @@ const convertorContact = async (req, res) => {
     try {
       //>----------- create model for data clue
 
+      const duplicate = await Clues.find({ mobile: contact.mobile });
+
+      if (duplicate) return res.sendStatus(409);
+
       await Clues.create({
         subject: "ندارد",
         fullName: contact.fullName,
         role: contact.role,
         mobile: contact.mobile,
         industry: contact.industry,
-        expert: contact.expertDecrypt,
+        expert: contact.expert,
         expertFullName: contact.expertFullName,
         company: contact.company,
         phonNumber: contact.phonNumber,
