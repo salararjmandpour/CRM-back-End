@@ -3,12 +3,12 @@ const Clues = require("app/models/Clue");
 const ActivityCluesMeetOpen = require("app/models/ActivityCluesMeetOpen");
 const ActivityCluesTellOpen = require("app/models/ActivityCluesTellOpen");
 
-//>---------- encrypt data sending
+//*>---------- encrypt data sending
 
 const cerateCipher = require("../../middleware/cerateCipher");
 const Key = config.encryptionKey;
 
-//>---------- create get method by user id
+//*>---------- create get method by user id
 
 const getNotifications = async (req, res) => {
   const strUserId = req.query.userId.toString();
@@ -17,7 +17,7 @@ const getNotifications = async (req, res) => {
   const decryptUserId = cerateCipher.decrypt(strUserIdNew, Key);
 
   try {
-    //>----------- get model for data  activity clue meet open
+    //*>----------- get model for data  activity clue meet open
 
     let findClueMeet = await ActivityCluesMeetOpen.find(
       {
@@ -72,7 +72,7 @@ const getNotifications = async (req, res) => {
   }
 };
 
-//>------------ export method
+//*>------------ export method
 
 module.exports = {
   getNotifications,
