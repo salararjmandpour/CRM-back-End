@@ -87,7 +87,7 @@ const createHandler = async (req, res) => {
   }
 };
 
-//>----------- get route all Contact
+//*>----------- get route all Contact
 
 const getAllHandler = async (req, res) => {
   const strId = req.query.id.toString();
@@ -113,7 +113,7 @@ const getAllHandler = async (req, res) => {
   }
 };
 
-//>----------- put route one Contact
+//*>----------- put route one Contact
 
 const updateOneContact = async (req, res) => {
   const str = req.query.id.toString();
@@ -173,7 +173,7 @@ const updateOneContact = async (req, res) => {
   }
 };
 
-//>----------- delete route one Contact
+//*>----------- delete route one Contact
 
 const deleteOneContact = async (req, res) => {
   const str = req.query.id.toString();
@@ -195,20 +195,27 @@ const convertorContact = async (req, res) => {
   const str = req.query.id.toString();
   const strNew = str.replaceAll(" ", "+");
 
-  const decryptId = cerateCipher.decrypt(strNew, Key);
+  const decryptId = JSON.parse(cerateCipher.decrypt(strNew, Key));
 
   try {
-    const contact = await Contact.findOne({ _id: decryptId });
+    //*>---------- handler array contact id for convert to clue
 
-    await Contact.findOneAndUpdate(
-      { _id: decryptId },
-      {
-        isActive: false,
-      }
-    );
+    let contactArray = [];
+
+    for (let index = 0; index < decryptId.length; index++) {
+      const contact = await Contact.findOne({ _id: decryptId[index] });
+      await Contact.findOneAndUpdate(
+        { _id: decryptId[index] },
+        {
+          isActive: false,
+        }
+      );
+
+      contactArray.push(contact);
+    }
 
     try {
-      //>----------- create model for data clue
+      //*>----------- create model for data clue
 
       const duplicate = await Clues.find({ mobile: contact.mobile });
 
@@ -216,17 +223,17 @@ const convertorContact = async (req, res) => {
 
       await Clues.create({
         subject: "ندارد",
-        fullName: contact.fullName,
-        role: contact.role,
-        mobile: contact.mobile,
-        industry: contact.industry,
-        expert: contact.expert,
-        expertFullName: contact.expertFullName,
-        company: contact.company,
-        phonNumber: contact.phonNumber,
-        state: contact.state,
-        cities: contact.cities,
-        address: contact.address,
+        fullName: contactArray[index].fullName,
+        role: contactArray[index].role,
+        mobile: contactArray[index].mobile,
+        industry: contactArray[index].industry,
+        expert: contactArray[index].expert,
+        expertFullName: contactArray[index].expertFullName,
+        company: contactArray[index].company,
+        phonNumber: contactArray[index].phonNumber,
+        state: contactArray[index].state,
+        cities: contactArray[index].cities,
+        address: contactArray[index].address,
         qualityCustomer: "ندارد",
         callTime: "ندارد",
       });
