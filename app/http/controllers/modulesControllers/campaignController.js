@@ -2,12 +2,12 @@ const User = require("app/models/User");
 const Clues = require("app/models/Clue");
 const CampaignMain = require("app/models/CampaignMain");
 
-//>---------- encrypt data sending
+//*>---------- encrypt data sending
 
 const cerateCipher = require("../../middleware/cerateCipher");
 const Key = config.encryptionKey;
 
-//>----------- post route campaign
+//*>----------- post route campaign
 
 const createHandler = async (req, res) => {
   const dataDecrypt = await JSON.parse(
@@ -77,10 +77,10 @@ const createHandler = async (req, res) => {
   }
 };
 
-//>---------- get data campaign all
+//*>---------- get data campaign all
 
 const getSingleAndAllHandler = async (req, res) => {
-  //>---------- get clues by id for set selective campaign
+  //*>---------- get clues by id for set selective campaign
 
   if (req.query.id && req.query.idCamp) {
     const strIds = req.query.id.toString();
@@ -103,7 +103,7 @@ const getSingleAndAllHandler = async (req, res) => {
           status: 404,
         });
 
-      //>---------- end search clue
+      //*>---------- end search clue
 
       if (!result) {
         const updateCamp = await CampaignMain.findOneAndUpdate(
@@ -147,7 +147,7 @@ const getSingleAndAllHandler = async (req, res) => {
     }
   }
 
-  //>---------- get single campaign and get clues for campaign
+  //*>---------- get single campaign and get clues for campaign
 
   if (req.query.idCamp) {
     try {
@@ -166,7 +166,7 @@ const getSingleAndAllHandler = async (req, res) => {
         Key
       );
 
-      //>----------- get campaign is not clues
+      //*>----------- get campaign is not clues
 
       if (clues.length == 0) {
         return res.status(202).json({
@@ -184,7 +184,7 @@ const getSingleAndAllHandler = async (req, res) => {
     }
   }
 
-  //>----------- get all campaign
+  //*>----------- get all campaign
 
   if (!req.query.id && !req.query.idCamp) {
     const campaignMain = await CampaignMain.find({});
@@ -203,7 +203,7 @@ const getSingleAndAllHandler = async (req, res) => {
   }
 };
 
-//>---------- method delete campaign compleat
+//*>---------- method delete campaign compleat
 
 const deleteOneCampaign = async (req, res) => {
   const str = req.query.id.toString();
@@ -233,7 +233,7 @@ const deleteOneCampaign = async (req, res) => {
   }
 };
 
-//>----------- method update campaign
+//*>----------- method update campaign
 
 const updateOneCampaign = async (req, res) => {
   const str = req.query.id.toString();
@@ -281,7 +281,7 @@ const updateOneCampaign = async (req, res) => {
   }
 
   try {
-    //>----------- update model for data campaign
+    //*>----------- update model for data campaign
     const updateCampaign = await CampaignMain.findOneAndUpdate(
       { _id: decryptId },
       {
@@ -308,7 +308,7 @@ const updateOneCampaign = async (req, res) => {
   }
 };
 
-//>------------ export method
+//*>------------ export method
 
 module.exports = {
   createHandler,
