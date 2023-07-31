@@ -16,11 +16,11 @@ const register = async (req, res) => {
   if (duplicate) return res.sendStatus(409);
 
   try {
-    //>----------- create hashed PWD
+    //*>----------- create hashed PWD
 
     const hashedPwd = await bcrypt.hash(password, 10);
 
-    //>----------- create model for data user
+    //*>----------- create model for data user
 
     await User.create({
       username: username,
@@ -32,7 +32,7 @@ const register = async (req, res) => {
       password: hashedPwd,
     });
 
-    //>----------- create model for source PWD
+    //*>----------- create model for source PWD
 
     const fuckingUser = await User.findOne({ username }).exec();
 
