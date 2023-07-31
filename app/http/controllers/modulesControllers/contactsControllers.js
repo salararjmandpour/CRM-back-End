@@ -23,10 +23,6 @@ const createHandler = async (req, res) => {
     let expertFullName = await User.findOne({ _id: expertDecrypt });
     expertFullName = expertFullName.fullName;
 
-    console.log(dataDecrypt);
-    console.log(expertDecrypt);
-    console.log(expertFullName);
-
     const {
       fullName,
       role,
@@ -212,7 +208,7 @@ const convertorContact = async (req, res) => {
       );
 
       contactArray.push(contact);
-    }
+   
 
     try {
       //*>----------- create model for data clue
@@ -240,7 +236,7 @@ const convertorContact = async (req, res) => {
     } catch (err) {
       console.log(err.message);
     }
-
+  }
     return res.sendStatus(200);
   } catch (err) {
     console.log(err.message);
