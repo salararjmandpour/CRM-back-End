@@ -6,12 +6,12 @@ const ActivityCluesMeetOpen = require("app/models/ActivityCluesMeetOpen");
 const ActivityCluesTellOpen = require("app/models/ActivityCluesTellOpen");
 const ROLES_LIST = require("app/config/roles_list");
 
-//>---------- encrypt data sending
+//*>---------- encrypt data sending
 
 const cerateCipher = require("../../middleware/cerateCipher");
 const Key = config.encryptionKey;
 
-//>----------- post route clue
+//*>----------- post route clue
 
 const createHandler = async (req, res) => {
   const dataDecrypt = await JSON.parse(
@@ -65,7 +65,7 @@ const createHandler = async (req, res) => {
     if (duplicate) return res.status(409);
 
     try {
-      //>----------- create model for data clue
+      //*>----------- create model for data clue
 
       await Clues.create({
         subject: subject,
@@ -91,7 +91,7 @@ const createHandler = async (req, res) => {
     }
   }
 
-  //>------------- handel create note clue by user
+  //*>------------- handel create note clue by user
 
   if (req.body.getId.clueId && req.body.getId.userId) {
     const clueDecrypt = await cerateCipher.decrypt(req.body.getId.clueId, Key);
@@ -121,7 +121,7 @@ const createHandler = async (req, res) => {
         return res.status(400);
 
       try {
-        //>----------- create model for data  note clue
+        //*>----------- create model for data  note clue
         await NoteClues.create({
           noteSubject: noteSubject,
           noteBody: noteBody,
@@ -147,7 +147,7 @@ const createHandler = async (req, res) => {
         return res.status(400);
 
       try {
-        //>----------- create model for data  activity clue meet open
+        //*>----------- create model for data  activity clue meet open
         await ActivityCluesMeetOpen.create({
           activitySubject: activitySubject,
           activityNote: activityNote,
@@ -176,7 +176,7 @@ const createHandler = async (req, res) => {
         return res.status(400);
 
       try {
-        //>----------- create model for data  activity clue tell open
+        //*>----------- create model for data  activity clue tell open
         await ActivityCluesTellOpen.create({
           activityTellSubject: activityTellSubject,
           activityTellNote: activityTellNote,
@@ -196,7 +196,7 @@ const createHandler = async (req, res) => {
   }
 };
 
-//>----------- get route single and all clue
+//*>----------- get route single and all clue
 
 const getOneAndAllHandler = async (req, res) => {
   if (req.query.role && req.query.id) {
@@ -291,9 +291,9 @@ const getOneAndAllHandler = async (req, res) => {
         cerateCipher.decrypt(strIdCampsNew, Key)
       );
 
-      //>---------- start update clue and campaign
+      //*>---------- start update clue and campaign
 
-      //>------------ search campaign in clue
+      //*>------------ search campaign in clue
       const result = clue.campaign.some((item) =>
         decryptStrIdCampsNew.includes(item)
       );
@@ -304,7 +304,7 @@ const getOneAndAllHandler = async (req, res) => {
           status: 404,
         });
 
-      //>---------- end search
+      //*>---------- end search
 
       if (!result) {
         const updateClue = await Clues.findOneAndUpdate(
@@ -331,7 +331,7 @@ const getOneAndAllHandler = async (req, res) => {
 
           await updateCampaign.save();
         }
-        //>---------- end update clue and campaign
+        //*>---------- end update clue and campaign
         const campaignMain = await CampaignMain.find({
           _id: decryptStrIdCampsNew,
         });
@@ -380,7 +380,7 @@ const getOneAndAllHandler = async (req, res) => {
   }
 };
 
-//>----------- put route one clue
+//*>----------- put route one clue
 
 const updateOneClue = async (req, res) => {
   const str = req.query.id.toString();
@@ -436,7 +436,7 @@ const updateOneClue = async (req, res) => {
     )
       return res.sendStatus(400);
     try {
-      //>----------- update model for data clue
+      //*>----------- update model for data clue
       const updateClue = await Clues.findOneAndUpdate(
         { _id: decryptId },
         {
@@ -464,7 +464,7 @@ const updateOneClue = async (req, res) => {
     }
   }
 
-  //>---------- update note clue
+  //*>---------- update note clue
 
   if (noteSubject && noteBody) {
     try {
@@ -484,7 +484,7 @@ const updateOneClue = async (req, res) => {
     }
   }
 
-  //>---------- update activity meet clue
+  //*>---------- update activity meet clue
   if (activitySubject && activityNote) {
     try {
       const updateActivityCluesMeetOpen =
@@ -506,7 +506,7 @@ const updateOneClue = async (req, res) => {
     }
   }
 
-  //>---------- update activity tell clue
+  //*>---------- update activity tell clue
   if (activityTellSubject && activityTellNote) {
     try {
       const updateActivityCluesTellOpen =
@@ -527,7 +527,7 @@ const updateOneClue = async (req, res) => {
     }
   }
 
-  // >---------- update activity is active meet clue
+  //*>---------- update activity is active meet clue
   if (isActiveActivityNote && cancelationReason) {
     console.log(isActiveActivityNote, cancelationReason);
     try {
@@ -548,7 +548,7 @@ const updateOneClue = async (req, res) => {
     }
   }
 
-  // >---------- update activity is active Tell clue
+  //*>---------- update activity is active Tell clue
   if (isActiveActivityTellNote && cancelationReason) {
     try {
       const updateActivityCluesTellOpen =
@@ -569,7 +569,7 @@ const updateOneClue = async (req, res) => {
   }
 };
 
-//>----------- delete route one clue
+//*>----------- delete route one clue
 
 const deleteOneClue = async (req, res) => {
   const str = req.query.id.toString();
@@ -581,7 +581,7 @@ const deleteOneClue = async (req, res) => {
   console.log(clueLength);
 
   try {
-    //>----------- delete model for data note clue
+    //*>----------- delete model for data note clue
     await NoteClues.findOneAndDelete({ _id: decryptId });
 
     // >----------- delete model for data clue
@@ -599,9 +599,9 @@ const deleteOneClue = async (req, res) => {
 
     await Clues.findOneAndDelete({ _id: decryptId });
 
-    //>----------- delete model for data  activity clues meet open
+    //*>----------- delete model for data  activity clues meet open
     await ActivityCluesMeetOpen.findOneAndDelete({ _id: decryptId });
-    //>----------- delete model for data  activity clues tell open
+    //*>----------- delete model for data  activity clues tell open
     await ActivityCluesTellOpen.findOneAndDelete({ _id: decryptId });
 
     return res.sendStatus(200);
@@ -611,7 +611,7 @@ const deleteOneClue = async (req, res) => {
   }
 };
 
-//>------------ export method
+//*>------------ export method
 
 module.exports = {
   createHandler,
