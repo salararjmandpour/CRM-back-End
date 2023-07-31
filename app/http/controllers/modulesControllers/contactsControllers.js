@@ -2,12 +2,12 @@ const User = require("app/models/User");
 const Clues = require("app/models/Clue");
 const Contact = require("app/models/Contact");
 
-//>---------- encrypt data sending
+//*>---------- encrypt data sending
 
 const cerateCipher = require("../../middleware/cerateCipher");
 const Key = config.encryptionKey;
 
-//>----------- post route Contact
+//*>----------- post route Contact
 
 const createHandler = async (req, res) => {
   const dataDecrypt = await JSON.parse(
@@ -60,7 +60,7 @@ const createHandler = async (req, res) => {
     if (duplicate) return res.status(409);
 
     try {
-      //>----------- create model for data clue
+      //*>----------- create model for data clue
       await Contact.create({
         fullName: fullName,
         role: role,
@@ -146,7 +146,7 @@ const updateOneContact = async (req, res) => {
       return res.status(400);
     }
     try {
-      //>----------- create model for data clue
+      //*>----------- create model for data clue
       await Contact.findOneAndUpdate(
         { _id: decryptId },
         {
