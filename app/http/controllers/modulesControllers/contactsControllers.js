@@ -200,43 +200,45 @@ const convertorContact = async (req, res) => {
 
     for (let index = 0; index < decryptId.length; index++) {
       const contact = await Contact.findOne({ _id: decryptId[index] });
-      await Contact.findOneAndUpdate(
-        { _id: decryptId[index] },
-        {
-          isActive: false,
-        }
-      );
 
       contactArray.push(contact);
-   
 
-    try {
-      //*>----------- create model for data clue
+      try {
+        //*>----------- create model for data clue
 
-      const duplicate = await Clues.find({ mobile: contact.mobile });
+        const duplicate = await Clues.find({
+          mobile: contactArray[index].mobile,
+        });
 
-      if (duplicate) return res.sendStatus(409);
+        if (duplicate.length) return res.sendStatus(409);
 
-      await Clues.create({
-        subject: "ندارد",
-        fullName: contactArray[index].fullName,
-        role: contactArray[index].role,
-        mobile: contactArray[index].mobile,
-        industry: contactArray[index].industry,
-        expert: contactArray[index].expert,
-        expertFullName: contactArray[index].expertFullName,
-        company: contactArray[index].company,
-        phonNumber: contactArray[index].phonNumber,
-        state: contactArray[index].state,
-        cities: contactArray[index].cities,
-        address: contactArray[index].address,
-        qualityCustomer: "ندارد",
-        callTime: "ندارد",
-      });
-    } catch (err) {
-      console.log(err.message);
+        await Clues.create({
+          subject: "ندارد",
+          fullName: contactArray[index].fullName,
+          role: contactArray[index].role,
+          mobile: contactArray[index].mobile,
+          industry: contactArray[index].industry,
+          expert: contactArray[index].expert,
+          expertFullName: contactArray[index].expertFullName,
+          company: contactArray[index].company,
+          phonNumber: contactArray[index].phonNumber,
+          state: contactArray[index].state,
+          cities: contactArray[index].cities,
+          address: contactArray[index].address,
+          qualityCustomer: "ندارد",
+          callTime: "ندارد",
+        });
+
+        await Contact.findOneAndUpdate(
+          { _id: decryptId[index] },
+          {
+            isActive: false,
+          }
+        );
+      } catch (err) {
+        console.log(err.message);
+      }
     }
-  }
     return res.sendStatus(200);
   } catch (err) {
     console.log(err.message);
