@@ -1,33 +1,25 @@
-
 const User = require("app/models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-//>---------- encrypt data sending
+//*>---------- encrypt data sending
 
 const cerateCipher = require("../../middleware/cerateCipher");
 const Key = config.encryptionKey;
 
 const handleLogin = async (req, res) => {
   const cookies = req.cookies;
-  
+
   const { username, password } = req.body;
   if (!username || !password) return res.status(400);
-  const foundUser = await User.findOne({ username }).exec();;
+  const foundUser = await User.findOne({ username }).exec();
   if (!foundUser) {
     return res.sendStatus(401);
   }
-  
-  // console.time("test");
 
   const match = await bcrypt.compare(password, foundUser.password);
-    if (!match) return res.sendStatus(401);
-  
-  // console.timeEnd("test");
+  if (!match) return res.sendStatus(401);
 
-  
-  
- 
   const roles = Object.values(foundUser.roles).filter(Boolean);
 
   const accessToken = jwt.sign(
@@ -52,7 +44,7 @@ const handleLogin = async (req, res) => {
 
   if (cookies?.jwt) {
     const refreshToken = cookies.jwt;
-    const foundToken = await User.findOne({ refreshToken }).exec();;
+    const foundToken = await User.findOne({ refreshToken }).exec();
     if (!foundToken) {
       newRefreshTokenArray = [];
     }
@@ -63,7 +55,6 @@ const handleLogin = async (req, res) => {
   foundUser.refreshToken = [...newRefreshTokenArray, newRefreshToken];
   foundUser.isActive = true;
   await foundUser.save();
-  
 
   const encryptData = {
     roles: cerateCipher.encrypt(roles.toString(), Key),
@@ -80,10 +71,9 @@ const handleLogin = async (req, res) => {
     maxAge: 1000 * 60 * 60 * 24,
   });
 
-   res.json({
+  res.json({
     encryptData,
   });
-
 };
 
 module.exports = { handleLogin };
