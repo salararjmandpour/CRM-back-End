@@ -1,7 +1,7 @@
 const User = require("app/models/User");
 const jwt = require("jsonwebtoken");
 
-//>---------- encrypt data sending
+//*>---------- encrypt data sending
 
 const cerateCipher = require("../../middleware/cerateCipher");
 const Key = config.encryptionKey;
