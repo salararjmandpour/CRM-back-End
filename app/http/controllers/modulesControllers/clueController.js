@@ -211,7 +211,7 @@ const getOneAndAllHandler = async (req, res) => {
     const decryptUserId = cerateCipher.decrypt(strIdNew, Key);
 
     if (ROLES_LIST[1].role == decryptUserRole) {
-      const clues = await Clues.find({})
+      const clues = await Clues.find({});
       if (clues.length == 0)
         return res.status(404).json({
           status: 404,
@@ -332,6 +332,7 @@ const getOneAndAllHandler = async (req, res) => {
           await updateCampaign.save();
         }
         //*>---------- end update clue and campaign
+
         const campaignMain = await CampaignMain.find({
           _id: decryptStrIdCampsNew,
         });
