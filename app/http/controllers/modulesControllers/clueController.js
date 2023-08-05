@@ -210,7 +210,7 @@ const getOneAndAllHandler = async (req, res) => {
     const decryptUserRole = cerateCipher.decrypt(strRoleNew, Key);
     const decryptUserId = cerateCipher.decrypt(strIdNew, Key);
 
-    if (ROLES_LIST[1].role == decryptUserRole) {
+    if (ROLES_LIST.SeniorManager == decryptUserRole) {
       const clues = await Clues.find({});
       if (clues.length == 0)
         return res.status(404).json({
