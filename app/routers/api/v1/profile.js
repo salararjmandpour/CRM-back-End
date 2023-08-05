@@ -15,7 +15,7 @@ const ROLES_LIST = require("app/config/roles_list");
 
 //>---------- post route 
 
-router.post("/", verifyJWT, userController.getSingleUser);
+router.get("/", verifyJWT, userController.getSingleUser);
 
 
 
