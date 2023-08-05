@@ -38,6 +38,9 @@ router.use("/api/v1/test", testRouter);
 const usersRouter = require("./v1/users");
 router.use("/api/v1/users", usersRouter);
 
+const createSideRouter = require("./v1/createSide");
+router.use("/api/v1/createSide", createSideRouter);
+
 const rolesRouter = require("./v1/roles");
 router.use("/api/v1/roles", rolesRouter);
 
