@@ -1,25 +1,30 @@
-const ROLES_LIST = [
-  { name: "کاربر آزمایشی", nameEN: "TestUser", role: 1000 },
-  { name: "مدیر ارشد", nameEN: "SeniorManager", role: 1001 },
-  { name: "دستیار ", nameEN: "Assistant", role: 1002 },
-  { name: "مدیر لوجتیک", nameEN: "LogisticsManager", role: 1003 },
-  { name: "کارشناس لوجتیک", nameEN: "LogisticsSpecialist", role: 1004 },
-  { name: "مدیر محتوا", nameEN: "ContentManager", role: 1005 },
-  { name: "کارشناس محتوا", nameEN: "ContentSpecialist", role: 1006 },
-  { name: "مدیر فروش", nameEN: "SalesManager", role: 1007 },
-  { name: "کارشناس فروش", nameEN: "SalesSpecialist", role: 1008 },
-  { name: "مدیر مالی", nameEN: "FinanceManager", role: 1009 },
-  { name: "مدیر حسابداری", nameEN: "AccountingManager", role: 1010 },
-  { name: "کمک حسابدار", nameEN: "AccountingAssistant", role: 1011 },
-  { name: "حسابدار", nameEN: "Accountant", role: 1012 },
-  { name: "کارشناس CRM", nameEN: "CRMSpecialist", role: 1013 },
-  { name: "مدیر CRM", nameEN: "CRMManager", role: 1014 },
-  { name: "مدیر بازرگانی", nameEN: "BusinessManager", role: 1015 },
-  { name: "کارشناس بازرگانی", nameEN: "BusinessSpecialist", role: 1016 },
-  { name: "مدیر انبار", nameEN: "WarehouseManager", role: 1017 },
-  { name: "کارشناس انبار", nameEN: "WarehouseSpecialist", role: 1018 },
-  { name: "مدیر HR", nameEN: "HrManager", role: 1019 },
-  { name: "کارشناس HR", nameEN: "HrSpecialist", role: 1020 },
-];
+const ROLES_LIST = {
+  User: 1000,
+  SeniorManager: 1001,
+  Assistant: 1002,
+  LogisticsManager: 1003,
+  LogisticsSpecialist: 1004,
+  ContentManager: 1005,
+  SalesManager: 1007,
+  SalesSpecialist: 1008,
+  FinanceManager: 1009,
+  AccountingManager: 1010,
+  AccountingAssistant: 1011,
+  Accountant: 1012,
+  CRMSpecialist: 1013,
+  CRMManager: 1014,
+  BusinessManager: 1015,
+  BusinessSpecialist: 1016,
+  WarehouseManager: 1017,
+  WarehouseSpecialist: 1018,
+  HrManager: 1019,
+  HrSpecialist: 1020,
+};
+
+// const ROLES_LIST = {
+//   Admin: 1001,
+//   Editor: 1005,
+//   User: 2001,
+// };
 
 module.exports = ROLES_LIST;
