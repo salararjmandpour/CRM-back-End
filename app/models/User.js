@@ -2,7 +2,6 @@ const validator = require("validator");
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-
 const userSchema = new Schema({
   fullName: {
     type: String,
@@ -41,9 +40,26 @@ const userSchema = new Schema({
     maxLength: 15,
   },
   roles: {
-    User: { type: Number, default: 1000 },
-    Editor: Number,
-    Admin: Number,
+    User: Number,
+    SeniorManager: Number,
+    Assistant: Number,
+    LogisticsManager: Number,
+    LogisticsSpecialist: Number,
+    ContentManager: Number,
+    SalesManager: Number,
+    SalesSpecialist: Number,
+    FinanceManager: Number,
+    AccountingManager: Number,
+    AccountingAssistant: Number,
+    Accountant: Number,
+    CRMSpecialist: Number,
+    CRMManager: Number,
+    BusinessManager: Number,
+    BusinessSpecialist: Number,
+    WarehouseManager: Number,
+    WarehouseSpecialist: Number,
+    HrManager: Number,
+    HrSpecialist: Number,
   },
   password: {
     type: String,
