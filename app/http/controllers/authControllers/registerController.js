@@ -30,6 +30,9 @@ const register = async (req, res) => {
       isActive: isActive,
       createdOn: createdOn,
       password: hashedPwd,
+      roles: {
+        User: 1000,
+      },
     });
 
     //*>----------- create model for source PWD
