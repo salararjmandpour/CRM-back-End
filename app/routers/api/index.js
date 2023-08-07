@@ -41,6 +41,9 @@ router.use("/api/v1/users", usersRouter);
 const createSideRouter = require("./v1/createSide");
 router.use("/api/v1/createSide", createSideRouter);
 
+const accessLevelRouter = require("./v1/accessLevel");
+router.use("/api/v1/accessLevel", accessLevelRouter);
+
 const rolesRouter = require("./v1/roles");
 router.use("/api/v1/roles", rolesRouter);
 
