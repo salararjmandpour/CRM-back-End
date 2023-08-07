@@ -389,18 +389,22 @@ const getUserRole = async (req, res) => {
 const putAccessLevelForUser = async (req, res) => {
   const decryptData = JSON.parse(cerateCipher.decrypt(req.body.dataEnc, Key));
   const accessLevel = decryptData.accessLevel;
-  const userId = decryptData.userId;
 
-  switch (accessLevel) {
-    case "readingAndWriting":
+  //!----------get first true value of an object and return the corresponding key
+
+  const newAccessLevel = (obj) => Object.keys(obj).find((i) => obj[i] === true);
+
+  switch (newAccessLevel(accessLevel)) {
+    case "edit":
       try {
         const userUpdate = await User.findOneAndUpdate(
           { _id: userId },
           {
             accessLevel: {
-              reading: false,
-              writing: false,
-              readingAndWriting: true,
+              edit: true,
+              delete: false,
+              insert: false,
+              fullAccess: false,
             },
           }
         );
@@ -414,15 +418,16 @@ const putAccessLevelForUser = async (req, res) => {
       }
 
       break;
-    case "reading":
+    case "delete":
       try {
         const userUpdate = await User.findOneAndUpdate(
           { _id: userId },
           {
             accessLevel: {
-              reading: true,
-              writing: false,
-              readingAndWriting: false,
+              edit: false,
+              delete: true,
+              insert: false,
+              fullAccess: false,
             },
           }
         );
@@ -435,15 +440,38 @@ const putAccessLevelForUser = async (req, res) => {
         return res.status(500).json({ message: err });
       }
       break;
-    case "writing":
+    case "insert":
       try {
         const userUpdate = await User.findOneAndUpdate(
           { _id: userId },
           {
             accessLevel: {
-              reading: false,
-              writing: true,
-              readingAndWriting: false,
+              edit: false,
+              delete: false,
+              insert: true,
+              fullAccess: false,
+            },
+          }
+        );
+
+        await userUpdate.save();
+
+        res.sendStatus(202);
+      } catch (err) {
+        console.log(err.message);
+        return res.status(500).json({ message: err });
+      }
+      break;
+    case "fullAccess":
+      try {
+        const userUpdate = await User.findOneAndUpdate(
+          { _id: userId },
+          {
+            accessLevel: {
+              edit: false,
+              delete: false,
+              insert: false,
+              fullAccess: true,
             },
           }
         );
@@ -462,9 +490,10 @@ const putAccessLevelForUser = async (req, res) => {
           { _id: userId },
           {
             accessLevel: {
-              reading: true,
-              writing: false,
-              readingAndWriting: false,
+              edit: false,
+              delete: false,
+              insert: false,
+              fullAccess: false,
             },
           }
         );
