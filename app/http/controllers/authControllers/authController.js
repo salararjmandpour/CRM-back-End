@@ -62,6 +62,7 @@ const handleLogin = async (req, res) => {
     fullName: cerateCipher.encrypt(foundUser.fullName, Key),
     isActive: cerateCipher.encrypt(foundUser.isActive.toString(), Key),
     _id: cerateCipher.encrypt(foundUser._id.toString(), Key),
+    accessLevel: cerateCipher.encrypt(JSON.stringify(foundUser.accessLevel), Key),
   };
 
   res.cookie("jwt", newRefreshToken, {
