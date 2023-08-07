@@ -5,7 +5,7 @@ const Key = config.encryptionKey;
 const ROLES_LIST = require("../../../config/roles_list");
 
 
-//>---------- verifyRoles
+//*>---------- verifyRoles
 
 // const verifyRoles = (req, res) => {
 //     const role = cerateCipher.decrypt(req.query.roles, Key);;
