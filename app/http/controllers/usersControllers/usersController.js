@@ -18,7 +18,9 @@ const getAllUsers = async (req, res) => {
 //>---------- method get single user for profile
 
 const getSingleUser = async (req, res, next) => {
-  let singleUser = cerateCipher.decrypt(req.query.userNameActive, Key);
+  let singleUser = req.query.userNameActive.toString();
+  singleUser = singleUser.replaceAll(" ", "+");
+  singleUser = await cerateCipher.decrypt(singleUser, Key);
   singleUser = await User.findOne({ username: parseInt(singleUser) });
   if (!singleUser) return res.sendStatus(204);
 
