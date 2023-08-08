@@ -3,12 +3,12 @@ const router = express.Router();
 const SettingMail = require("app/models/SettingMail");
 const nodeMailer = require("nodemailer");
 
-//>---------- encrypt data sending
+//*>---------- encrypt data sending
 
 const cerateCipher = require("app/http/middleware/cerateCipher");
 const Key = config.encryptionKey;
 
-//>------------ method set setting mail
+//*>------------ method set setting mail
 
 const settingMail = async (req, res, next) => {
   const mailDecrypt = await JSON.parse(
@@ -27,7 +27,7 @@ const settingMail = async (req, res, next) => {
 
   if (oldSettingMail) {
     try {
-      //>----------- update model for data setting mail
+      //*>----------- update model for data setting mail
 
       await SettingMail.findOneAndUpdate(
         { host: mailDecrypt.host },
@@ -47,7 +47,7 @@ const settingMail = async (req, res, next) => {
   }
 
   try {
-    //>----------- create model for data setting mail
+    //*>----------- create model for data setting mail
     await SettingMail.find({}).remove().exec();
     await SettingMail.create({
       host: host,
@@ -62,7 +62,7 @@ const settingMail = async (req, res, next) => {
   }
 };
 
-//>------------ method get setting mail
+//*>------------ method get setting mail
 
 const getSettingMail = async (req, res) => {
   try {
@@ -86,6 +86,6 @@ const getSettingMail = async (req, res) => {
   }
 };
 
-//>---------------------- module export
+//*>---------------------- module export
 
 module.exports = { settingMail, getSettingMail };
