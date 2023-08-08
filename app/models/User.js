@@ -10,7 +10,7 @@ const userSchema = new Schema(
       unique: true,
       trim: true,
       minlength: 5,
-      maxLength: 25,
+      maxLength: 100,
     },
     phoneNumber: {
       type: Number,
