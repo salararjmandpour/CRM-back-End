@@ -3,12 +3,12 @@ const router = express.Router();
 const request = require("request");
 const PanelSms = require("app/models/PanelSms");
 
-//>---------- encrypt data sending
+//*>---------- encrypt data sending
 
 const cerateCipher = require("../../middleware/cerateCipher");
 const Key = config.encryptionKey;
 
-//>------------ method set setting sms
+//*>------------ method set setting sms
 
 const setSettingSms = async (req, res, next) => {
   const panelSms = req.query.name.toString();
@@ -17,7 +17,7 @@ const setSettingSms = async (req, res, next) => {
     cerateCipher.decrypt(req.body.dataEnc, Key)
   );
 
-  //>------------ check panel sms is ippanel
+  //*>------------ check panel sms is ippanel
 
   if (
     panelSms === "max-sms.ir" ||
@@ -30,7 +30,7 @@ const setSettingSms = async (req, res, next) => {
 
     if (oldPanelSms) {
       try {
-        //>----------- update model for data panel sms
+        //*>----------- update model for data panel sms
 
         await PanelSms.findOneAndUpdate(
           { uname: dataDecrypt.uname },
@@ -50,7 +50,7 @@ const setSettingSms = async (req, res, next) => {
     }
 
     try {
-      //>----------- create model for data panel sms
+      //*>----------- create model for data panel sms
 
       await PanelSms.find({}).remove().exec();
       const dataSms = await PanelSms.create({
@@ -67,7 +67,7 @@ const setSettingSms = async (req, res, next) => {
   }
 };
 
-//>------------ method get setting sms
+//*>------------ method get setting sms
 
 const getSettingSms = async (req, res) => {
   try {
@@ -91,6 +91,6 @@ const getSettingSms = async (req, res) => {
   }
 };
 
-//>---------- module exports
+//*>---------- module exports
 
 module.exports = { setSettingSms, getSettingSms };
