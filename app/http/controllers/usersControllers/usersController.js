@@ -1,11 +1,11 @@
 const User = require("app/models/User");
 
-//>---------- encrypt data sending
+//*>---------- encrypt data sending
 
 const cerateCipher = require("../../middleware/cerateCipher");
 const Key = config.encryptionKey;
 
-//>---------- method get all users
+//*>---------- method get all users
 
 const getAllUsers = async (req, res) => {
   const users = await User.find();
@@ -15,7 +15,7 @@ const getAllUsers = async (req, res) => {
   res.json({ encryptData });
 };
 
-//>---------- method get single user for profile
+//*>---------- method get single user for profile
 
 const getSingleUser = async (req, res, next) => {
   let singleUser = req.query.userNameActive.toString();
@@ -23,8 +23,6 @@ const getSingleUser = async (req, res, next) => {
   singleUser = await cerateCipher.decrypt(singleUser, Key);
   singleUser = await User.findOne({ username: parseInt(singleUser) });
   if (!singleUser) return res.sendStatus(204);
-
-  // console.log(singleUser);User
 
   const encryptData = cerateCipher.encrypt(JSON.stringify(singleUser), Key);
 
