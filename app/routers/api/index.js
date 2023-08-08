@@ -2,9 +2,8 @@ const express = require("express");
 const app = express();
 const router = express.Router();
 
-//>-------------------- middleware
 
-//>-------------------- public route
+//*>-------------------- public route
 
 const authRouter = require("./v1/auth");
 router.use("/api/v1/auth", authRouter);
@@ -33,7 +32,7 @@ router.use("/api/v1/phoneCode", phoneCodeRouter);
 const testRouter = require("./v1/test");
 router.use("/api/v1/test", testRouter);
 
-//>---------- protected routes
+//*>---------- protected routes
 
 const usersRouter = require("./v1/users");
 router.use("/api/v1/users", usersRouter);
@@ -71,7 +70,7 @@ router.use("/api/v1/notifications", notificationsRouter);
 const contactRouter = require("./v1/contacts");
 router.use("/api/v1/contacts", contactRouter);
 
-//>---------- not found route
+//*>---------- not found route
 
 app.all("*", (req, res) => {
   res.status(404).json({
@@ -89,6 +88,6 @@ app.use((err, req, res) => {
   res.sendStatus(500).send(err.message);
 });
 
-//>---------------------- module export
+//*>---------------------- module export
 
 module.exports = router;
