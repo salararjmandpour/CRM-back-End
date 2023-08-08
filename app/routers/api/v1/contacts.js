@@ -8,10 +8,22 @@ const ContactController = require("app/http/controllers/modulesControllers/conta
 //*>---------- middleware
 
 const verifyJWT = require("app/http/middleware/authMiddleware/verifyJWT");
+const verifyRoles = require("app/http/middleware/authMiddleware/verifyRoles");
+const ROLES_LIST = require("../../../config/roles_list");
 
 //*>----------- create route for clue
 
-router.post("/", verifyJWT, ContactController.createHandler);
+router.post(
+  "/",
+  verifyJWT,
+  verifyRoles(
+    ROLES_LIST.SeniorManager,
+    ROLES_LIST.AccountingManager,
+    ROLES_LIST.AccountingAssistant,
+    ROLES_LIST.SalesManager,
+  ),
+  ContactController.createHandler
+);
 
 router.get("/", verifyJWT, ContactController.getAllHandler);
 
