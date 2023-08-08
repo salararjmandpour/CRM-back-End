@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
 
-//>---------- import tools
+//*>---------- import tools
 
 const getCities = require("app/http/tools/states");
 
-//>---------- create routers
+//*>---------- create routers
 
 router.get("/", getCities.getCities);
 
