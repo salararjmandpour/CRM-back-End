@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-//>------------ import controllers
+//*>------------ import controllers
 
 const authController = require("app/http/controllers/authControllers/authController");
 
