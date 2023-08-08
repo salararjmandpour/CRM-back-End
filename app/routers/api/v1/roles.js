@@ -2,13 +2,13 @@ const express = require("express");
 const router = express.Router();
 
 
-//>------------ import middleware
+//*>------------ import middleware
 
 
 const verifyJWT = require("app/http/middleware/authMiddleware/verifyJWT");
 const verifyRoles = require("app/http/middleware/authMiddleware/verifyRoles");
 
-//>---------- routers
+//*>---------- routers
 
 router.post("/", verifyJWT, verifyRoles);
 
