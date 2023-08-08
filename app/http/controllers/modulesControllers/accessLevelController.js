@@ -388,8 +388,9 @@ const getUserRole = async (req, res) => {
 
 const putAccessLevelForUser = async (req, res) => {
   const decryptData = JSON.parse(cerateCipher.decrypt(req.body.dataEnc, Key));
+  const userId = decryptData.userId;
   const accessLevel = decryptData.accessLevel;
-
+  
   //!----------get first true value of an object and return the corresponding key
 
   const newAccessLevel = (obj) => Object.keys(obj).find((i) => obj[i] === true);
