@@ -3550,6 +3550,7 @@ const getPhoneCode = (req, res) => {
       break;
   }
 };
-//>----------- module export
+
+//*>----------- module export
 
 module.exports = { getStates, getCities, getPhoneCode };
