@@ -2,17 +2,17 @@ const express = require("express");
 const router = express.Router();
 
 
-//>---------- import controllers 
+//*>---------- import controllers 
 
 const settingSmsController = require("app/http/controllers/toolsControllers/settingSmsController");
 const sendSmsController = require("app/http/controllers/modulesControllers/sendSmsController");
 
 
-//>---------- import middleware
+//*>---------- import middleware
 
 const verifyJWT = require("app/http/middleware/authMiddleware/verifyJWT");
 
-//>---------- create routers
+//*>---------- create routers
 
 router.post("/set", verifyJWT,settingSmsController.setSettingSms);
 
