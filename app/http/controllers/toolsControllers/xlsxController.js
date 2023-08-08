@@ -7,14 +7,15 @@ const xlsx = require("xlsx");
 const User = require("app/models/User");
 const Clues = require("app/models/Clue");
 
-//>---------- encrypt data sending
+//*>---------- encrypt data sending
 
 const cerateCipher = require("../../middleware/cerateCipher");
 const Key = config.encryptionKey;
 
 let fullNameFile = "";
 
-//>---------- create Date
+//*>---------- create Date
+
 const createDate = () => {
   const date = new Date();
   const option = {
@@ -28,7 +29,7 @@ const createDate = () => {
   return totalDate;
 };
 
-//>---------- create method import xlsx of clues
+//*>---------- create method import xlsx of clues
 
 const importFile = async (req, res, next) => {
   if (req.query.userid) {
@@ -67,7 +68,6 @@ const importFile = async (req, res, next) => {
         return res.end("Error Uploading File");
       } else {
         fullNameFile = req.file.path;
-        // console.log("success", req.file.filename);
       }
 
       const wb = xlsx.readFile(fullNameFile, {
@@ -79,7 +79,6 @@ const importFile = async (req, res, next) => {
 
       try {
         for (let index = 0; index < data.length; index++) {
-
           const {
             subject,
             fullName,
@@ -151,7 +150,7 @@ const importFile = async (req, res, next) => {
   }
 };
 
-//>---------- create method export xlsx of clues
+//*>---------- create method export xlsx of clues
 
 const exportFile = async (req, res, next) => {
   const strId = req.query.userid.toString();
@@ -193,12 +192,12 @@ const exportFile = async (req, res, next) => {
   }, "2000");
 };
 
-//>---------- create method example xlsx of clues
+//*>---------- create method example xlsx of clues
 
 const downloadFile = (req, res, next) => {
   res.download("./upload/Example Data.zip");
 };
 
-//>---------- module exports
+//*>---------- module exports
 
 module.exports = { importFile, exportFile, downloadFile };
