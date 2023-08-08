@@ -2,16 +2,16 @@ const express = require("express");
 const router = express.Router();
 const ROLES_LIST = require("../../../config/roles_list");
 
-//>---------- controller
+//*>---------- controller
 
 const campaignController = require("app/http/controllers/modulesControllers/campaignController");
 
-//>---------- middleware
+//*>---------- middleware
 
 const verifyJWT = require("app/http/middleware/authMiddleware/verifyJWT");
 const verifyRoles = require("app/http/middleware/authMiddleware/verifyRoles");
 
-//>----------- create route for campaign
+//*>----------- create route for campaign
 
 router.get(
   "/",
@@ -45,6 +45,6 @@ router.put(
   campaignController.updateOneCampaign
 );
 
-//>----------- exports routers
+//*>----------- exports routers
 
 module.exports = router;
