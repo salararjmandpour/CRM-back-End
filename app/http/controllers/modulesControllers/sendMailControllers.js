@@ -3,12 +3,12 @@ const router = express.Router();
 const SettingMail = require("app/models/SettingMail");
 const nodeMailer = require("nodemailer");
 
-//>---------- encrypt data sending
+//*>---------- encrypt data sending
 
 const cerateCipher = require("../../middleware/cerateCipher");
 const Key = config.encryptionKey;
 
-//>---------- method send mail
+//*>---------- method send mail
 
 const sendMail = async (req, res) => {
   const userMail = await SettingMail.find({}).exec();
