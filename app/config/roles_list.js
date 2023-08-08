@@ -21,10 +21,4 @@ const ROLES_LIST = {
   HrSpecialist: 1020,
 };
 
-// const ROLES_LIST = {
-//   Admin: 1001,
-//   Editor: 1005,
-//   User: 2001,
-// };
-
 module.exports = ROLES_LIST;
