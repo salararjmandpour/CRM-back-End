@@ -17,13 +17,13 @@ router.get(
   "/",
   verifyJWT,
   verifyRoles(ROLES_LIST.HrManager, ROLES_LIST.SeniorManager),
-  accessLevelController.getUserRole,
+  accessLevelController.getUserRole
 );
 
 router.put(
   "/",
   verifyJWT,
   verifyRoles(ROLES_LIST.HrManager, ROLES_LIST.SeniorManager),
-  accessLevelController.putAccessLevelForUser,
+  accessLevelController.putAccessLevelForUser
 );
 module.exports = router;
