@@ -2,16 +2,16 @@ const express = require("express");
 const router = express.Router();
 const ROLES_LIST = require("../../../config/roles_list");
 
-//>---------- controller
+//*>---------- controller
 
 const clueController = require("app/http/controllers/modulesControllers/clueController");
 
-//>---------- middleware
+//*>---------- middleware
 
 const verifyJWT = require("app/http/middleware/authMiddleware/verifyJWT");
 const verifyRoles = require("app/http/middleware/authMiddleware/verifyRoles");
 
-//>----------- create route for clue
+//*>----------- create route for clue
 
 router.get("/singleandall", verifyJWT, clueController.getOneAndAllHandler);
 
