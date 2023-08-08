@@ -2,12 +2,12 @@
 const express = require("express");
 const router = express.Router();
 
-
+//*>---------- middleware
 
 const cerateCipher = require("app/http/middleware/cerateCipher");
 const Key = config.encryptionKey;
 
-
+//*>----------- create route for test
 
 router.get("/", (req,res)=>{
   const object = { name: "John", age: 30, city: "New York" };
@@ -19,10 +19,4 @@ router.get("/", (req,res)=>{
     });})
 
 
-
-
-
-// router.get("/", (req,res)=>{
-// res.send("ok")
-// })
 module.exports = router;
