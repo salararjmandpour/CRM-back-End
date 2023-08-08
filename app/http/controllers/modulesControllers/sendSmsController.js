@@ -4,12 +4,12 @@ const request = require("request");
 const PanelSms = require("app/models/PanelSms");
 const moment = require("moment-timezone");
 
-//>---------- encrypt data sending
+//*>---------- encrypt data sending
 
 const cerateCipher = require("../../middleware/cerateCipher");
 const Key = config.encryptionKey;
 
-//>---------- method send sms
+//*>---------- method send sms
 
 const sendSms = async (req, res) => {
   const messageDecrypt = await JSON.parse(
@@ -21,20 +21,19 @@ const sendSms = async (req, res) => {
   if (messageDecrypt.date && messageDecrypt.time) {
     const time = `${messageDecrypt.date} ${messageDecrypt.time}:00`;
 
-    //>---------- Example function to convert client's time to UTC
+    //*>---------- Example function to convert client's time to UTC
 
     const convertToUTC = (clientTimeString, clientTimezone) => {
-      // const format = "YYYY-MM-DD HH:mm:ss";
 
-      //>--------- Parse the client time string with the client timezone
+      //*>--------- Parse the client time string with the client timezone
 
       const clientDateTime = moment.tz(clientTimeString, clientTimezone);
 
-      //>--------- Convert to UTC
+      //*>--------- Convert to UTC
 
       const utcDateTime = clientDateTime.clone().utc();
 
-      //>--------- Return the UTC time in the desired format
+      //*>--------- Return the UTC time in the desired format
 
       return utcDateTime.format();
     };
