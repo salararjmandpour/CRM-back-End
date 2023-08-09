@@ -33,7 +33,6 @@ const createHandlerNew = async (req, res) => {
     campaign,
   } = clue;
 
-
   try {
     //*>----------- create model for data sale
     await Sale.create({
@@ -42,11 +41,11 @@ const createHandlerNew = async (req, res) => {
       role,
       mobile,
       expert: {
-         expertId: userId, 
-         expertFullName: clue.expertFullName 
-        },
+        expertId: userId,
+        expertFullName: clue.expertFullName,
+      },
       qualityCustomer,
-      dateForSale:dataDecrypt.dateForSale,
+      dateForSale: dataDecrypt.dateForSale,
       industry,
       company,
       campaign,
@@ -65,8 +64,36 @@ const createHandlerNew = async (req, res) => {
   }
 };
 
+//*>---------- get method all sale
+
+const getByUserHandler = async (req, res) => {
+  const strId = req.query.id.toString();
+  const strIdNew = strId.replaceAll(" ", "+");
+  const decryptUserId = cerateCipher.decrypt(strIdNew, Key);
+  console.log(decryptUserId);
+
+  try {
+    //!>----------- get all  model for data user
+    const saleAll = await Sale.find({ "expert.expertId": decryptUserId });
+    console.log(saleAll);
+
+    if (!saleAll || saleAll.length == 0) {
+      return res.status(404).json({
+        status: 404,
+        message: "فروشی ثبت نشده است",
+      });
+    }
+    const encryptData = cerateCipher.encrypt(JSON.stringify(saleAll), Key);
+    return res.status(202).json({ encryptData });
+  } catch (err) {
+    console.log(err.message);
+    return res.status(500).json({ message: err.message });
+  }
+};
+
 //*>------------ export method
 
 module.exports = {
   createHandlerNew,
+  getByUserHandler,
 };
