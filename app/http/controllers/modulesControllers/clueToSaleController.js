@@ -12,7 +12,6 @@ const createHandlerNew = async (req, res) => {
   const dataDecrypt = await JSON.parse(
     cerateCipher.decrypt(req.body.dataEncSale, Key)
   );
-  console.log(dataDecrypt);
   const userId = cerateCipher.decrypt(dataDecrypt.userId, Key);
 
   if (!dataDecrypt) return res.sendStatus(404);
@@ -73,7 +72,6 @@ const getByUserHandler = async (req, res) => {
       //!>----------- get all  model for data user
       const saleAll = await Sale.find({ "expert.expertId": decryptUserId });
 
-
       if (!saleAll || saleAll.length == 0) {
         return res.status(404).json({
           status: 404,
@@ -97,7 +95,6 @@ const getByUserHandler = async (req, res) => {
 
     try {
       const sale = await Sale.findOne({ _id: decryptSaleId });
-console.log(sale);
       if (!sale || sale.length == 0) {
         return res.status(404).json({
           status: 404,
