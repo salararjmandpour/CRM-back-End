@@ -62,7 +62,6 @@ const saleSchema = new Schema(
     totalAmount: {
       type: Number,
       default:0,
-      unique: true,
       trim: true,
     },
     phoneNumber: {
