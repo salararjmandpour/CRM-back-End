@@ -70,8 +70,6 @@ const getByUserHandler = async (req, res) => {
   const strId = req.query.id.toString();
   const strIdNew = strId.replaceAll(" ", "+");
   const decryptUserId = cerateCipher.decrypt(strIdNew, Key);
-  console.log(decryptUserId);
-
   try {
     //!>----------- get all  model for data user
     const saleAll = await Sale.find({ "expert.expertId": decryptUserId });
