@@ -394,179 +394,209 @@ const updateOneClue = async (req, res) => {
     cerateCipher.decrypt(req.body.dataEnc, Key)
   );
 
-  const {
-    subject,
-    fullName,
-    role,
-    mobile,
-    qualityCustomer,
-    callTime,
-    industry,
-    company,
-    phonNumber,
-    state,
-    cities,
-    address,
-    noteSubject,
-    noteBody,
-    activitySubject,
-    activityNote,
-    activityLocation,
-    activityTime,
-    activityTellSubject,
-    activityTellNote,
-    activityTellTime,
-    isActiveActivityNote,
-    isActiveActivityTellNote,
-    cancelationReason,
-  } = dataDecrypt;
-  if (subject && mobile) {
-    if (
-      !subject ||
-      !fullName ||
-      !role ||
-      !mobile ||
-      !qualityCustomer ||
-      !callTime ||
-      !industry ||
-      !company ||
-      !phonNumber ||
-      !state ||
-      !cities ||
-      !address
-    )
-      return res.sendStatus(400);
-    try {
-      //*>----------- update model for data clue
-      const updateClue = await Clues.findOneAndUpdate(
-        { _id: decryptId },
-        {
-          subject,
-          fullName,
-          role,
-          mobile,
-          qualityCustomer,
-          callTime,
-          industry,
-          company,
-          phonNumber,
-          state,
-          cities,
-          address,
-        }
-      );
+  console.log(dataDecrypt.position);
 
-      await updateClue.save();
+//*>---------- clue update not position 
 
-      res.sendStatus(202);
-    } catch (err) {
-      console.log(err.message);
-      return res.status(500).json({ message: err });
-    }
-  }
-
-  //*>---------- update note clue
-
-  if (noteSubject && noteBody) {
-    try {
-      const updateNoteClue = await NoteClues.findOneAndUpdate(
-        { _id: decryptId },
-        {
-          noteSubject: noteSubject,
-          noteBody: noteBody,
-        }
-      );
-      await updateNoteClue.save();
-
-      return res.sendStatus(202);
-    } catch (err) {
-      console.log(err.message);
-      return res.status(500).json({ message: err });
-    }
-  }
-
-  //*>---------- update activity meet clue
-  if (activitySubject && activityNote) {
-    try {
-      const updateActivityCluesMeetOpen =
-        await ActivityCluesMeetOpen.findOneAndUpdate(
+  if (!dataDecrypt.position) {
+    const {
+      subject,
+      fullName,
+      role,
+      mobile,
+      qualityCustomer,
+      callTime,
+      industry,
+      company,
+      phonNumber,
+      state,
+      cities,
+      address,
+      noteSubject,
+      noteBody,
+      activitySubject,
+      activityNote,
+      activityLocation,
+      activityTime,
+      activityTellSubject,
+      activityTellNote,
+      activityTellTime,
+      isActiveActivityNote,
+      isActiveActivityTellNote,
+      cancelationReason,
+    } = dataDecrypt;
+    if (subject && mobile) {
+      if (
+        !subject ||
+        !fullName ||
+        !role ||
+        !mobile ||
+        !qualityCustomer ||
+        !callTime ||
+        !industry ||
+        !company ||
+        !phonNumber ||
+        !state ||
+        !cities ||
+        !address
+      )
+        return res.sendStatus(400);
+      try {
+        //*>----------- update model for data clue
+        const updateClue = await Clues.findOneAndUpdate(
           { _id: decryptId },
           {
-            activitySubject: activitySubject,
-            activityNote: activityNote,
-            activityLocation: activityLocation,
-            activityTime: activityTime,
+            subject,
+            fullName,
+            role,
+            mobile,
+            qualityCustomer,
+            callTime,
+            industry,
+            company,
+            phonNumber,
+            state,
+            cities,
+            address,
           }
         );
-      await updateActivityCluesMeetOpen.save();
 
-      return res.sendStatus(202);
-    } catch (err) {
-      console.log(err.message);
-      return res.status(500).json({ message: err });
+        await updateClue.save();
+
+        res.sendStatus(202);
+      } catch (err) {
+        console.log(err.message);
+        return res.status(500).json({ message: err });
+      }
+    }
+
+    if (noteSubject && noteBody) {
+      //*>---------- update note clue
+
+      try {
+        const updateNoteClue = await NoteClues.findOneAndUpdate(
+          { _id: decryptId },
+          {
+            noteSubject: noteSubject,
+            noteBody: noteBody,
+          }
+        );
+        await updateNoteClue.save();
+
+        return res.sendStatus(202);
+      } catch (err) {
+        console.log(err.message);
+        return res.status(500).json({ message: err });
+      }
+    }
+
+    //*>---------- update activity meet clue
+    if (activitySubject && activityNote) {
+      try {
+        const updateActivityCluesMeetOpen =
+          await ActivityCluesMeetOpen.findOneAndUpdate(
+            { _id: decryptId },
+            {
+              activitySubject: activitySubject,
+              activityNote: activityNote,
+              activityLocation: activityLocation,
+              activityTime: activityTime,
+            }
+          );
+        await updateActivityCluesMeetOpen.save();
+
+        return res.sendStatus(202);
+      } catch (err) {
+        console.log(err.message);
+        return res.status(500).json({ message: err });
+      }
+    }
+
+    //*>---------- update activity tell clue
+    if (activityTellSubject && activityTellNote) {
+      try {
+        const updateActivityCluesTellOpen =
+          await ActivityCluesTellOpen.findOneAndUpdate(
+            { _id: decryptId },
+            {
+              activityTellSubject: activityTellSubject,
+              activityTellNote: activityTellNote,
+              activityTellTime: activityTellTime,
+            }
+          );
+        await updateActivityCluesTellOpen.save();
+
+        return res.sendStatus(202);
+      } catch (err) {
+        console.log(err.message);
+        return res.status(500).json({ message: err });
+      }
+    }
+
+    //*>---------- update activity is active meet clue
+    if (isActiveActivityNote && cancelationReason) {
+      console.log(isActiveActivityNote, cancelationReason);
+      try {
+        const updateActivityCluesMeetOpen =
+          await ActivityCluesMeetOpen.findOneAndUpdate(
+            { _id: decryptId },
+            {
+              isActive: isActiveActivityNote,
+              cancelationReason: cancelationReason,
+            }
+          );
+        await updateActivityCluesMeetOpen.save();
+
+        return res.sendStatus(202);
+      } catch (err) {
+        console.log(err.message);
+        return res.status(500).json({ message: err });
+      }
+    }
+
+    //*>---------- update activity is active Tell clue
+    if (isActiveActivityTellNote && cancelationReason) {
+      try {
+        const updateActivityCluesTellOpen =
+          await ActivityCluesTellOpen.findOneAndUpdate(
+            { _id: decryptId },
+            {
+              isActive: isActiveActivityTellNote,
+              cancelationReason: cancelationReason,
+            }
+          );
+        await updateActivityCluesTellOpen.save();
+
+        return res.sendStatus(202);
+      } catch (err) {
+        console.log(err.message);
+        return res.status(500).json({ message: err });
+      }
     }
   }
 
-  //*>---------- update activity tell clue
-  if (activityTellSubject && activityTellNote) {
-    try {
-      const updateActivityCluesTellOpen =
-        await ActivityCluesTellOpen.findOneAndUpdate(
-          { _id: decryptId },
-          {
-            activityTellSubject: activityTellSubject,
-            activityTellNote: activityTellNote,
-            activityTellTime: activityTellTime,
-          }
-        );
-      await updateActivityCluesTellOpen.save();
+//*>---------- clue update but position
 
-      return res.sendStatus(202);
-    } catch (err) {
-      console.log(err.message);
-      return res.status(500).json({ message: err });
-    }
-  }
+  if (dataDecrypt.position) {
+     try {
+       //*>----------- update model for data clue
+       const updateClue = await Clues.findOneAndUpdate(
+         { _id: decryptId },
+         {
+           subject: dataDecrypt.subject,
+           position: dataDecrypt.position,
+         }
+       );
 
-  //*>---------- update activity is active meet clue
-  if (isActiveActivityNote && cancelationReason) {
-    console.log(isActiveActivityNote, cancelationReason);
-    try {
-      const updateActivityCluesMeetOpen =
-        await ActivityCluesMeetOpen.findOneAndUpdate(
-          { _id: decryptId },
-          {
-            isActive: isActiveActivityNote,
-            cancelationReason: cancelationReason,
-          }
-        );
-      await updateActivityCluesMeetOpen.save();
+       await updateClue.save();
 
-      return res.sendStatus(202);
-    } catch (err) {
-      console.log(err.message);
-      return res.status(500).json({ message: err });
-    }
-  }
-
-  //*>---------- update activity is active Tell clue
-  if (isActiveActivityTellNote && cancelationReason) {
-    try {
-      const updateActivityCluesTellOpen =
-        await ActivityCluesTellOpen.findOneAndUpdate(
-          { _id: decryptId },
-          {
-            isActive: isActiveActivityTellNote,
-            cancelationReason: cancelationReason,
-          }
-        );
-      await updateActivityCluesTellOpen.save();
-
-      return res.sendStatus(202);
-    } catch (err) {
-      console.log(err.message);
-      return res.status(500).json({ message: err });
-    }
+       res.sendStatus(202);
+     } catch (err) {
+       console.log(err.message);
+       return res.status(500).json({ message: err });
+     }
+    console.log("subject:",dataDecrypt.subject);
+    console.log("position:",dataDecrypt.position);
   }
 };
 
