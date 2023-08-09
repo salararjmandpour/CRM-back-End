@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const mongoosePaginate = require('mongoose-paginate');
+const mongoosePaginate = require("mongoose-paginate");
 const Schema = mongoose.Schema;
 
 const clueSchema = new Schema(
@@ -57,6 +57,10 @@ const clueSchema = new Schema(
       minlength: 2,
       maxLength: 100,
       default: null,
+    },
+    position: {
+      clue: { type: Boolean, default: true },
+      sale: { type: Boolean, default: false },
     },
     phonNumber: {
       type: Number,
