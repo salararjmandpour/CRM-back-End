@@ -13,7 +13,7 @@ const verifyRoles = require("app/http/middleware/authMiddleware/verifyRoles");
 
 //*>----------- create route for clue
 
-// router.get("/singleandall", verifyJWT, clueController.getOneAndAllHandler);
+router.get("/", verifyJWT, clueToSaleController.getByUserHandler);
 
 router.post(
   "/",

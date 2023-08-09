@@ -52,8 +52,11 @@ router.use("/api/v1/profile", userRouter);
 const clueRouter = require("./v1/clue");
 router.use("/api/v1/clue", clueRouter);
 
-const clueToSaleRouter = require("./v1/clueToSale");
+const clueToSaleRouter = require("./v1/sale");
 router.use("/api/v1/clueToSale", clueToSaleRouter);
+
+const saleRouter = require("./v1/sale");
+router.use("/api/v1/sale", saleRouter);
 
 const campaignRouter = require("./v1/campaign");
 router.use("/api/v1/campaign", campaignRouter);
