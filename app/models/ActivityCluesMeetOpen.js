@@ -20,9 +20,10 @@ const ActivityClueOpenSchema = new Schema(
       required: true,
       trim: true,
     },
-    step: {
+    stepMeet: {
+      isActive: {type: Boolean,default: false,},
       evaluation: { type: Boolean },
-      preliminaryNegotiations: { type: Boolean },
+      PreliminaryNegotiations: { type: Boolean },
     },
     activityTime: {
       type: String,
@@ -34,10 +35,7 @@ const ActivityClueOpenSchema = new Schema(
       required: true,
       trim: true,
     },
-    isActive: {
-      type: Boolean,
-      default: false,
-    },
+
     cancelationReason: {
       type: String,
       default: "",
