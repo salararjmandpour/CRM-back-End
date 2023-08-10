@@ -20,18 +20,15 @@ const ActivityClueTellOpenSchema = new Schema(
       required: true,
       trim: true,
     },
-    step: {
+    stepTell: {
+      isActive: { type: Boolean, default: false },
       evaluation: { type: Boolean },
-      preliminaryNegotiations: { type: Boolean },
+      PreliminaryNegotiations: { type: Boolean },
     },
     activityTellDate: {
       type: String,
       required: true,
       trim: true,
-    },
-    isActive: {
-      type: Boolean,
-      default: false,
     },
     cancelationReason: {
       type: String,
