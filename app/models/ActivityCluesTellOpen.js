@@ -20,6 +20,10 @@ const ActivityClueTellOpenSchema = new Schema(
       required: true,
       trim: true,
     },
+    step: {
+      evaluation: { type: Boolean },
+      preliminaryNegotiations: { type: Boolean },
+    },
     activityTellDate: {
       type: String,
       required: true,

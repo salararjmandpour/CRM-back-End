@@ -20,6 +20,10 @@ const ActivityClueOpenSchema = new Schema(
       required: true,
       trim: true,
     },
+    step: {
+      evaluation: { type: Boolean },
+      preliminaryNegotiations: { type: Boolean },
+    },
     activityTime: {
       type: String,
       required: true,

@@ -53,15 +53,15 @@ const saleSchema = new Schema(
       default: null,
     },
     step: {
-      evaluation: { type: String, default: "15%" },
-      PreliminaryNegotiations: { type: String },
-      invoice: { type: String },
+      // evaluation: { type: String, default: "15%" },
+      // PreliminaryNegotiations: { type: String },
+      invoice: { type: String, default: "75%" },
       finalNegotiations: { type: String },
       closed: { type: String },
     },
     totalAmount: {
       type: Number,
-      default:0,
+      default: 0,
       trim: true,
     },
     phoneNumber: {
