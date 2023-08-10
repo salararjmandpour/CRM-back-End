@@ -116,6 +116,10 @@ const createHandler = async (req, res) => {
       activityTellDate,
     } = dataDecrypt;
 
+    const step = dataDecrypt.step;
+
+    console.log("fullData", dataDecrypt);
+
     if (noteSubject) {
       if (!noteSubject || !dataDecrypt || !clueDecrypt || !expertDecrypt)
         return res.status(400);
@@ -155,6 +159,7 @@ const createHandler = async (req, res) => {
           activityTime: activityTime,
           activityDate: activityDate,
           userId: expertDecrypt,
+          step: step,
           clueId: clueDecrypt,
           clueName: clueName.fullName,
         });
@@ -183,6 +188,7 @@ const createHandler = async (req, res) => {
           activityTellTime: activityTellTime,
           activityTellDate: activityTellDate,
           userId: expertDecrypt,
+          step: step,
           clueId: clueDecrypt,
           clueName: clueName.fullName,
         });
@@ -396,7 +402,7 @@ const updateOneClue = async (req, res) => {
 
   console.log(dataDecrypt.position);
 
-//*>---------- clue update not position 
+  //*>---------- clue update not position
 
   if (!dataDecrypt.position) {
     const {
@@ -421,10 +427,12 @@ const updateOneClue = async (req, res) => {
       activityTellSubject,
       activityTellNote,
       activityTellTime,
-      isActiveActivityNote,
-      isActiveActivityTellNote,
       cancelationReason,
     } = dataDecrypt;
+    console.log(dataDecrypt);
+    const stepMeet = dataDecrypt.stepMeet;
+    const stepTell = dataDecrypt.stepTell;
+
     if (subject && mobile) {
       if (
         !subject ||
@@ -534,14 +542,14 @@ const updateOneClue = async (req, res) => {
     }
 
     //*>---------- update activity is active meet clue
-    if (isActiveActivityNote && cancelationReason) {
-      console.log(isActiveActivityNote, cancelationReason);
+    if (stepMeet && cancelationReason) {
+      console.log(stepMeet, cancelationReason);
       try {
         const updateActivityCluesMeetOpen =
           await ActivityCluesMeetOpen.findOneAndUpdate(
             { _id: decryptId },
             {
-              isActive: isActiveActivityNote,
+              stepMeet: stepMeet,
               cancelationReason: cancelationReason,
             }
           );
@@ -555,13 +563,13 @@ const updateOneClue = async (req, res) => {
     }
 
     //*>---------- update activity is active Tell clue
-    if (isActiveActivityTellNote && cancelationReason) {
+    if (stepTell && cancelationReason) {
       try {
         const updateActivityCluesTellOpen =
           await ActivityCluesTellOpen.findOneAndUpdate(
             { _id: decryptId },
             {
-              isActive: isActiveActivityTellNote,
+              stepTell: stepTell,
               cancelationReason: cancelationReason,
             }
           );
@@ -575,28 +583,28 @@ const updateOneClue = async (req, res) => {
     }
   }
 
-//*>---------- clue update but position
+  //*>---------- clue update but position
 
   if (dataDecrypt.position) {
-     try {
-       //*>----------- update model for data clue
-       const updateClue = await Clues.findOneAndUpdate(
-         { _id: decryptId },
-         {
-           subject: dataDecrypt.subject,
-           position: dataDecrypt.position,
-         }
-       );
+    try {
+      //*>----------- update model for data clue
+      const updateClue = await Clues.findOneAndUpdate(
+        { _id: decryptId },
+        {
+          subject: dataDecrypt.subject,
+          position: dataDecrypt.position,
+        }
+      );
 
-       await updateClue.save();
+      await updateClue.save();
 
-       res.sendStatus(202);
-     } catch (err) {
-       console.log(err.message);
-       return res.status(500).json({ message: err });
-     }
-    console.log("subject:",dataDecrypt.subject);
-    console.log("position:",dataDecrypt.position);
+      res.sendStatus(202);
+    } catch (err) {
+      console.log(err.message);
+      return res.status(500).json({ message: err });
+    }
+    console.log("subject:", dataDecrypt.subject);
+    console.log("position:", dataDecrypt.position);
   }
 };
 
