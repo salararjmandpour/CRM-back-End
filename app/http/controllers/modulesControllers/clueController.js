@@ -116,7 +116,8 @@ const createHandler = async (req, res) => {
       activityTellDate,
     } = dataDecrypt;
 
-    const step = dataDecrypt.step;
+    const stepMeet = dataDecrypt.stepMeet;
+    const stepTell = dataDecrypt.stepTell;
 
     console.log("fullData", dataDecrypt);
 
@@ -159,7 +160,7 @@ const createHandler = async (req, res) => {
           activityTime: activityTime,
           activityDate: activityDate,
           userId: expertDecrypt,
-          step: step,
+          stepMeet: stepMeet,
           clueId: clueDecrypt,
           clueName: clueName.fullName,
         });
@@ -188,7 +189,7 @@ const createHandler = async (req, res) => {
           activityTellTime: activityTellTime,
           activityTellDate: activityTellDate,
           userId: expertDecrypt,
-          step: step,
+          stepTell: stepTell,
           clueId: clueDecrypt,
           clueName: clueName.fullName,
         });
