@@ -17,6 +17,8 @@ const hpp = require("hpp");
 const xss = require("xss-clean");
 const path = require("path");
 const jsPDF = require("jspdf");
+
+
 //*>----------------------module export
 
 module.exports = class Application {
@@ -53,6 +55,8 @@ module.exports = class Application {
   //*>---------------------- set router app
 
   setRouter() {
+
+    
     //*>---------------------- set express brute
     const store = new ExpressBrute.MemoryStore(); //!stores state locally, don't use this in production
     const bruteForce = new ExpressBrute(store);
