@@ -119,8 +119,6 @@ const createHandler = async (req, res) => {
     const stepMeet = dataDecrypt.stepMeet;
     const stepTell = dataDecrypt.stepTell;
 
-    console.log("fullData", dataDecrypt);
-
     if (noteSubject) {
       if (!noteSubject || !dataDecrypt || !clueDecrypt || !expertDecrypt)
         return res.status(400);
@@ -217,7 +215,9 @@ const getOneAndAllHandler = async (req, res) => {
     const decryptUserRole = cerateCipher.decrypt(strRoleNew, Key);
     const decryptUserId = cerateCipher.decrypt(strIdNew, Key);
 
+
     if (ROLES_LIST.SeniorManager == decryptUserRole) {
+       console.log(decryptUserRole);
       const clues = await Clues.find({});
       if (clues.length == 0)
         return res.status(404).json({
@@ -399,8 +399,6 @@ const updateOneClue = async (req, res) => {
   const dataDecrypt = await JSON.parse(
     cerateCipher.decrypt(req.body.dataEnc, Key)
   );
-
-  console.log(dataDecrypt.position);
 
   //*>---------- clue update not position
 
