@@ -323,7 +323,6 @@ const getOneAndAllHandler = async (req, res) => {
           }
         );
 
-        // console.log(updateClue);
 
         await updateClue.save();
         for (let index = 0; index < decryptStrIdCampsNew.length; index++) {
