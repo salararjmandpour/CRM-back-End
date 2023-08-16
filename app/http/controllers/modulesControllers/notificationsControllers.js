@@ -22,7 +22,7 @@ const getNotifications = async (req, res) => {
     let findClueMeet = await ActivityCluesMeetOpen.find(
       {
         userId: decryptUserId,
-        isActive:false,
+        "stepMeet.isActive": false,
       },
       {
         _id: 0,
@@ -30,19 +30,17 @@ const getNotifications = async (req, res) => {
         activityLocation: 0,
         cancelationReason: 0,
         createdAt: 0,
-        isActive:0,
+        isActive: 0,
         updatedAt: 0,
         userId: 0,
         __v: 0,
       }
     );
 
-
-
     let findClueTell = await ActivityCluesTellOpen.find(
       {
         userId: decryptUserId,
-        isActive: false,
+        "stepMeet.isActive": false,
       },
       {
         _id: 0,
