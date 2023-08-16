@@ -1,6 +1,8 @@
 const User = require("app/models/User");
 const Clues = require("app/models/Clue");
 const Contact = require("app/models/Contact");
+const ROLES_LIST = require("app/config/roles_list");
+
 
 //*>---------- encrypt data sending
 
@@ -86,26 +88,54 @@ const createHandler = async (req, res) => {
 //*>----------- get route all Contact
 
 const getAllHandler = async (req, res) => {
-  const strId = req.query.id.toString();
-  const strIdNew = strId.replaceAll(" ", "+");
-  const decryptUserId = cerateCipher.decrypt(strIdNew, Key);
-  console.log(decryptUserId);
+  if (req.query.role && req.query.id) {
+    const strId = req.query.id.toString();
+    const strIdNew = strId.replaceAll(" ", "+");
+    const strRole = req.query.role.toString();
+    const strRoleNew = strRole.replaceAll(" ", "+");
 
-  try {
-    //>----------- get all  model for data user
-    const contact = await Contact.find({ expert: decryptUserId });
+    if (!strIdNew && !strRoleNew) return res.sensStatus(404);
 
-    if (!contact || contact.length == 0) {
-      return res.status(404).json({
-        status: 404,
-        message: "کانتکتی ثبت نشده است",
-      });
+    const decryptUserRole = cerateCipher.decrypt(strRoleNew, Key);
+    const decryptUserId = cerateCipher.decrypt(strIdNew, Key);
+
+    if (ROLES_LIST.SeniorManager == decryptUserRole) {
+      try {
+        //*>----------- get all model data by admin
+
+        const contact = await Contact.find({});
+
+        if (!contact || contact.length == 0) {
+          return res.status(404).json({
+            status: 404,
+            message: "کانتکتی ثبت نشده است",
+          });
+        }
+        const encryptData = cerateCipher.encrypt(JSON.stringify(contact), Key);
+        return res.status(202).json({ encryptData });
+      } catch (err) {
+        console.log(err.message);
+        return res.status(500).json({ message: err });
+      }
+    } else {
+      try {
+        //*>----------- get all model data by user
+
+        const contact = await Contact.find({ expert: decryptUserId });
+
+        if (!contact || contact.length == 0) {
+          return res.status(404).json({
+            status: 404,
+            message: "کانتکتی ثبت نشده است",
+          });
+        }
+        const encryptData = cerateCipher.encrypt(JSON.stringify(contact), Key);
+        return res.status(202).json({ encryptData });
+      } catch (err) {
+        console.log(err.message);
+        return res.status(500).json({ message: err });
+      }
     }
-    const encryptData = cerateCipher.encrypt(JSON.stringify(contact), Key);
-    return res.status(202).json({ encryptData });
-  } catch (err) {
-    console.log(err.message);
-    return res.status(500).json({ message: err });
   }
 };
 
@@ -142,7 +172,9 @@ const updateOneContact = async (req, res) => {
       return res.status(400);
     }
     try {
+
       //*>----------- create model for data clue
+
       await Contact.findOneAndUpdate(
         { _id: decryptId },
         {
@@ -194,6 +226,7 @@ const convertorContact = async (req, res) => {
   const decryptId = JSON.parse(cerateCipher.decrypt(strNew, Key));
 
   try {
+
     //*>---------- handler array contact id for convert to clue
 
     let contactArray = [];
@@ -245,7 +278,8 @@ const convertorContact = async (req, res) => {
     return res.status(500).json({ message: err });
   }
 };
-//>------------ export method
+
+//*>------------ export method
 
 module.exports = {
   createHandler,
