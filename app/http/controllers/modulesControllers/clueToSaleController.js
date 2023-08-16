@@ -67,7 +67,32 @@ const getByUserHandler = async (req, res) => {
   if (req.query.id) {
     const strId = req.query.id.toString();
     const strIdNew = strId.replaceAll(" ", "+");
+    const strRole = req.query.role.toString();
+    const strRoleNew = strRole.replaceAll(" ", "+");
+
+    if (!strIdNew && !strRoleNew) return res.sensStatus(404);
+
+    const decryptUserRole = cerateCipher.decrypt(strRoleNew, Key);
     const decryptUserId = cerateCipher.decrypt(strIdNew, Key);
+
+    //!>----------- get all  model for data  by role seniorManager
+
+    if (ROLES_LIST.SeniorManager == decryptUserRole) {
+      try {
+        const clues = await Clues.find({});
+        if (clues.length == 0)
+          return res.status(404).json({
+            status: 404,
+            message: "فروشی ثبت نشده است",
+          });
+        const encryptData = cerateCipher.encrypt(JSON.stringify(clues), Key);
+        return res.status(202).json({ encryptData });
+      } catch (err) {
+        console.log(err.message);
+        return res.status(500).json({ message: err.message });
+      }
+    }
+
     try {
       //!>----------- get all  model for data user
       const saleAll = await Sale.find({ "expert.expertId": decryptUserId });
