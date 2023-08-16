@@ -1,5 +1,7 @@
 const Clues = require("app/models/Clue");
 const Sale = require("app/models/Sale");
+const ROLES_LIST = require("app/config/roles_list");
+
 
 //*>---------- encrypt data sending
 
@@ -64,7 +66,7 @@ const createHandlerNew = async (req, res) => {
 //*>---------- get method all sale by user
 
 const getByUserHandler = async (req, res) => {
-  if (req.query.id) {
+  if (req.query.role && req.query.id) {
     const strId = req.query.id.toString();
     const strIdNew = strId.replaceAll(" ", "+");
     const strRole = req.query.role.toString();
@@ -74,24 +76,28 @@ const getByUserHandler = async (req, res) => {
 
     const decryptUserRole = cerateCipher.decrypt(strRoleNew, Key);
     const decryptUserId = cerateCipher.decrypt(strIdNew, Key);
+    console.log(decryptUserRole);
 
     //!>----------- get all  model for data  by role seniorManager
 
     if (ROLES_LIST.SeniorManager == decryptUserRole) {
       try {
-        const clues = await Clues.find({});
-        if (clues.length == 0)
+        const saleAll = await Sale.find({});
+        if (saleAll.length == 0)
           return res.status(404).json({
             status: 404,
             message: "فروشی ثبت نشده است",
           });
-        const encryptData = cerateCipher.encrypt(JSON.stringify(clues), Key);
+        const encryptData = cerateCipher.encrypt(JSON.stringify(saleAll), Key);
         return res.status(202).json({ encryptData });
       } catch (err) {
         console.log(err.message);
         return res.status(500).json({ message: err.message });
       }
+
+      
     }
+    else{
 
     try {
       //!>----------- get all  model for data user
@@ -110,6 +116,7 @@ const getByUserHandler = async (req, res) => {
       return res.status(500).json({ message: err.message });
     }
   }
+}
 
   //*>---------- get method  single sale by id sale
 
