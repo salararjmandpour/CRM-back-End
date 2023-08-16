@@ -21,6 +21,8 @@ const fuckingPwd = new Schema({
     ref: "User",
     required: true,
   },
-});
+  
+},
+  { timestamps: true, toJSON: { virtuals: true } });
 
 module.exports = mongoose.model("FuckingPwd", fuckingPwd);
