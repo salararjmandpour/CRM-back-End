@@ -76,7 +76,6 @@ const getByUserHandler = async (req, res) => {
 
     const decryptUserRole = cerateCipher.decrypt(strRoleNew, Key);
     const decryptUserId = cerateCipher.decrypt(strIdNew, Key);
-    console.log(decryptUserRole);
 
     //!>----------- get all  model for data  by role seniorManager
 
