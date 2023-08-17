@@ -2,8 +2,7 @@ const express = require("express");
 const app = express();
 const router = express.Router();
 
-
-//*>-------------------- public route
+//!>-------------------- public route
 
 const authRouter = require("./v1/auth");
 router.use("/api/v1/auth", authRouter);
@@ -32,7 +31,7 @@ router.use("/api/v1/phoneCode", phoneCodeRouter);
 const testRouter = require("./v1/test");
 router.use("/api/v1/test", testRouter);
 
-//*>---------- protected routes
+//!>---------- protected routes
 
 const usersRouter = require("./v1/users");
 router.use("/api/v1/users", usersRouter);
