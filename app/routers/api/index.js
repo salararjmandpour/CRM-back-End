@@ -25,6 +25,9 @@ router.use("/api/v1/states", statesRouter);
 const citiesRouter = require("./v1/cities");
 router.use("/api/v1/cities", citiesRouter);
 
+const timeZonesRouter = require("./v1/timeZones");
+router.use('/api/v1/timeZones', timeZonesRouter);
+
 const phoneCodeRouter = require("./v1/phoneCode");
 router.use("/api/v1/phoneCode", phoneCodeRouter);
 
