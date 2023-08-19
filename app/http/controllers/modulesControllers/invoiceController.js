@@ -39,7 +39,7 @@ const createHandlerNew = async (req, res, next) => {
   userName = userName.fullName.slice(0, 2);
 
   let time = new Date();
-  time = Intl.DateTimeFormat("en-US").format(time);
+  time = Intl.DateTimeFormat("fa-IR").format(time);
 
   const numberOfInvoice = `${userName} -${time}-${generatePassword()}`;
   console.log(numberOfInvoice);
