@@ -1,5 +1,6 @@
 const Sale = require("app/models/Sale");
 const Invoice = require("app/models/Invoice");
+const User = require("app/models/User");
 const ROLES_LIST = require("app/config/roles_list");
 
 //*>---------- encrypt data sending
@@ -7,9 +8,20 @@ const ROLES_LIST = require("app/config/roles_list");
 const cerateCipher = require("../../middleware/cerateCipher");
 const Key = config.encryptionKey;
 
+//*>---------- generate number
+const generatePassword = () => {
+  var length = 5,
+    charset = "1234567890",
+    retVal = "";
+  for (var i = 0, n = charset.length; i < length; ++i) {
+    retVal += charset.charAt(Math.floor(Math.random() * n));
+  }
+  return retVal;
+};
+
 //*>----------- post route Invoice
 
-const createHandlerNew = async (req, res) => {
+const createHandlerNew = async (req, res, next) => {
   const dataDecrypt = await JSON.parse(
     cerateCipher.decrypt(req.body.dataEncInvoice, Key)
   );
@@ -23,15 +35,24 @@ const createHandlerNew = async (req, res) => {
 
   if (!dataDecrypt) return res.sendStatus(404);
 
+  let userName = await User.findOne({ _id: userId });
+  userName = userName.fullName.slice(0, 2);
+
+  let time = new Date();
+  time = Intl.DateTimeFormat("en-US").format(time);
+
+  const numberOfInvoice = `${userName} -${time}-${generatePassword()}`;
+  console.log(numberOfInvoice);
+
   const invoice = await Invoice.findOne({
-    nameOfInvoice: dataDecrypt.nameOfInvoice,
-    numberOfInvoice: dataDecrypt.numberOfInvoice,
+    numberOfInvoice: numberOfInvoice,
+    email: dataDecrypt.email,
+    mobile: dataDecrypt.mobile,
   });
 
   if (invoice) return res.status(409);
 
   const {
-    numberOfInvoice,
     nameOfInvoice,
     statusInvoice,
     nameOfAgent,
@@ -53,7 +74,7 @@ const createHandlerNew = async (req, res) => {
   try {
     //*>----------- create model for data invoice
     await Invoice.create({
-      numberOfInvoice,
+      numberOfInvoice: numberOfInvoice,
       nameOfInvoice,
       statusInvoice,
       nameOfAgent,
