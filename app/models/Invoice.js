@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const invoiceSchema = new Schema(
   {
     numberOfInvoice: {
-      type: Number,
+      type: String,
       required: true,
       trim: true,
     },
