@@ -39,14 +39,12 @@ const invoiceSchema = new Schema(
     mobile: {
       type: Number,
       required: true,
-
       trim: true,
     },
     email: {
       type: String,
       required: true,
       trim: true,
-
       minlength: 2,
       maxLength: 100,
     },
