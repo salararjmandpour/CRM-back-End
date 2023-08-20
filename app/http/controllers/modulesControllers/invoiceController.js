@@ -8,6 +8,8 @@ const ROLES_LIST = require("app/config/roles_list");
 const cerateCipher = require("../../middleware/cerateCipher");
 const Key = config.encryptionKey;
 
+const generateNumberInvoice = require("app/helpers/generatorNumber");
+
 //*>---------- generate number
 const generatePassword = () => {
   var length = 5,
@@ -17,6 +19,29 @@ const generatePassword = () => {
     retVal += charset.charAt(Math.floor(Math.random() * n));
   }
   return retVal;
+};
+
+//*>---------- convert english numbers to persian
+
+String.prototype.toPersianDigits = function () {
+  const id = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
+  return this.replace(/[0-9]/g, function (w) {
+    return id[+w];
+  });
+};
+
+const conv2EnNum = (str) => {
+  return (
+    parseFloat(
+      str
+        .replace(/[٠١٢٣٤٥٦٧٨٩]/g, function (d) {
+          return d.charCodeAt(0) - 1632;
+        }) // Convert Arabic numbers
+        .replace(/[۰۱۲۳۴۵۶۷۸۹]/g, function (d) {
+          return d.charCodeAt(0) - 1776;
+        }) // Convert Persian numbers
+    ) * 1
+  );
 };
 
 //*>----------- post route Invoice
@@ -35,17 +60,28 @@ const createHandlerNew = async (req, res, next) => {
 
   if (!dataDecrypt) return res.sendStatus(404);
 
+  let oldNumberOfInvoice = await Invoice.find({})
+    .sort({ createdAt: -1 })
+    .limit(1).toArray;
+
+  if (!oldNumberOfInvoice || oldNumberOfInvoice.length == 0) {
+    oldNumberOfInvoiceNew = 0;
+  } else {
+    oldNumberOfInvoice = oldNumberOfInvoice[0].numberOfInvoice.slice(-4);
+    oldNumberOfInvoice = conv2EnNum(oldNumberOfInvoice);
+    const oldNumberOfInvoiceNew = parseInt(oldNumberOfInvoice);
+    console.log(typeof oldNumberOfInvoice);
+  }
   let userName = await User.findOne({ _id: userId });
   userName = userName.fullName.slice(0, 2);
 
-  let time = new Date();
-  time = Intl.DateTimeFormat("fa-IR").format(time);
+  // let time = new Date();
+  // time = Intl.DateTimeFormat("fa-IR").format(time);
 
-  const numberOfInvoice = `${userName} -${time}-${generatePassword()}`;
-  console.log(numberOfInvoice);
+
+  // console.log(numberOfInvoice);
 
   const invoice = await Invoice.findOne({
-    numberOfInvoice: numberOfInvoice,
     email: dataDecrypt.email,
     mobile: dataDecrypt.mobile,
   });
@@ -72,6 +108,11 @@ const createHandlerNew = async (req, res, next) => {
   const sale = saleId;
 
   try {
+
+      const numberOfInvoice = `${generateNumberInvoice.generateInvoiceNumber(
+        userName,
+        oldNumberOfInvoiceNew
+      )}`;
     //*>----------- create model for data invoice
     await Invoice.create({
       numberOfInvoice: numberOfInvoice,
