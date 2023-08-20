@@ -53,23 +53,25 @@ const createHandlerNew = async (req, res, next) => {
   const userId = cerateCipher.decrypt(dataDecrypt.userId, Key);
   const saleId = cerateCipher.decrypt(dataDecrypt.saleId, Key);
 
-  console.log(dataDecrypt);
+  // console.log(dataDecrypt);
 
-  console.log("userId:", userId);
-  console.log("saleId:", saleId);
-
+  // console.log("userId:", userId);
+  // console.log("saleId:", saleId);
+  let oldNumberOfInvoiceNew = 0;
   if (!dataDecrypt) return res.sendStatus(404);
 
   let oldNumberOfInvoice = await Invoice.find({})
     .sort({ createdAt: -1 })
-    .limit(1).toArray;
+    .limit(1);
+  console.log(oldNumberOfInvoice);
 
   if (!oldNumberOfInvoice || oldNumberOfInvoice.length == 0) {
-    oldNumberOfInvoiceNew = 0;
-  } else {
+    oldNumberOfInvoiceNew = 1;
+    console.log(oldNumberOfInvoiceNew);
+  } else if (oldNumberOfInvoice || !oldNumberOfInvoice.length == 0) {
     oldNumberOfInvoice = oldNumberOfInvoice[0].numberOfInvoice.slice(-4);
     oldNumberOfInvoice = conv2EnNum(oldNumberOfInvoice);
-    const oldNumberOfInvoiceNew = parseInt(oldNumberOfInvoice);
+    oldNumberOfInvoiceNew = parseInt(oldNumberOfInvoice);
     console.log(typeof oldNumberOfInvoice);
   }
   let userName = await User.findOne({ _id: userId });
@@ -77,7 +79,6 @@ const createHandlerNew = async (req, res, next) => {
 
   // let time = new Date();
   // time = Intl.DateTimeFormat("fa-IR").format(time);
-
 
   // console.log(numberOfInvoice);
 
@@ -108,11 +109,10 @@ const createHandlerNew = async (req, res, next) => {
   const sale = saleId;
 
   try {
-
-      const numberOfInvoice = `${generateNumberInvoice.generateInvoiceNumber(
-        userName,
-        oldNumberOfInvoiceNew
-      )}`;
+    const numberOfInvoice = `${generateNumberInvoice.generateInvoiceNumber(
+      userName,
+      oldNumberOfInvoiceNew
+    )}`;
     //*>----------- create model for data invoice
     await Invoice.create({
       numberOfInvoice: numberOfInvoice,
