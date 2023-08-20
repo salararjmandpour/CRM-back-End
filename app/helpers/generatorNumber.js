@@ -20,16 +20,19 @@ const generateInvoiceNumber = (prefix, number) => {
 };
 
 // Replace this with your own logic to get a sequential number
-const getSequentialNumber = (counter = -1) => {
-  if (!getSequentialNumber.counter) {
-    getSequentialNumber.counter = ++counter;
+const getSequentialNumber = (number) => {
+
+    console.log("number",number);
+  if (!getSequentialNumber.counter || number===1) {
+    getSequentialNumber.counter = number;
   } else {
     getSequentialNumber.counter++;
   }
+  console.log("ttt", getSequentialNumber.counter);
   return getSequentialNumber.counter
     .toString()
     .padStart(4, "0") // Padded to 4 digits
-    .toPersianDigits(); 
+    .toPersianDigits();
 };
 
 
