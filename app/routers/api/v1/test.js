@@ -9,14 +9,9 @@ const Key = config.encryptionKey;
 
 //*>----------- create route for test
 
-router.get("/", (req,res)=>{
-  const object = { name: "John", age: 30, city: "New York" };
-  let output = cerateCipher.encrypt(JSON.stringify(object), Key);
+// const generatePassword = require("app/helpers/generatorNumber");
 
-    res.json({
-      encrypted: output,
-      decode:  JSON.parse(cerateCipher.decrypt(output, Key)),
-    });})
+// router.get("/", generatePassword.generate);
 
 
 module.exports = router;
