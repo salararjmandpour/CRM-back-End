@@ -21,11 +21,12 @@ const generateInvoiceNumber = (prefix, number) => {
 
 // Replace this with your own logic to get a sequential number
 const getSequentialNumber = (number) => {
-
-    console.log("number",number);
-  if (!getSequentialNumber.counter || number===1) {
-    getSequentialNumber.counter = number;
+  console.log("number", number);
+  if (!getSequentialNumber.counter && number === 0) {
+    console.log("test");
+    getSequentialNumber.counter = 1;
   } else {
+    getSequentialNumber.counter = number;
     getSequentialNumber.counter++;
   }
   console.log("ttt", getSequentialNumber.counter);
@@ -34,7 +35,5 @@ const getSequentialNumber = (number) => {
     .padStart(4, "0") // Padded to 4 digits
     .toPersianDigits();
 };
-
-
 
 module.exports = { generateInvoiceNumber };
