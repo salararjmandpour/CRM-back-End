@@ -37,4 +37,6 @@ router.get("/invoice", verifyJWT, invoiceController.getBySaleIdHandler);
 
 router.post("/invoice", verifyJWT, invoiceController.createHandlerNew);
 
+router.put("/invoice", verifyJWT, invoiceController.putBySaleHandler);
+
 module.exports = router;
