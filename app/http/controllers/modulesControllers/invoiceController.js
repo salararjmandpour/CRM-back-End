@@ -3,32 +3,17 @@ const Invoice = require("app/models/Invoice");
 const User = require("app/models/User");
 const ROLES_LIST = require("app/config/roles_list");
 
-//*>---------- encrypt data sending
+//*>----------- import middleware
 
+//*>---------- encrypt data sending
 const cerateCipher = require("../../middleware/cerateCipher");
 const Key = config.encryptionKey;
 
+//*>----------- import helpers
+
 const generateNumberInvoice = require("app/helpers/generatorNumber");
 
-//*>---------- generate number
-const generatePassword = () => {
-  var length = 5,
-    charset = "1234567890",
-    retVal = "";
-  for (var i = 0, n = charset.length; i < length; ++i) {
-    retVal += charset.charAt(Math.floor(Math.random() * n));
-  }
-  return retVal;
-};
-
-//*>---------- convert english numbers to persian
-
-String.prototype.toPersianDigits = function () {
-  const id = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
-  return this.replace(/[0-9]/g, function (w) {
-    return id[+w];
-  });
-};
+//*>---------- convert persian numbers to english
 
 const conv2EnNum = (str) => {
   return (
@@ -53,10 +38,8 @@ const createHandlerNew = async (req, res, next) => {
   const userId = cerateCipher.decrypt(dataDecrypt.userId, Key);
   const saleId = cerateCipher.decrypt(dataDecrypt.saleId, Key);
 
-  // console.log(dataDecrypt);
+  //!>----------- Start create number of invoice
 
-  // console.log("userId:", userId);
-  // console.log("saleId:", saleId);
   let oldNumberOfInvoiceNew = 0;
   if (!dataDecrypt) return res.sendStatus(404);
 
@@ -77,10 +60,7 @@ const createHandlerNew = async (req, res, next) => {
   let userName = await User.findOne({ _id: userId });
   userName = userName.fullName.slice(0, 2);
 
-  // let time = new Date();
-  // time = Intl.DateTimeFormat("fa-IR").format(time);
-
-  // console.log(numberOfInvoice);
+  //!>----------- End create number of invoice
 
   const invoice = await Invoice.findOne({
     email: dataDecrypt.email,
@@ -139,6 +119,9 @@ const createHandlerNew = async (req, res, next) => {
     return res.status(500).json({ message: err });
   }
 };
+
+//*>------------ get route Invoice 
+
 const getBySaleIdHandler = async (req, res) => {
   const strId = req.query.saleId.toString();
   const strIdNew = strId.replaceAll(" ", "+");
@@ -161,9 +144,15 @@ const getBySaleIdHandler = async (req, res) => {
   }
 };
 
+
+const putBySaleHandler = async (req,res)=>{
+
+}
+
 //*>------------ export method
 
 module.exports = {
   createHandlerNew,
   getBySaleIdHandler,
+  putBySaleHandler,
 };
