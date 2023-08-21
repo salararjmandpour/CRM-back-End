@@ -48,9 +48,9 @@ const createHandlerNew = async (req, res, next) => {
     .limit(1);
   console.log(oldNumberOfInvoice);
 
-  if (!oldNumberOfInvoice || oldNumberOfInvoice.length == 0) {
-    oldNumberOfInvoiceNew = 1;
-    console.log(oldNumberOfInvoiceNew);
+  if (!oldNumberOfInvoice || oldNumberOfInvoice.length === 0) {
+    oldNumberOfInvoiceNew = 0;
+    console.log("null",oldNumberOfInvoiceNew);
   } else if (oldNumberOfInvoice || !oldNumberOfInvoice.length == 0) {
     oldNumberOfInvoice = oldNumberOfInvoice[0].numberOfInvoice.slice(-4);
     oldNumberOfInvoice = conv2EnNum(oldNumberOfInvoice);
@@ -120,7 +120,7 @@ const createHandlerNew = async (req, res, next) => {
   }
 };
 
-//*>------------ get route Invoice 
+//*>------------ get route Invoice
 
 const getBySaleIdHandler = async (req, res) => {
   const strId = req.query.saleId.toString();
@@ -144,10 +144,68 @@ const getBySaleIdHandler = async (req, res) => {
   }
 };
 
+//*>----------- put route invoice
 
-const putBySaleHandler = async (req,res)=>{
+const putBySaleHandler = async (req, res) => {
+  const strId = req.query.invoiceId.toString();
+  const strIdNew = strId.replaceAll(" ", "+");
+  const decryptInvoiceId = cerateCipher.decrypt(strIdNew, Key);
+  if (!decryptInvoiceId) return res.sensStatus(404);
 
-}
+  const dataDecrypt = await JSON.parse(
+    cerateCipher.decrypt(req.body.dataEncInvoice, Key)
+  );
+
+  const invoice = await Invoice.findOne({
+    email: dataDecrypt.email,
+    mobile: dataDecrypt.mobile,
+  });
+
+  if (invoice) return res.status(409);
+
+  const {
+    nameOfInvoice,
+    statusInvoice,
+    nameOfAgent,
+    economicCode,
+    mobile,
+    email,
+    wayOfPost,
+    description,
+    wayOfPay,
+    addressOfProduct,
+    addressOfInvoice,
+    sumTax,
+    finalPrice,
+  } = dataDecrypt;
+
+  try {
+    const updateInvoice = await Invoice.findOneAndUpdate(
+      { _id: decryptInvoiceId },
+      {
+        nameOfInvoice,
+        statusInvoice,
+        nameOfAgent,
+        economicCode,
+        mobile,
+        email,
+        wayOfPost,
+        description,
+        wayOfPay,
+        addressOfProduct,
+        addressOfInvoice,
+        sumTax,
+        finalPrice,
+      }
+    );
+    await updateInvoice.save();
+
+    res.sendStatus(202);
+  } catch (err) {
+    console.log(err.message);
+    return res.status(500).json({ message: err });
+  }
+};
 
 //*>------------ export method
 
