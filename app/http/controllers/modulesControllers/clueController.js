@@ -26,7 +26,6 @@ const createHandler = async (req, res) => {
     let expertFullName = await User.findOne({ _id: expertDecrypt });
     expertFullName = expertFullName.fullName;
 
-
     const {
       subject,
       fullName,
@@ -63,7 +62,11 @@ const createHandler = async (req, res) => {
 
     const duplicate = await Clues.findOne({ mobile, phonNumber }).exec();
 
-    if (duplicate) return res.sendStatus(409);
+    if (duplicate) {
+      return res.status(409).json({
+        message: "شماره موبایل یا شماره ثابت تکراری می باشد لطفا بررسی کنید ):",
+      });
+    }
 
     try {
       //*>----------- create model for data clue
@@ -216,9 +219,8 @@ const getOneAndAllHandler = async (req, res) => {
     const decryptUserRole = cerateCipher.decrypt(strRoleNew, Key);
     const decryptUserId = cerateCipher.decrypt(strIdNew, Key);
 
-
     if (ROLES_LIST.SeniorManager == decryptUserRole) {
-       console.log(decryptUserRole);
+      console.log(decryptUserRole);
       const clues = await Clues.find({});
       if (clues.length == 0)
         return res.status(404).json({
@@ -323,7 +325,6 @@ const getOneAndAllHandler = async (req, res) => {
             $push: { campaign: decryptStrIdCampsNew },
           }
         );
-
 
         await updateClue.save();
         for (let index = 0; index < decryptStrIdCampsNew.length; index++) {
