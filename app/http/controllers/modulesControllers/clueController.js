@@ -428,7 +428,7 @@ const updateOneClue = async (req, res) => {
       activityTellTime,
       cancelationReason,
     } = dataDecrypt;
-    console.log(dataDecrypt);
+    
     const stepMeet = dataDecrypt.stepMeet;
     const stepTell = dataDecrypt.stepTell;
 
