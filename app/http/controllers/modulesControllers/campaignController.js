@@ -215,7 +215,6 @@ const deleteOneCampaign = async (req, res) => {
     // >----------- delete model for data clue
     for (let index = 0; index < campLength.length; index++) {
       const campaignArray = await CampaignMain.findOne({ _id: decryptId });
-      await console.log("campaign.clues", campaignArray.clues);
       const deleteCampaignOfClues = await Clues.findOneAndUpdate(
         { _id: campaignArray.clues[index] },
         { $pull: { campaign: { $in: decryptId } } },
@@ -240,7 +239,6 @@ const updateOneCampaign = async (req, res) => {
   const strNew = str.replaceAll(" ", "+");
 
   const decryptId = cerateCipher.decrypt(strNew, Key);
-  console.log(decryptId);
   if (!decryptId) return res.sendStatus(404);
 
   const dataDecrypt = await JSON.parse(
