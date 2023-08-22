@@ -51,4 +51,6 @@ router.get("/inquiryOfPrice", verifyJWT, inquiryOfPrice.getBySaleIdHandler);
 
 router.post("/inquiryOfPrice", verifyJWT, inquiryOfPrice.createHandlerNew);
 
+router.delete("/inquiryOfPrice", verifyJWT, inquiryOfPrice.deleteOneInvoice);
+
 module.exports = router;
