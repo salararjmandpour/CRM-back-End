@@ -220,7 +220,6 @@ const getOneAndAllHandler = async (req, res) => {
     const decryptUserId = cerateCipher.decrypt(strIdNew, Key);
 
     if (ROLES_LIST.SeniorManager == decryptUserRole) {
-      console.log(decryptUserRole);
       const clues = await Clues.find({});
       if (clues.length == 0)
         return res.status(404).json({
@@ -543,7 +542,6 @@ const updateOneClue = async (req, res) => {
 
     //*>---------- update activity is active meet clue
     if (stepMeet && cancelationReason) {
-      console.log(stepMeet, cancelationReason);
       try {
         const updateActivityCluesMeetOpen =
           await ActivityCluesMeetOpen.findOneAndUpdate(
@@ -603,8 +601,7 @@ const updateOneClue = async (req, res) => {
       console.log(err.message);
       return res.status(500).json({ message: err });
     }
-    console.log("subject:", dataDecrypt.subject);
-    console.log("position:", dataDecrypt.position);
+    
   }
 };
 
@@ -626,7 +623,6 @@ const deleteOneClue = async (req, res) => {
     // >----------- delete model for data clue
     for (let index = 0; index < clueLength.length; index++) {
       const clueArray = await Clues.findOne({ _id: decryptId });
-      await console.log("clue.campaign", clueArray.campaign);
       const deleteClueOfCampaign = await CampaignMain.findOneAndUpdate(
         { _id: clueArray.campaign[index] },
         { $pull: { clues: { $in: decryptId } } },
