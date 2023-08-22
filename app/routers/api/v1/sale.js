@@ -6,11 +6,15 @@ const ROLES_LIST = require("../../../config/roles_list");
 
 const clueToSaleController = require("app/http/controllers/modulesControllers/clueToSaleController");
 const invoiceController = require("app/http/controllers/modulesControllers/invoiceController");
+const inquiryOfPrice = require("app/http/controllers/modulesControllers/inquiryOfPrice");
 
 //*>---------- middleware
 
 const verifyJWT = require("app/http/middleware/authMiddleware/verifyJWT");
 const verifyRoles = require("app/http/middleware/authMiddleware/verifyRoles");
+
+
+
 
 //*>----------- create route for sale
 
@@ -38,5 +42,13 @@ router.get("/invoice", verifyJWT, invoiceController.getBySaleIdHandler);
 router.post("/invoice", verifyJWT, invoiceController.createHandlerNew);
 
 router.put("/invoice", verifyJWT, invoiceController.putBySaleHandler);
+
+router.delete("/invoice", verifyJWT, invoiceController.deleteOneInvoice);
+
+//*>---------- create route for inquiryOfPrice
+
+router.get("/inquiryOfPrice", verifyJWT, inquiryOfPrice.getBySaleIdHandler);
+
+router.post("/inquiryOfPrice", verifyJWT, inquiryOfPrice.createHandlerNew);
 
 module.exports = router;
