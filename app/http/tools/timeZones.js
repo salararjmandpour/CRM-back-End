@@ -1,6 +1,5 @@
 const getTimeZones = (req, res) => {
   const country = req.query.country;
-  console.log(country.toLowerCase());
   let TimeZone = "";
   let Capital = "";
   let DialCode = "";
