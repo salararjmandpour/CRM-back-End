@@ -67,7 +67,11 @@ const createHandlerNew = async (req, res, next) => {
     mobile: dataDecrypt.mobile,
   });
 
-  if (invoice) return res.status(409);
+  if (invoice) {
+    return res.status(409).json({
+      message: "شماره موبایل یا ایمیل تکراری می باشد لطفا بررسی کنید ):",
+    });
+  }
 
   const {
     nameOfInvoice,
@@ -160,12 +164,20 @@ const putBySaleHandler = async (req, res) => {
 
   console.log(dataDecrypt);
 
-  const invoice = await Invoice.findOne({
+  const invoice = await Invoice.find({
     email: dataDecrypt.email,
     mobile: dataDecrypt.mobile,
-  });
+  }).exec();
 
-  if (invoice) return res.status(409);
+  console.log(invoice);
+
+  if (invoice) {
+    return res
+      .status(409)
+      .json({
+        message: "شماره موبایل یا ایمیل تکراری می باشد لطفا بررسی کنید ):",
+      });
+  }
 
   const {
     nameOfInvoice,
@@ -188,21 +200,22 @@ const putBySaleHandler = async (req, res) => {
     const updateInvoice = await Invoice.findOneAndUpdate(
       { _id: decryptInvoiceId },
       {
-        nameOfInvoice,
-        statusInvoice,
-        nameOfAgent,
-        economicCode,
-        mobile,
-        email,
-        wayOfPost,
-        description,
-        wayOfPay,
-        addressOfProduct,
-        addressOfInvoice,
-        sumTax,
-        finalPrice,
+        nameOfInvoice: nameOfInvoice,
+        statusInvoice: statusInvoice,
+        nameOfAgent: nameOfAgent,
+        economicCode: economicCode,
+        mobile: mobile,
+        email: email,
+        wayOfPost: wayOfPost,
+        description: description,
+        wayOfPay: wayOfPay,
+        addressOfProduct: addressOfProduct,
+        addressOfInvoice: addressOfInvoice,
+        sumTax: sumTax,
+        finalPrice: finalPrice,
       }
     );
+    console.log("test:", updateInvoice);
     await updateInvoice.save();
 
     res.sendStatus(202);
