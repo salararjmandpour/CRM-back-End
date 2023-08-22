@@ -63,7 +63,7 @@ const createHandler = async (req, res) => {
 
     const duplicate = await Clues.findOne({ mobile, phonNumber }).exec();
 
-    if (duplicate) return res.status(409);
+    if (duplicate) return res.sendStatus(409);
 
     try {
       //*>----------- create model for data clue
@@ -428,7 +428,7 @@ const updateOneClue = async (req, res) => {
       activityTellTime,
       cancelationReason,
     } = dataDecrypt;
-    
+
     const stepMeet = dataDecrypt.stepMeet;
     const stepTell = dataDecrypt.stepTell;
 
