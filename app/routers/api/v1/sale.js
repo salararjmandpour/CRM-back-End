@@ -13,9 +13,6 @@ const inquiryOfPrice = require("app/http/controllers/modulesControllers/inquiryO
 const verifyJWT = require("app/http/middleware/authMiddleware/verifyJWT");
 const verifyRoles = require("app/http/middleware/authMiddleware/verifyRoles");
 
-
-
-
 //*>----------- create route for sale
 
 router.get("/", verifyJWT, clueToSaleController.getByUserHandler);
@@ -51,6 +48,8 @@ router.get("/inquiryOfPrice", verifyJWT, inquiryOfPrice.getBySaleIdHandler);
 
 router.post("/inquiryOfPrice", verifyJWT, inquiryOfPrice.createHandlerNew);
 
-router.delete("/inquiryOfPrice", verifyJWT, inquiryOfPrice.deleteOneInvoice);
+router.delete("/inquiryOfPrice", verifyJWT, inquiryOfPrice.deleteOneById);
+
+router.put("/inquiryOfPrice", verifyJWT, inquiryOfPrice.putBySaleHandler);
 
 module.exports = router;
