@@ -169,7 +169,7 @@ const putBySaleHandler = async (req, res) => {
 
 //*>----------- delete route one InquiryOfPrice
 
-const deleteOneInquiryOfPrice = async (req, res) => {
+const deleteOneById = async (req, res) => {
   const str = req.query.id.toString();
   const strNew = str.replaceAll(" ", "+");
   const decryptId = cerateCipher.decrypt(strNew, Key);
@@ -189,6 +189,6 @@ const deleteOneInquiryOfPrice = async (req, res) => {
 module.exports = {
   createHandlerNew,
   getBySaleIdHandler,
-  deleteOneInquiryOfPrice,
   putBySaleHandler,
+  deleteOneById,
 };
