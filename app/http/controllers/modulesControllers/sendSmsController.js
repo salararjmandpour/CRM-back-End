@@ -47,7 +47,6 @@ const sendSms = async (req, res) => {
     });
   }
 
-  console.log(utcTime);
 
   const panelSms = await PanelSms.find({}).exec();
 
@@ -67,7 +66,6 @@ const sendSms = async (req, res) => {
     },
     function (error, request, body) {
       if (!error && request.statusCode === 200) {
-        console.log(request.body);
         return res.sendStatus(200);
       } else {
         console.log("whatever you want");
