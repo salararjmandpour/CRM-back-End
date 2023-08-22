@@ -50,12 +50,10 @@ const createHandlerNew = async (req, res, next) => {
 
   if (!oldNumberOfInvoice || oldNumberOfInvoice.length === 0) {
     oldNumberOfInvoiceNew = 0;
-    console.log("null", oldNumberOfInvoiceNew);
   } else if (oldNumberOfInvoice || !oldNumberOfInvoice.length == 0) {
     oldNumberOfInvoice = oldNumberOfInvoice[0].numberOfInvoice.slice(-4);
     oldNumberOfInvoice = conv2EnNum(oldNumberOfInvoice);
     oldNumberOfInvoiceNew = parseInt(oldNumberOfInvoice);
-    console.log(typeof oldNumberOfInvoice);
   }
   let userName = await User.findOne({ _id: userId });
   userName = userName.fullName.slice(0, 2);
@@ -156,7 +154,6 @@ const putBySaleHandler = async (req, res) => {
   const decryptInvoiceId = cerateCipher.decrypt(strIdNew, Key);
   if (!decryptInvoiceId) return res.sensStatus(404);
 
-  console.log(decryptInvoiceId);
 
   const dataDecrypt = await JSON.parse(
     cerateCipher.decrypt(req.body.dataEncInvoice, Key)
@@ -225,7 +222,6 @@ const deleteOneInvoice = async (req, res) => {
   const strNew = str.replaceAll(" ", "+");
   const decryptId = cerateCipher.decrypt(strNew, Key);
 
-  console.log(decryptId);
   try {
     //*>----------- delete model for data invoice
     await Invoice.findOneAndDelete({ _id: decryptId });
