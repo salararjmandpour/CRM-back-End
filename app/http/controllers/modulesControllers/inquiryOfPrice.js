@@ -35,8 +35,6 @@ const createHandlerNew = async (req, res, next) => {
     cerateCipher.decrypt(req.body.dataEncInquiryOfPrice, Key)
   );
 
-  console.log(dataDecrypt);
-
   const userId = cerateCipher.decrypt(dataDecrypt.userId, Key);
   const saleId = cerateCipher.decrypt(dataDecrypt.saleId, Key);
 
@@ -127,8 +125,6 @@ const getBySaleIdHandler = async (req, res) => {
   }
 };
 
-
-
 //*>----------- delete route one InquiryOfPrice
 
 const deleteOneInquiryOfPrice = async (req, res) => {
@@ -136,7 +132,6 @@ const deleteOneInquiryOfPrice = async (req, res) => {
   const strNew = str.replaceAll(" ", "+");
   const decryptId = cerateCipher.decrypt(strNew, Key);
 
-  console.log(decryptId);
   try {
     //*>----------- delete model for data invoice
     await InquiryOfPrice.findOneAndDelete({ _id: decryptId });
