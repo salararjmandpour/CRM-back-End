@@ -46,7 +46,7 @@ const createHandlerNew = async (req, res, next) => {
   let oldNumberOfInvoice = await Invoice.find({})
     .sort({ createdAt: -1 })
     .limit(1);
-  console.log(oldNumberOfInvoice);
+
 
   if (!oldNumberOfInvoice || oldNumberOfInvoice.length === 0) {
     oldNumberOfInvoiceNew = 0;
@@ -218,10 +218,30 @@ const putBySaleHandler = async (req, res) => {
   }
 };
 
+//*>----------- delete route one invoice
+
+const deleteOneInvoice = async (req, res) => {
+  const str = req.query.id.toString();
+  const strNew = str.replaceAll(" ", "+");
+  const decryptId = cerateCipher.decrypt(strNew, Key);
+
+  console.log(decryptId);
+  try {
+    //*>----------- delete model for data invoice
+    await Invoice.findOneAndDelete({ _id: decryptId });
+
+    return res.status(200).json({ message: "فاکتور مورد نظر شما پاک شود" });
+  } catch (err) {
+    console.log(err.message);
+    return res.status(500).json({ message: err });
+  }
+};
+
 //*>------------ export method
 
 module.exports = {
   createHandlerNew,
   getBySaleIdHandler,
   putBySaleHandler,
+  deleteOneInvoice,
 };
