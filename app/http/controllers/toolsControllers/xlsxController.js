@@ -35,18 +35,15 @@ const importFile = async (req, res, next) => {
   if (req.query.userid) {
     const strId = req.query.userid.toString();
     const strIdNew = strId.replaceAll(" ", "+");
-    console.log(strIdNew);
     const expertDecrypt = await cerateCipher.decrypt(strIdNew, Key);
     let expertFullName = await User.findOne({ _id: expertDecrypt });
     expertFullName = expertFullName.fullName;
 
     const storage = multer.diskStorage({
       destination: (req, file, callback) => {
-        console.log(file);
         callback(null, "./upload");
       },
       filename: (req, file, callback) => {
-        console.log(file.originalname);
         const temp_file_arr = file.originalname.split(".");
 
         const temp_file_name = temp_file_arr[0];
