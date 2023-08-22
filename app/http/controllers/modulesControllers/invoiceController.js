@@ -162,21 +162,15 @@ const putBySaleHandler = async (req, res) => {
     cerateCipher.decrypt(req.body.dataEncInvoice, Key)
   );
 
-  console.log(dataDecrypt);
-
-  const invoice = await Invoice.find({
+  const invoice = await Invoice.findOne({
     email: dataDecrypt.email,
     mobile: dataDecrypt.mobile,
   }).exec();
 
-  console.log(invoice);
-
   if (invoice) {
-    return res
-      .status(409)
-      .json({
-        message: "شماره موبایل یا ایمیل تکراری می باشد لطفا بررسی کنید ):",
-      });
+    return res.status(409).json({
+      message: "شماره موبایل یا ایمیل تکراری می باشد لطفا بررسی کنید ):",
+    });
   }
 
   const {
@@ -215,7 +209,6 @@ const putBySaleHandler = async (req, res) => {
         finalPrice: finalPrice,
       }
     );
-    console.log("test:", updateInvoice);
     await updateInvoice.save();
 
     res.sendStatus(202);
