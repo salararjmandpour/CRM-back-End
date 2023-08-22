@@ -47,7 +47,6 @@ const createHandlerNew = async (req, res, next) => {
     .sort({ createdAt: -1 })
     .limit(1);
 
-
   if (!oldNumberOfInvoice || oldNumberOfInvoice.length === 0) {
     oldNumberOfInvoiceNew = 0;
   } else if (oldNumberOfInvoice || !oldNumberOfInvoice.length == 0) {
@@ -154,7 +153,6 @@ const putBySaleHandler = async (req, res) => {
   const decryptInvoiceId = cerateCipher.decrypt(strIdNew, Key);
   if (!decryptInvoiceId) return res.sensStatus(404);
 
-
   const dataDecrypt = await JSON.parse(
     cerateCipher.decrypt(req.body.dataEncInvoice, Key)
   );
@@ -175,8 +173,6 @@ const putBySaleHandler = async (req, res) => {
     statusInvoice,
     nameOfAgent,
     economicCode,
-    mobile,
-    email,
     wayOfPost,
     description,
     wayOfPay,
@@ -191,19 +187,17 @@ const putBySaleHandler = async (req, res) => {
     const updateInvoice = await Invoice.findOneAndUpdate(
       { _id: decryptInvoiceId },
       {
-        nameOfInvoice: nameOfInvoice,
-        statusInvoice: statusInvoice,
-        nameOfAgent: nameOfAgent,
-        economicCode: economicCode,
-        mobile: mobile,
-        email: email,
-        wayOfPost: wayOfPost,
-        description: description,
-        wayOfPay: wayOfPay,
-        addressOfProduct: addressOfProduct,
-        addressOfInvoice: addressOfInvoice,
-        sumTax: sumTax,
-        finalPrice: finalPrice,
+        nameOfInvoice,
+        statusInvoice,
+        nameOfAgent,
+        economicCode,
+        wayOfPost,
+        description,
+        wayOfPay,
+        addressOfProduct,
+        addressOfInvoice,
+        sumTax,
+        finalPrice,
       }
     );
     await updateInvoice.save();
