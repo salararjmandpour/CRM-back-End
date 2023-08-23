@@ -59,9 +59,25 @@ const getTimeZones = (req, res) => {
       break;
 
     case "argentina":
-      TimeZone = new Date().toLocaleString("en-US", {
-        timeZone: "Asia/Yerevan",
-      });
+      TimeZone = {
+        AmericaArgentinaBuenos_Aires: new Date().toLocaleString("en-US", {
+          timeZone: "America/Argentina/Buenos_Aires",
+        }),
+        AmericaArgentinaCordoba: new Date().toLocaleString("en-US", {
+          timeZone: "America/Argentina/Cordoba",
+        }),
+
+        AmericaArgentinaSalta: new Date().toLocaleString("en-US", {
+          timeZone: "America/Argentina/Salta",
+        }),
+        AmericaArgentinaJujuy: new Date().toLocaleString("en-US", {
+          timeZone: "America/Argentina/Jujuy",
+        }),
+        AmericaArgentinaTucuman: new Date().toLocaleString("en-US", {
+          timeZone: "America/Argentina/Tucuman",
+        }),
+      };
+
       Capital = "Buenos Aires";
       DialCode = "+54";
       res.status(200).json({ TimeZone, Capital, DialCode });
