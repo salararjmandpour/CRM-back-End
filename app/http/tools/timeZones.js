@@ -124,79 +124,94 @@ const getTimeZones = (req, res) => {
       break;
 
     case "azerbaijan":
-      TimeZone = {
-        AustraliaLordHowe: new Date().toLocaleString("en-US", {
-          timeZone: "Asia/Baku",
-        }),
-      };
-      Capital = "Baku";
+      (TimeZone = new Date().toLocaleString("en-US", {
+        timeZone: "Asia/Baku",
+      })),
+        (Capital = "Baku");
       DialCode = "+994";
       res.status(200).json({ TimeZone, Capital, DialCode });
       break;
 
     case "barbados":
-      TimeZone = {
-        AustraliaLordHowe: new Date().toLocaleString("en-US", {
-          timeZone: "America/Barbados",
-        }),
-      };
-      Capital = "Bridgetown";
+      (TimeZone = new Date().toLocaleString("en-US", {
+        timeZone: "America/Barbados",
+      })),
+        (Capital = "Bridgetown");
       DialCode = "+1";
       res.status(200).json({ TimeZone, Capital, DialCode });
       break;
 
     case "bangladesh":
-      TimeZone = {
-        AustraliaLordHowe: new Date().toLocaleString("en-US", {
-          timeZone: "Asia/Dhaka",
-        }),
-      };
-      Capital = "Dhaka";
+      (TimeZone = new Date().toLocaleString("en-US", {
+        timeZone: "Asia/Dhaka",
+      })),
+        (Capital = "Dhaka");
       DialCode = "+880";
       res.status(200).json({ TimeZone, Capital, DialCode });
       break;
 
     case "belgium":
-      TimeZone = {
-        AustraliaLordHowe: new Date().toLocaleString("en-US", {
-          timeZone: "Europe/Brussels",
-        }),
-      };
-      Capital = "Brussels";
+      (TimeZone = new Date().toLocaleString("en-US", {
+        timeZone: "Europe/Brussels",
+      })),
+        (Capital = "Brussels");
       DialCode = "+32";
       res.status(200).json({ TimeZone, Capital, DialCode });
       break;
 
     case "bulgaria":
-      TimeZone = {
-        AustraliaLordHowe: new Date().toLocaleString("en-US", {
-          timeZone: "Europe/Sofia",
-        }),
-      };
-      Capital = "Sofia";
+      (TimeZone = new Date().toLocaleString("en-US", {
+        timeZone: "Europe/Sofia",
+      })),
+        (Capital = "Sofia");
       DialCode = "+359";
       res.status(200).json({ TimeZone, Capital, DialCode });
       break;
 
     case "brunei":
-      TimeZone = {
-        AustraliaLordHowe: new Date().toLocaleString("en-US", {
-          timeZone: "Asia/Brunei",
-        }),
-      };
-      Capital = "Bandar Seri Begawan";
+      (TimeZone = new Date().toLocaleString("en-US", {
+        timeZone: "Asia/Brunei",
+      })),
+        (Capital = "Bandar Seri Begawan");
       DialCode = "+673";
       res.status(200).json({ TimeZone, Capital, DialCode });
       break;
 
     case "bolivia":
+      (TimeZone = new Date().toLocaleString("en-US", {
+        timeZone: "America/La_Paz",
+      })),
+        (Capital = "Sucre");
+      DialCode = "+591";
+      res.status(200).json({ TimeZone, Capital, DialCode });
+      break;
+
+    case "brazil":
       TimeZone = {
-        AustraliaLordHowe: new Date().toLocaleString("en-US", {
+        AmericaLa_Paz: new Date().toLocaleString("en-US", {
           timeZone: "America/La_Paz",
         }),
+        AmericaNoronha: new Date().toLocaleString("en-US", {
+          timeZone: "America/Noronha",
+        }),
+        AmericaBelem: new Date().toLocaleString("en-US", {
+          timeZone: "America/Belem",
+        }),
+        AmericaFortaleza: new Date().toLocaleString("en-US", {
+          timeZone: "America/Fortaleza",
+        }),
+        AmericaRecife: new Date().toLocaleString("en-US", {
+          timeZone: "America/Recife",
+        }),
+        AmericaAraguaina: new Date().toLocaleString("en-US", {
+          timeZone: "America/Araguaina",
+        }),
+        AmericaMaceio: new Date().toLocaleString("en-US", {
+          timeZone: "America/Maceio",
+        }),
       };
-      Capital = "Sucre";
-      DialCode = "+591";
+      Capital = "Brasilia";
+      DialCode = "+55";
       res.status(200).json({ TimeZone, Capital, DialCode });
       break;
 
