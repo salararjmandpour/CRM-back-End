@@ -968,7 +968,7 @@ const getAllUni = (req, res) => {
       id: 137,
     },
     {
-      name: "دانشکده علوم پزشکی سراب	",
+      name: "دانشکده علوم پزشکی سراب",
       city: "سراب",
       establishedYear: "1392",
       NumberOfFaculties: "1",
