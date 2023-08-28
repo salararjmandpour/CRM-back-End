@@ -113,7 +113,7 @@ const getAllUni = (req, res) => {
       id: 16,
     },
     {
-      name: "دانشگاه تخصصی فناوری‌های نوین آمل	",
+      name: "دانشگاه تخصصی فناوری‌های نوین آمل",
       city: "آمل",
       establishedYear: "1392",
       NumberOfFaculties: "4",
@@ -174,6 +174,41 @@ const getAllUni = (req, res) => {
       establishedYear: "1391",
       NumberOfFaculties: "1",
       id: 25,
+    },
+    {
+      name: "دانشگاه حکیم سبزواری",
+      city: "سبزوار",
+      establishedYear: "1366",
+      NumberOfFaculties: "10",
+      id: 26,
+    },
+    {
+      name: "دانشگاه خلیج فارس بوشهر",
+      city: "بوشهر",
+      establishedYear: "1371",
+      NumberOfFaculties: "8",
+      id: 27,
+    },
+    {
+      name: "دانشگاه خوارزمی",
+      city: "تهران",
+      establishedYear: "1297",
+      NumberOfFaculties: "14",
+      id: 28,
+    },
+    {
+      name: "دانشگاه دامغان",
+      city: "دامغان",
+      establishedYear: "1368",
+      NumberOfFaculties: "8",
+      id: 29,
+    },
+    {
+      name: "دانشگاه حضرت معصومه	",
+      city: "قم",
+      establishedYear: "1386",
+      NumberOfFaculties: "1",
+      id: 30,
     },
   ]);
 };
