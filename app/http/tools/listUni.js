@@ -778,6 +778,55 @@ const getAllUni = (req, res) => {
       NumberOfFaculties: "7",
       id: 110,
     },
+    {
+      name: "دانشگاه علوم پزشکی ایران",
+      city: "تهران",
+      establishedYear: "1352",
+      NumberOfFaculties: "10",
+      id: 111,
+    },
+    {
+      name: "دانشگاه علوم پزشکی ایرانشهر",
+      city: "ایرانشهر",
+      establishedYear: "1372",
+      NumberOfFaculties: "5",
+      id: 112,
+    },
+    {
+      name: "دانشگاه علوم پزشکی ایلام",
+      city: "ایلام",
+      establishedYear: "1369",
+      NumberOfFaculties: "5",
+      id: 113,
+    },
+    {
+      name: "دانشگاه علوم پزشکی بابل",
+      city: "بابل",
+      establishedYear: "1362",
+      NumberOfFaculties: "8",
+      id: 114,
+    },
+    {
+      name: "دانشگاه علوم پزشکی بقیةالله",
+      city: "تهران",
+      establishedYear: "1364",
+      NumberOfFaculties: "4",
+      id: 115,
+    },
+    {
+      name: "دانشگاه علوم پزشکی بم",
+      city: "بم",
+      establishedYear: "1370",
+      NumberOfFaculties: "34",
+      id: 116,
+    },
+    {
+      name: "دانشگاه علوم پزشکی بوشهر",
+      city: "بوشهر",
+      establishedYear: "1362",
+      NumberOfFaculties: "5",
+      id: 117,
+    },
   ]);
 };
 
