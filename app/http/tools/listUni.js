@@ -204,11 +204,32 @@ const getAllUni = (req, res) => {
       id: 29,
     },
     {
-      name: "دانشگاه حضرت معصومه	",
+      name: "دانشگاه حضرت معصومه",
       city: "قم",
       establishedYear: "1386",
       NumberOfFaculties: "1",
       id: 30,
+    },
+    {
+      name: "دانشگاه دریانوردی و علوم دریایی چابهار	",
+      city: "چابهار",
+      establishedYear: "1355",
+      NumberOfFaculties: "3",
+      id: 31,
+    },
+    {
+      name: "دانشگاه رازی کرمانشاه",
+      city: "کرمانشاه",
+      establishedYear: "1351",
+      NumberOfFaculties: "13",
+      id: 32,
+    },
+    {
+      name: "دانشگاه زابل",
+      city: "زابل",
+      establishedYear: "1357",
+      NumberOfFaculties: "9",
+      id: 33,
     },
   ]);
 };
