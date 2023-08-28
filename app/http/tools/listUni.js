@@ -920,7 +920,7 @@ const getAllUni = (req, res) => {
     },
     {
       name: "دانشکده علوم پزشکی خوی",
-      city: "خوی		",
+      city: "خوی",
       establishedYear: "1371",
       NumberOfFaculties: "1",
       id: 131,
