@@ -232,6 +232,9 @@ const getTimeZones = (req, res) => {
       break;
 
     default:
+      res.status(409).json({
+        message: "Send a valid country name with `country` parameter",
+      });
       break;
   }
 };
