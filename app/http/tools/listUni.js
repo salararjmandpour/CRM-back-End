@@ -925,6 +925,55 @@ const getAllUni = (req, res) => {
       NumberOfFaculties: "1",
       id: 131,
     },
+    {
+      name: "دانشگاه علوم پزشکی دزفول",
+      city: "رفسنجان",
+      establishedYear: "1386",
+      NumberOfFaculties: "5",
+      id: 132,
+    },
+    {
+      name: "دانشگاه علوم پزشکی زابل",
+      city: "زابل",
+      establishedYear: "1370",
+      NumberOfFaculties: "5",
+      id: 133,
+    },
+    {
+      name: "دانشگاه علوم پزشکی زاهدان",
+      city: "زاهدان",
+      establishedYear: "1365",
+      NumberOfFaculties: "7",
+      id: 134,
+    },
+    {
+      name: "دانشگاه علوم پزشکی زنجان",
+      city: "زنجان",
+      establishedYear: "1366",
+      NumberOfFaculties: "8",
+      id: 135,
+    },
+    {
+      name: "دانشکده علوم پزشکی ساوه",
+      city: "ساوه",
+      establishedYear: "1376",
+      NumberOfFaculties: "1",
+      id: 136,
+    },
+    {
+      name: "دانشگاه علوم پزشکی سبزوار",
+      city: "سبزوار",
+      establishedYear: "1365",
+      NumberOfFaculties: "5",
+      id: 137,
+    },
+    {
+      name: "دانشکده علوم پزشکی سراب	",
+      city: "سراب",
+      establishedYear: "1392",
+      NumberOfFaculties: "1",
+      id: 138,
+    },
   ]);
 };
 
