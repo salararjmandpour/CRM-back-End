@@ -231,6 +231,55 @@ const getAllUni = (req, res) => {
       NumberOfFaculties: "9",
       id: 33,
     },
+    {
+      name: "دانشگاه زنجان",
+      city: "زنجان",
+      establishedYear: "1353",
+      NumberOfFaculties: "5",
+      id: 34,
+    },
+    {
+      name: "دانشگاه سلمان فارسی کازرون",
+      city: "کازرون",
+      establishedYear: "1372",
+      NumberOfFaculties: "4",
+      id: 35,
+    },
+    {
+      name: "دانشگاه سید جمال‌الدین اسدآبادی",
+      city: "اسدآباد",
+      establishedYear: "1390",
+      NumberOfFaculties: "4",
+      id: 36,
+    },
+    {
+      name: "دانشگاه سمنان",
+      city: "سمنان",
+      establishedYear: "1353",
+      NumberOfFaculties: "24",
+      id: 37,
+    },
+    {
+      name: "دانشگاه سیستان و بلوچستان",
+      city: "زاهدان",
+      establishedYear: "1353",
+      NumberOfFaculties: "12",
+      id: 38,
+    },
+    {
+      name: "دانشگاه شاهد",
+      city: "تهران",
+      establishedYear: "1369",
+      NumberOfFaculties: "5",
+      id: 39,
+    },
+    {
+      name: "دانشگاه بین‌المللی مذاهب اسلامی",
+      city: "تهران",
+      establishedYear: "1371",
+      NumberOfFaculties: "3",
+      id: 40,
+    },
   ]);
 };
 
