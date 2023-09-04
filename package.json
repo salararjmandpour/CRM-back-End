@@ -53,8 +53,8 @@
     "request-ip": "^3.3.0",
     "set-tz": "^0.2.0",
     "sniffr": "^1.2.0",
-    "swagger-jsdoc": "^6.2.8",
-    "swagger-ui-express": "^5.0.0",
+    "swagger-jsdoc": "^6.0.1",
+    "swagger-ui-express": "^4.1.6",
     "unique-string": "^2.0.0",
     "uuid": "^9.0.0",
     "validator": "^13.7.0",
@@ -66,5 +66,4 @@
     "eslint-config-prettier": "^8.8.0",
     "prettier": "^3.0.0"
   }
-  
 }
