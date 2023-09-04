@@ -42,7 +42,7 @@ module.exports = class Application {
           new Date().toLocaleString("fa-IR", { timeZone: "Asia/Tehran" })
         )
       );
-      
+
     });
   }
 
