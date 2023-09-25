@@ -89,7 +89,7 @@ const clueSchema = new Schema(
       required: true,
       trim: true,
       minlength: 2,
-      maxLength: 100,
+      maxLength: 500,
     },
     qualityCustomer: {
       type: String,
