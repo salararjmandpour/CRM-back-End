@@ -131,6 +131,7 @@ const getSingleAndAllHandler = async (req, res) => {
         });
 
         const campaignMain = await CampaignMain.find({ _id: decryptIdCamp });
+        console.log(campaignMain);
         const encryptClues = cerateCipher.encrypt(JSON.stringify(clues), Key);
         const encryptData = cerateCipher.encrypt(
           JSON.stringify(campaignMain),
