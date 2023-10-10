@@ -24,13 +24,18 @@ const sendMail = async (req, res) => {
   }
 
   const transporter = await nodeMailer.createTransport({
+    pool: true,
     host: userMail[0].host,
     port: userMail[0].port,
-    secureConnection: true,
+    secure: false,
+    // secureConnection: true,
     auth: {
       user: userMail[0].user,
       pass: userMail[0].pass,
     },
+    tls: {
+      rejectUnauthorized: false
+  },
   });
 
   const mailOptions = await {
