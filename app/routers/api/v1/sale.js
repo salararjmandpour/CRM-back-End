@@ -20,15 +20,15 @@ router.get("/", verifyJWT, clueToSaleController.getByUserHandler);
 router.post(
   "/",
   verifyJWT,
-  // verifyRoles(
-  //   ROLES_LIST.SeniorManager
-  //   ROLES_LIST.SalesSpecialist,
-  //   ROLES_LIST.SalesManager,
-  //   ROLES_LIST.FinanceManager,
-  //   ROLES_LIST.AccountingManager,
-  //   ROLES_LIST.Accountant,
-  //   ROLES_LIST.CRMManager
-  // ),
+  verifyRoles(
+    ROLES_LIST.SeniorManager,
+    ROLES_LIST.SalesSpecialist,
+    ROLES_LIST.SalesManager,
+    ROLES_LIST.FinanceManager,
+    ROLES_LIST.AccountingManager,
+    ROLES_LIST.Accountant,
+    ROLES_LIST.CRMManager
+  ),
   clueToSaleController.createHandlerNew
 );
 

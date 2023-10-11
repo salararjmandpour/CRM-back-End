@@ -18,37 +18,37 @@ router.get("/singleandall", verifyJWT, clueController.getOneAndAllHandler);
 router.post(
   "/",
   verifyJWT,
-  // verifyRoles(
-  //   ROLES_LIST.SeniorManager,
-  //   ROLES_LIST.SalesSpecialist,
-  //   ROLES_LIST.SalesManager,
-  //   ROLES_LIST.FinanceManager,
-  //   ROLES_LIST.AccountingManager,
-  //   ROLES_LIST.Accountant,
-  //   ROLES_LIST.CRMManager,
-  // ),
+  verifyRoles(
+    ROLES_LIST.SeniorManager,
+    ROLES_LIST.SalesSpecialist,
+    ROLES_LIST.SalesManager,
+    ROLES_LIST.FinanceManager,
+    ROLES_LIST.AccountingManager,
+    ROLES_LIST.Accountant,
+    ROLES_LIST.CRMManager,
+  ),
   clueController.createHandler
 );
 
 router.put(
   "/",
   verifyJWT,
-  // verifyRoles(
-  //   ROLES_LIST.SeniorManager,
-  //   ROLES_LIST.SalesManager,
-  //   ROLES_LIST.SalesSpecialist,
-  //   ROLES_LIST.FinanceManager,
-  //   ROLES_LIST.AccountingManager,
-  //   ROLES_LIST.Accountant,
-  //   ROLES_LIST.CRMManager
-  // ),
+  verifyRoles(
+    ROLES_LIST.SeniorManager,
+    ROLES_LIST.SalesManager,
+    ROLES_LIST.SalesSpecialist,
+    ROLES_LIST.FinanceManager,
+    ROLES_LIST.AccountingManager,
+    ROLES_LIST.Accountant,
+    ROLES_LIST.CRMManager
+  ),
   clueController.updateOneClue
 );
 
 router.delete(
   "/",
   verifyJWT,
-  // verifyRoles(ROLES_LIST.SeniorManager, ROLES_LIST.SalesManager),
+  verifyRoles(ROLES_LIST.SeniorManager, ROLES_LIST.SalesManager),
   clueController.deleteOneClue
 );
 
