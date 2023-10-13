@@ -27,7 +27,7 @@ const sendMail = async (req, res) => {
     pool: true,
     host: userMail[0].host,
     port: userMail[0].port,
-    secure: false,
+    secure: true,
     // secureConnection: true,
     auth: {
       user: userMail[0].user,
