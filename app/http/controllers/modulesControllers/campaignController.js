@@ -237,12 +237,10 @@ const deleteClueOfCampaign = async (req, res) => {
   const strClueId = req.query.clueId.toString();
   const strNewClueId = strClueId.replaceAll(" ", "+");
   const decryptClueId = cerateCipher.decrypt(strNewClueId, Key);
-  console.log("decryptClueId; ", decryptClueId);
 
   const strCampaignId = req.query.campaignId.toString();
   const strNewCampaignId = strCampaignId.replaceAll(" ", "+");
   const decryptCampaignId = cerateCipher.decrypt(strNewCampaignId, Key);
-  console.log("decryptCampaignId: ", decryptCampaignId);
 
   try {
     const deleteCampaignOfClues = await Clues.findOneAndUpdate(
@@ -250,14 +248,13 @@ const deleteClueOfCampaign = async (req, res) => {
       { $pull: { campaign: { $in: decryptCampaignId } } },
       { new: true }
     );
-    console.log(deleteCampaignOfClue);
 
     const deleteClueOfCampaign = await CampaignMain.findOneAndUpdate(
       { _id: decryptCampaignId },
       { $pull: { clues: { $in: decryptClueId } } },
       { new: true }
     );
-    console.log(deleteClueOfCampaign);
+
     await deleteCampaignOfClues.save();
     await deleteClueOfCampaign.save();
     return res.sendStatus(200);
