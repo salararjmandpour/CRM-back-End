@@ -38,6 +38,13 @@ router.delete(
   campaignController.deleteOneCampaign
 );
 
+router.delete(
+  "/ClueOfCampaign",
+  verifyJWT,
+  verifyRoles(ROLES_LIST.SeniorManager, ROLES_LIST.SalesManager),
+  campaignController.deleteClueOfCampaign
+);
+
 router.put(
   "/",
   verifyJWT,

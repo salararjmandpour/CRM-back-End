@@ -231,6 +231,42 @@ const deleteOneCampaign = async (req, res) => {
   }
 };
 
+//*>------------ delete a clue of a campaign
+
+const deleteClueOfCampaign = async (req, res) => {
+  const strClueId = req.query.clueId.toString();
+  const strNewClueId = strClueId.replaceAll(" ", "+");
+  const decryptClueId = cerateCipher.decrypt(strNewClueId, Key);
+  console.log("decryptClueId; ", decryptClueId);
+
+  const strCampaignId = req.query.campaignId.toString();
+  const strNewCampaignId = strCampaignId.replaceAll(" ", "+");
+  const decryptCampaignId = cerateCipher.decrypt(strNewCampaignId, Key);
+  console.log("decryptCampaignId: ", decryptCampaignId);
+
+  try {
+    const deleteCampaignOfClues = await Clues.findOneAndUpdate(
+      { _id: decryptClueId },
+      { $pull: { campaign: { $in: decryptCampaignId } } },
+      { new: true }
+    );
+    console.log(deleteCampaignOfClue);
+
+    const deleteClueOfCampaign = await CampaignMain.findOneAndUpdate(
+      { _id: decryptCampaignId },
+      { $pull: { clues: { $in: decryptClueId } } },
+      { new: true }
+    );
+    console.log(deleteClueOfCampaign);
+    await deleteCampaignOfClues.save();
+    await deleteClueOfCampaign.save();
+    return res.sendStatus(200);
+  } catch (err) {
+    console.log(err.message);
+    return res.status(500).json({ message: err });
+  }
+};
+
 //*>----------- method update campaign
 
 const updateOneCampaign = async (req, res) => {
@@ -311,5 +347,6 @@ module.exports = {
   createHandler,
   getSingleAndAllHandler,
   deleteOneCampaign,
+  deleteClueOfCampaign,
   updateOneCampaign,
 };
