@@ -52,4 +52,11 @@ router.delete(
   clueController.deleteOneClue
 );
 
+router.delete(
+  "/CampaignOfClue",
+  verifyJWT,
+  verifyRoles(ROLES_LIST.SeniorManager, ROLES_LIST.SalesManager),
+  clueController.deleteCampaignOfClue
+);
+
 module.exports = router;
