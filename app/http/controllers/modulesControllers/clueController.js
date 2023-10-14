@@ -1,5 +1,6 @@
 const User = require("app/models/User");
 const Clues = require("app/models/Clue");
+const Contact = require("app/models/Contact");
 const CampaignMain = require("app/models/CampaignMain");
 const NoteClues = require("app/models/NoteClues");
 const ActivityCluesMeetOpen = require("app/models/ActivityCluesMeetOpen");
@@ -629,6 +630,12 @@ const deleteOneClue = async (req, res) => {
 
       await deleteClueOfCampaign.save();
     }
+
+    const mobileContact = await Contact.findOneAndUpdate(
+      { mobile: clue.mobile },
+      { isActive: true }
+    );
+    await mobileContact.save();
 
     await Clues.findOneAndDelete({ _id: decryptId });
 
