@@ -631,11 +631,14 @@ const deleteOneClue = async (req, res) => {
       await deleteClueOfCampaign.save();
     }
 
-    const mobileContact = await Contact.findOneAndUpdate(
-      { mobile: clue.mobile },
-      { isActive: true }
-    );
-    await mobileContact.save();
+    const checkContact = await Contact.findOne({ mobile: clue.mobile });
+    if (checkContact) {
+      const mobileContact = await Contact.findOneAndUpdate(
+        { mobile: clue.mobile },
+        { isActive: true }
+      );
+      await mobileContact.save();
+    }
 
     await Clues.findOneAndDelete({ _id: decryptId });
 
