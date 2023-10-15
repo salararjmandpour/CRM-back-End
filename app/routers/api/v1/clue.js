@@ -55,7 +55,7 @@ router.delete(
 router.delete(
   "/CampaignOfClue",
   verifyJWT,
-  verifyRoles(ROLES_LIST.SeniorManager, ROLES_LIST.SalesManager),
+  verifyRoles(ROLES_LIST.SeniorManager, ROLES_LIST.SalesManager,ROLES_LIST.SalesSpecialist),
   clueController.deleteCampaignOfClue
 );
 
