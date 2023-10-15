@@ -21,6 +21,7 @@ router.post(
     ROLES_LIST.AccountingManager,
     ROLES_LIST.AccountingAssistant,
     ROLES_LIST.SalesManager,
+    ROLES_LIST.SalesSpecialist,
   ),
   ContactController.createHandler
 );
