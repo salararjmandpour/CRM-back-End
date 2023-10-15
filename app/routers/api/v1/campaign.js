@@ -19,7 +19,7 @@ router.get(
   verifyRoles(
     ROLES_LIST.SeniorManager,
     ROLES_LIST.SalesManager,
-    ROLES_LIST.User
+    ROLES_LIST.SalesSpecialist
   ),
   campaignController.getSingleAndAllHandler
 );
@@ -41,14 +41,14 @@ router.delete(
 router.delete(
   "/ClueOfCampaign",
   verifyJWT,
-  verifyRoles(ROLES_LIST.SeniorManager, ROLES_LIST.SalesManager),
+  verifyRoles(ROLES_LIST.SeniorManager, ROLES_LIST.SalesManager,ROLES_LIST.SalesSpecialist),
   campaignController.deleteClueOfCampaign
 );
 
 router.put(
   "/",
   verifyJWT,
-  verifyRoles(ROLES_LIST.SeniorManager, ROLES_LIST.SalesManager),
+  verifyRoles(ROLES_LIST.SeniorManager, ROLES_LIST.SalesManager,ROLES_LIST.SalesSpecialist),
   campaignController.updateOneCampaign
 );
 
