@@ -57,6 +57,9 @@ router.use("/api/v1/profile", userRouter);
 const clueRouter = require("./v1/clue");
 router.use("/api/v1/clue", clueRouter);
 
+const accountRouter = require("./v1/account");
+router.use("/api/v1/account", accountRouter);
+
 const clueToSaleRouter = require("./v1/sale");
 router.use("/api/v1/clueToSale", clueToSaleRouter);
 
