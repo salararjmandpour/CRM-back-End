@@ -38,7 +38,7 @@ const importFile = async (req, res, next) => {
     const expertDecrypt = await cerateCipher.decrypt(strIdNew, Key);
     let expertFullName = await User.findOne({ _id: expertDecrypt });
     expertFullName = expertFullName.fullName;
-  
+
     const storage = multer.diskStorage({
       destination: (req, file, callback) => {
         callback(null, "./upload");
@@ -112,7 +112,9 @@ const importFile = async (req, res, next) => {
               .json({ message: "فایل مورد نظر دارای یک فیلد خالی می باشد " });
           }
 
-          const duplicate = await Clues.findOne({ mobile, phonNumber }).exec();
+          const duplicate = await Clues.findOne({
+            $or: [{ mobile }, { phonNumber }],
+          }).exec();
 
           if (duplicate) return res.status(409);
 
@@ -133,7 +135,7 @@ const importFile = async (req, res, next) => {
             callTime: callTime,
           });
         }
-        
+
         fs.unlinkSync(fullNameFile);
 
         return res.sendStatus(201);
@@ -162,7 +164,7 @@ const exportFile = async (req, res, next) => {
     {
       _id: 0,
       expert: 0,
-      position:0,
+      position: 0,
       campaign: 0,
       createdAt: 0,
       updatedAt: 0,
