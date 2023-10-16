@@ -61,16 +61,16 @@ const createHandler = async (req, res) => {
       return res.status(400);
     }
 
-    const duplicate = await Clues.findOne({ mobile, phonNumber }).exec();
-
+    const duplicate = await Clues.findOne({ "$or":[{ mobile },{ phonNumber }]})
     if (duplicate) {
       return res.status(409).json({
-        message: "شماره موبایل یا شماره ثابت تکراری می باشد لطفا بررسی کنید ):",
+        message:
+        "شماره موبایل یا شماره ثابت تکراری می باشد لطفا بررسی کنید ):",
       });
     }
-
+    
+    //*>----------- create model for data clue
     try {
-      //*>----------- create model for data clue
 
       await Clues.create({
         subject: subject,
@@ -613,39 +613,42 @@ const deleteOneClue = async (req, res) => {
 
   const decryptId = cerateCipher.decrypt(strNew, Key);
   const clue = await Clues.findOne({ _id: decryptId });
-  const clueLength = clue.campaign;
+  let clueLength;
 
   try {
     //*>----------- delete model for data note clue
     await NoteClues.findOneAndDelete({ _id: decryptId });
 
     // >----------- delete model for data clue
-    for (let index = 0; index < clueLength.length; index++) {
-      const clueArray = await Clues.findOne({ _id: decryptId });
-      const deleteClueOfCampaign = await CampaignMain.findOneAndUpdate(
-        { _id: clueArray.campaign[index] },
-        { $pull: { clues: { $in: decryptId } } },
-        { new: true }
-      );
+    if (clue) {
+      clueLength = clue.campaign;
+      for (let index = 0; index < clueLength.length; index++) {
+        const clueArray = await Clues.findOne({ _id: decryptId });
+        const deleteClueOfCampaign = await CampaignMain.findOneAndUpdate(
+          { _id: clueArray.campaign[index] },
+          { $pull: { clues: { $in: decryptId } } },
+          { new: true }
+        );
 
-      await deleteClueOfCampaign.save();
-    }
+        await deleteClueOfCampaign.save();
+      }
 
-    const checkContact = await Contact.findOne({ mobile: clue.mobile });
-    if (checkContact) {
-      const mobileContact = await Contact.findOneAndUpdate(
-        { mobile: clue.mobile },
-        { isActive: true }
-      );
-      await mobileContact.save();
+      const checkContact = await Contact.findOne({ mobile: clue.mobile });
+      if (checkContact) {
+        const mobileContact = await Contact.findOneAndUpdate(
+          { mobile: clue.mobile },
+          { isActive: true }
+        );
+        await mobileContact.save();
+      }
     }
 
     await Clues.findOneAndDelete({ _id: decryptId });
 
     //*>----------- delete model for data  activity clues meet open
-    await ActivityCluesMeetOpen.findOneAndDelete({ _id: decryptId });
+    await ActivityCluesMeetOpen.findOneAndDelete({ clueId: decryptId });
     //*>----------- delete model for data  activity clues tell open
-    await ActivityCluesTellOpen.findOneAndDelete({ _id: decryptId });
+    await ActivityCluesTellOpen.findOneAndDelete({ clueId: decryptId });
 
     return res.sendStatus(200);
   } catch (err) {
