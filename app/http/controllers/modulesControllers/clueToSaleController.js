@@ -1,7 +1,8 @@
 const Clues = require("app/models/Clue");
 const Sale = require("app/models/Sale");
+const Invoice = require("app/models/Invoice");
+const InquiryOfPrice = require("app/models/InquiryOfPrice");
 const ROLES_LIST = require("app/config/roles_list");
-
 
 //*>---------- encrypt data sending
 
@@ -93,29 +94,25 @@ const getByUserHandler = async (req, res) => {
         console.log(err.message);
         return res.status(500).json({ message: err.message });
       }
+    } else {
+      try {
+        //!>----------- get all  model for data user
+        const saleAll = await Sale.find({ "expert.expertId": decryptUserId });
 
-      
-    }
-    else{
-
-    try {
-      //!>----------- get all  model for data user
-      const saleAll = await Sale.find({ "expert.expertId": decryptUserId });
-
-      if (!saleAll || saleAll.length == 0) {
-        return res.status(404).json({
-          status: 404,
-          message: "فروشی ثبت نشده است",
-        });
+        if (!saleAll || saleAll.length == 0) {
+          return res.status(404).json({
+            status: 404,
+            message: "فروشی ثبت نشده است",
+          });
+        }
+        const encryptData = cerateCipher.encrypt(JSON.stringify(saleAll), Key);
+        return res.status(202).json({ encryptData });
+      } catch (err) {
+        console.log(err.message);
+        return res.status(500).json({ message: err.message });
       }
-      const encryptData = cerateCipher.encrypt(JSON.stringify(saleAll), Key);
-      return res.status(202).json({ encryptData });
-    } catch (err) {
-      console.log(err.message);
-      return res.status(500).json({ message: err.message });
     }
   }
-}
 
   //*>---------- get method  single sale by id sale
 
@@ -129,7 +126,7 @@ const getByUserHandler = async (req, res) => {
       if (!sale || sale.length == 0) {
         return res.status(404).json({
           status: 404,
-          message: "سرنخی ثبت نشده است",
+          message: "فروشی ثبت نشده است",
         });
       }
       const encryptData = cerateCipher.encrypt(JSON.stringify(sale), Key);
@@ -141,9 +138,28 @@ const getByUserHandler = async (req, res) => {
   }
 };
 
+//*>---------- delete method all sale by id
+
+const deleteSaleById = async (req, res) => {
+  const strId = req.query.saleId.toString();
+  const strIdNew = strId.replaceAll(" ", "+");
+  const decryptSaleId = cerateCipher.decrypt(strIdNew, Key);
+
+  try {
+    await Sale.findOneDelete({ _id: decryptSaleId });
+    await Invoice.findOneDelete({ sale: decryptSaleId });
+    await InquiryOfPrice.fondOneDelete({ sale: decryptSaleId });
+    return res.status(200).json({ status: 200, message: "فروش با موفقعیت پاک شد" });
+  } catch (err) {
+    console.log(err.message);
+    return res.status(500).json({ message: err.message });
+  }
+};
+
 //*>------------ export method
 
 module.exports = {
   createHandlerNew,
   getByUserHandler,
+  deleteSaleById,
 };
