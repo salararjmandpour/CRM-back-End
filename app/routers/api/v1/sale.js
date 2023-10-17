@@ -32,6 +32,13 @@ router.post(
   clueToSaleController.createHandlerNew
 );
 
+router.delete(
+  "/",
+  verifyJWT,
+  verifyRoles(ROLES_LIST.SeniorManager),
+  clueToSaleController.deleteSaleById
+);
+
 //*>----------- create route for invoice
 
 router.get("/invoice", verifyJWT, invoiceController.getBySaleIdHandler);
