@@ -141,15 +141,17 @@ const getByUserHandler = async (req, res) => {
 //*>---------- delete method all sale by id
 
 const deleteSaleById = async (req, res) => {
-  const strId = req.query.saleId.toString();
+  const strId = req.query.id.toString();
   const strIdNew = strId.replaceAll(" ", "+");
   const decryptSaleId = cerateCipher.decrypt(strIdNew, Key);
 
   try {
-    await Sale.findOneDelete({ _id: decryptSaleId });
-    await Invoice.findOneDelete({ sale: decryptSaleId });
-    await InquiryOfPrice.fondOneDelete({ sale: decryptSaleId });
-    return res.status(200).json({ status: 200, message: "فروش با موفقعیت پاک شد" });
+    await Sale.findOneAndDelete({ _id: decryptSaleId });
+    await Invoice.findOneAndDelete({ sale: decryptSaleId });
+    await InquiryOfPrice.findOneAndDelete({ sale: decryptSaleId });
+    return res
+      .status(200)
+      .json({ status: 200, message: "فروش با موفقعیت پاک شد" });
   } catch (err) {
     console.log(err.message);
     return res.status(500).json({ message: err.message });
