@@ -1,6 +1,8 @@
 const Clues = require("app/models/Clue");
 const Sale = require("app/models/Sale");
 const Invoice = require("app/models/Invoice");
+const ActivitySaleMeetOpen = require("app/models/ActivitySaleMeetOpen");
+const NoteSales = require("app/models/NoteSales");
 const InquiryOfPrice = require("app/models/InquiryOfPrice");
 const ROLES_LIST = require("app/config/roles_list");
 
@@ -62,6 +64,122 @@ const createHandlerNew = async (req, res) => {
     console.log(err.message);
     return res.status(500).json({ message: err });
   }
+};
+
+//*>---------- create method activity for sale by user id
+
+const createHandlerActivity = async (req,res) => {
+
+  const dataDecrypt = await JSON.parse(
+    cerateCipher.decrypt(req.body.dataEnc, Key)
+  );
+    const saleDecrypt = await cerateCipher.decrypt(req.body.getId.saleId, Key);
+    const expertDecrypt = await cerateCipher.decrypt(
+      req.body.getId.userId,
+      Key
+    );
+
+    const saleName = await Sale.findOne({ _id: saleDecrypt });
+
+    const {
+      noteSubject,
+      noteBody,
+      activitySubject,
+      activityNote,
+      activityLocation,
+      activityTime,
+      activityDate,
+      // activityTellSubject,
+      // activityTellNote,
+      // activityTellTime,
+      // activityTellDate,
+    } = dataDecrypt;
+
+    const stepMeet = dataDecrypt.stepMeet;
+    // const stepTell = dataDecrypt.stepTell;
+
+    if (noteSubject) {
+      if (!noteSubject || !dataDecrypt || !saleDecrypt || !expertDecrypt)
+        return res.status(400);
+
+      try {
+        //*>----------- create model for data  note clue
+        await NoteSales.create({
+          noteSubject: noteSubject,
+          noteBody: noteBody,
+          userId: expertDecrypt,
+          saleId: saleDecrypt,
+        });
+
+        res.sendStatus(201);
+      } catch (err) {
+        console.log(err.message);
+        return res.status(500).json({ message: err });
+      }
+    } else if (activitySubject) {
+      if (
+        !activitySubject ||
+        !activityNote ||
+        !activityLocation ||
+        !activityTime ||
+        !activityDate ||
+        !saleDecrypt ||
+        !expertDecrypt
+      )
+        return res.status(400);
+
+      try {
+        //*>----------- create model for data  activity sale meet open
+        await ActivitySaleMeetOpen.create({
+          activitySubject: activitySubject,
+          activityNote: activityNote,
+          activityLocation: activityLocation,
+          activityTime: activityTime,
+          activityDate: activityDate,
+          userId: expertDecrypt,
+          stepMeet: stepMeet,
+          saleId: saleDecrypt,
+          saleName: saleName.fullName,
+        });
+
+        res.sendStatus(201);
+      } catch (err) {
+        console.log(err.message);
+        return res.status(500).json({ message: err });
+      }
+    } 
+    // else if (activityTellSubject && activityTellNote) {
+    //   if (
+    //     !activityTellSubject ||
+    //     !activityTellNote ||
+    //     !activityTellTime ||
+    //     !clueDecrypt ||
+    //     !activityTellDate ||
+    //     !expertDecrypt
+    //   )
+    //     return res.status(400);
+
+    //   try {
+    //     //*>----------- create model for data  activity clue tell open
+    //     await ActivityCluesTellOpen.create({
+    //       activityTellSubject: activityTellSubject,
+    //       activityTellNote: activityTellNote,
+    //       activityTellTime: activityTellTime,
+    //       activityTellDate: activityTellDate,
+    //       userId: expertDecrypt,
+    //       stepTell: stepTell,
+    //       clueId: clueDecrypt,
+    //       clueName: clueName.fullName,
+    //     });
+
+    //     res.sendStatus(201);
+    //   } catch (err) {
+    //     console.log(err.message);
+    //     return res.status(500).json({ message: err });
+    //   }
+    // }
+
+
 };
 
 //*>---------- get method all sale by user
@@ -164,4 +282,5 @@ module.exports = {
   createHandlerNew,
   getByUserHandler,
   deleteSaleById,
+  createHandlerActivity,
 };
