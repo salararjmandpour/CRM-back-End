@@ -3,6 +3,7 @@ const Sale = require("app/models/Sale");
 const Invoice = require("app/models/Invoice");
 const ActivitySaleMeetOpen = require("app/models/ActivitySaleMeetOpen");
 const NoteSales = require("app/models/NoteSales");
+const ActivitySaleTellOpen = require("app/models/ActivitySaleTellOpen");
 const InquiryOfPrice = require("app/models/InquiryOfPrice");
 const ROLES_LIST = require("app/config/roles_list");
 
@@ -89,14 +90,14 @@ const createHandlerActivity = async (req,res) => {
       activityLocation,
       activityTime,
       activityDate,
-      // activityTellSubject,
-      // activityTellNote,
-      // activityTellTime,
-      // activityTellDate,
+      activityTellSubject,
+      activityTellNote,
+      activityTellTime,
+      activityTellDate,
     } = dataDecrypt;
 
     const stepMeet = dataDecrypt.stepMeet;
-    // const stepTell = dataDecrypt.stepTell;
+    const stepTell = dataDecrypt.stepTell;
 
     if (noteSubject) {
       if (!noteSubject || !dataDecrypt || !saleDecrypt || !expertDecrypt)
@@ -148,36 +149,36 @@ const createHandlerActivity = async (req,res) => {
         return res.status(500).json({ message: err });
       }
     } 
-    // else if (activityTellSubject && activityTellNote) {
-    //   if (
-    //     !activityTellSubject ||
-    //     !activityTellNote ||
-    //     !activityTellTime ||
-    //     !clueDecrypt ||
-    //     !activityTellDate ||
-    //     !expertDecrypt
-    //   )
-    //     return res.status(400);
+    else if (activityTellSubject && activityTellNote) {
+      if (
+        !activityTellSubject ||
+        !activityTellNote ||
+        !activityTellTime ||
+        !saleDecrypt ||
+        !activityTellDate ||
+        !expertDecrypt
+      )
+        return res.status(400);
 
-    //   try {
-    //     //*>----------- create model for data  activity clue tell open
-    //     await ActivityCluesTellOpen.create({
-    //       activityTellSubject: activityTellSubject,
-    //       activityTellNote: activityTellNote,
-    //       activityTellTime: activityTellTime,
-    //       activityTellDate: activityTellDate,
-    //       userId: expertDecrypt,
-    //       stepTell: stepTell,
-    //       clueId: clueDecrypt,
-    //       clueName: clueName.fullName,
-    //     });
+      try {
+        //*>----------- create model for data  activity sale tell open
+        await ActivitySaleTellOpen.create({
+          activityTellSubject: activityTellSubject,
+          activityTellNote: activityTellNote,
+          activityTellTime: activityTellTime,
+          activityTellDate: activityTellDate,
+          userId: expertDecrypt,
+          stepTell: stepTell,
+          saleId: saleDecrypt,
+          saleName: saleName.fullName,
+        });
 
-    //     res.sendStatus(201);
-    //   } catch (err) {
-    //     console.log(err.message);
-    //     return res.status(500).json({ message: err });
-    //   }
-    // }
+        res.sendStatus(201);
+      } catch (err) {
+        console.log(err.message);
+        return res.status(500).json({ message: err });
+      }
+    }
 
 
 };
