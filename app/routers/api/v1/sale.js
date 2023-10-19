@@ -38,6 +38,9 @@ router.delete(
   verifyRoles(ROLES_LIST.SeniorManager),
   clueToSaleController.deleteSaleById
 );
+//*>----------- create route for activity
+
+router.post("/activity", verifyJWT, clueToSaleController.createHandlerActivity);
 
 //*>----------- create route for invoice
 
