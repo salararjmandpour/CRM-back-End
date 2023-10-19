@@ -40,6 +40,8 @@ router.delete(
 );
 //*>----------- create route for activity
 
+router.get("/activity", verifyJWT , clueToSaleController.getHandlerActivity);
+
 router.post("/activity", verifyJWT, clueToSaleController.createHandlerActivity);
 
 //*>----------- create route for invoice
