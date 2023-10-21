@@ -4,6 +4,7 @@ const Invoice = require("app/models/Invoice");
 const ActivitySaleMeetOpen = require("app/models/ActivitySaleMeetOpen");
 const NoteSales = require("app/models/NoteSales");
 const ActivitySaleTellOpen = require("app/models/ActivitySaleTellOpen");
+const DutiesSale = require("app/models/DutiesSale");
 const InquiryOfPrice = require("app/models/InquiryOfPrice");
 const ROLES_LIST = require("app/config/roles_list");
 
@@ -90,10 +91,15 @@ const createHandlerActivity = async (req, res) => {
     activityTellNote,
     activityTellTime,
     activityTellDate,
+    subjectForDuties,
+    explainForDuties,
+    dateForDuties,
+    timeForDuties,
   } = dataDecrypt;
 
   const stepMeet = dataDecrypt.stepMeet;
   const stepTell = dataDecrypt.stepTell;
+  const status = dataDecrypt.state;
 
   if (noteSubject) {
     if (!noteSubject || !dataDecrypt || !saleDecrypt || !expertDecrypt)
@@ -173,6 +179,32 @@ const createHandlerActivity = async (req, res) => {
       console.log(err.message);
       return res.status(500).json({ message: err });
     }
+  } else if (subjectForDuties) {
+    if (
+      !subjectForDuties ||
+      !explainForDuties ||
+      !dateForDuties ||
+      !timeForDuties
+    )
+      return res.status(400);
+
+    try {
+      //*>----------- create model for data  activity sale Duties
+      await DutiesSale.create({
+        subjectForDuties,
+        explainForDuties,
+        dateForDuties,
+        timeForDuties,
+        status,
+        userId: expertDecrypt,
+        saleId: saleDecrypt,
+      });
+
+      res.sendStatus(201);
+    } catch (error) {
+      console.log(err.message);
+      return res.status(500).json({ message: err });
+    }
   }
 };
 
@@ -186,7 +218,7 @@ const getHandlerActivity = async (req, res) => {
 
   const decryptSaleId = cerateCipher.decrypt(strSaleIdNew, Key);
 
-  //!>----------- get model Activity data all by sale id 
+  //!>----------- get model Activity data all by sale id
 
   try {
     const noteSales = await NoteSales.find({ saleId: decryptSaleId });
@@ -306,13 +338,11 @@ const deleteSaleById = async (req, res) => {
   console.log(decryptId);
 
   try {
-    await NoteSales.findOneAndDelete({_id:decryptId});
+    await NoteSales.findOneAndDelete({ _id: decryptId });
     await Sale.findOneAndDelete({ _id: decryptId });
     await Invoice.findOneAndDelete({ sale: decryptId });
     await InquiryOfPrice.findOneAndDelete({ sale: decryptId });
-    return res
-      .status(200)
-      .json({ status: 200, message: "با موفقعیت پاک شد" });
+    return res.status(200).json({ status: 200, message: "با موفقعیت پاک شد" });
   } catch (err) {
     console.log(err.message);
     return res.status(500).json({ message: err.message });
