@@ -44,6 +44,8 @@ router.get("/activity", verifyJWT , clueToSaleController.getHandlerActivity);
 
 router.post("/activity", verifyJWT, clueToSaleController.createHandlerActivity);
 
+router.delete("/activity", verifyJWT,clueToSaleController.deleteSaleById);
+
 //*>----------- create route for invoice
 
 router.get("/invoice", verifyJWT, invoiceController.getBySaleIdHandler);

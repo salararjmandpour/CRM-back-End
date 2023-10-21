@@ -301,15 +301,18 @@ const getByUserHandler = async (req, res) => {
 const deleteSaleById = async (req, res) => {
   const strId = req.query.id.toString();
   const strIdNew = strId.replaceAll(" ", "+");
-  const decryptSaleId = cerateCipher.decrypt(strIdNew, Key);
+  const decryptId = cerateCipher.decrypt(strIdNew, Key);
+
+  console.log(decryptId);
 
   try {
-    await Sale.findOneAndDelete({ _id: decryptSaleId });
-    await Invoice.findOneAndDelete({ sale: decryptSaleId });
-    await InquiryOfPrice.findOneAndDelete({ sale: decryptSaleId });
+    await NoteSales.findOneAndDelete({_id:decryptId});
+    await Sale.findOneAndDelete({ _id: decryptId });
+    await Invoice.findOneAndDelete({ sale: decryptId });
+    await InquiryOfPrice.findOneAndDelete({ sale: decryptId });
     return res
       .status(200)
-      .json({ status: 200, message: "فروش با موفقعیت پاک شد" });
+      .json({ status: 200, message: "با موفقعیت پاک شد" });
   } catch (err) {
     console.log(err.message);
     return res.status(500).json({ message: err.message });
