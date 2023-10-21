@@ -645,6 +645,8 @@ const deleteOneClue = async (req, res) => {
 
     await Clues.findOneAndDelete({ _id: decryptId });
 
+    //*>----------- delete model for data activity clue note
+    await NoteClues.findOneAndDelete({ clueId: decryptId });
     //*>----------- delete model for data  activity clues meet open
     await ActivityCluesMeetOpen.findOneAndDelete({ clueId: decryptId });
     //*>----------- delete model for data  activity clues tell open
