@@ -221,6 +221,9 @@ const getHandlerActivity = async (req, res) => {
   //!>----------- get model Activity data all by sale id
 
   try {
+
+    //*>--------- try find data 
+
     const noteSales = await NoteSales.find({ saleId: decryptSaleId });
     const activitySaleMeetOpen = await ActivitySaleMeetOpen.find({
       saleId: decryptSaleId,
@@ -228,6 +231,11 @@ const getHandlerActivity = async (req, res) => {
     const activitySaleTellOpen = await ActivitySaleTellOpen.find({
       saleId: decryptSaleId,
     });
+    const dutiesSale = await DutiesSale.find({
+      saleId: decryptSaleId,
+    });
+
+    //*>---------- encrypt find data 
 
     const encryptNoteSales = cerateCipher.encrypt(
       JSON.stringify(noteSales),
@@ -241,10 +249,17 @@ const getHandlerActivity = async (req, res) => {
       JSON.stringify(activitySaleTellOpen),
       Key
     );
+    const encryptDutiesSale = cerateCipher.encrypt(
+      JSON.stringify(dutiesSale),
+      Key
+    );
+
+
     return res.status(202).json({
       encryptNoteSales,
       encryptActivitySaleMeetOpen,
       encryptActivitySaleTellOpen,
+      encryptDutiesSale,
     });
   } catch (error) {
     return res.status(404).json({
