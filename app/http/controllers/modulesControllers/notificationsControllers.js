@@ -40,7 +40,7 @@ const getNotifications = async (req, res) => {
     let findClueTell = await ActivityCluesTellOpen.find(
       {
         userId: decryptUserId,
-        "stepMeet.isActive": false,
+        "stepTell.isActive": false,
       },
       {
         _id: 0,
