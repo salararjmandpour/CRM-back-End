@@ -353,7 +353,8 @@ const deleteSaleById = async (req, res) => {
   console.log(decryptId);
 
   try {
-    await NoteSales.findOneAndDelete({ _id: decryptId });
+    await DutiesSale.findOneAndDelete({"$or":[{_id: decryptId},{saleId:decryptId}] });
+    await NoteSales.findOneAndDelete({ "$or":[{_id: decryptId},{saleId:decryptId}] });
     await Sale.findOneAndDelete({ _id: decryptId });
     await Invoice.findOneAndDelete({ sale: decryptId });
     await InquiryOfPrice.findOneAndDelete({ sale: decryptId });
