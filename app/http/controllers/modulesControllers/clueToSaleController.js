@@ -221,8 +221,7 @@ const getHandlerActivity = async (req, res) => {
   //!>----------- get model Activity data all by sale id
 
   try {
-
-    //*>--------- try find data 
+    //*>--------- try find data
 
     const noteSales = await NoteSales.find({ saleId: decryptSaleId });
     const activitySaleMeetOpen = await ActivitySaleMeetOpen.find({
@@ -235,7 +234,7 @@ const getHandlerActivity = async (req, res) => {
       saleId: decryptSaleId,
     });
 
-    //*>---------- encrypt find data 
+    //*>---------- encrypt find data
 
     const encryptNoteSales = cerateCipher.encrypt(
       JSON.stringify(noteSales),
@@ -253,7 +252,6 @@ const getHandlerActivity = async (req, res) => {
       JSON.stringify(dutiesSale),
       Key
     );
-
 
     return res.status(202).json({
       encryptNoteSales,
@@ -343,6 +341,70 @@ const getByUserHandler = async (req, res) => {
   }
 };
 
+//*>---------- update method all sale by id
+
+const updateSaleById = async (req, res) => {
+
+  const str = req.query.id.toString();
+  const strNew = str.replaceAll(" ", "+");
+  const decryptId = cerateCipher.decrypt(strNew, Key);
+
+  const dataDecrypt = await JSON.parse(
+    cerateCipher.decrypt(req.body.dataEnc, Key)
+  );
+
+  const {
+    noteSubject,
+    noteBody,
+    activitySubject,
+    activityNote,
+    activityLocation,
+    activityTime,
+    activityDate,
+    activityTellSubject,
+    activityTellNote,
+    activityTellTime,
+    activityTellDate,
+    subjectForDuties,
+    explainForDuties,
+    dateForDuties,
+    timeForDuties,
+  } = dataDecrypt;
+
+  const stepMeet = dataDecrypt.stepMeet;
+  const stepTell = dataDecrypt.stepTell;
+  const status = dataDecrypt.state;
+
+  if (subjectForDuties) {
+    if (
+      !subjectForDuties ||
+      !explainForDuties ||
+      !dateForDuties ||
+      !timeForDuties
+    )
+      return res.status(400);
+
+    try {
+      //*>----------- update model for data  activity sale Duties
+      await DutiesSale.findOneUpdate(
+        { _id: decryptId },
+        {
+          subjectForDuties,
+          explainForDuties,
+          dateForDuties,
+          timeForDuties,
+          status,
+        }
+      );
+
+      res.sendStatus(202);
+    } catch (error) {
+      console.log(err.message);
+      return res.status(500).json({ message: err });
+    }
+  }
+};
+
 //*>---------- delete method all sale by id
 
 const deleteSaleById = async (req, res) => {
@@ -353,8 +415,12 @@ const deleteSaleById = async (req, res) => {
   console.log(decryptId);
 
   try {
-    await DutiesSale.findOneAndDelete({"$or":[{_id: decryptId},{saleId:decryptId}] });
-    await NoteSales.findOneAndDelete({ "$or":[{_id: decryptId},{saleId:decryptId}] });
+    await DutiesSale.findOneAndDelete({
+      $or: [{ _id: decryptId }, { saleId: decryptId }],
+    });
+    await NoteSales.findOneAndDelete({
+      $or: [{ _id: decryptId }, { saleId: decryptId }],
+    });
     await Sale.findOneAndDelete({ _id: decryptId });
     await Invoice.findOneAndDelete({ sale: decryptId });
     await InquiryOfPrice.findOneAndDelete({ sale: decryptId });
@@ -373,4 +439,5 @@ module.exports = {
   deleteSaleById,
   createHandlerActivity,
   getHandlerActivity,
+  updateSaleById,
 };
