@@ -368,11 +368,12 @@ const updateSaleById = async (req, res) => {
     explainForDuties,
     dateForDuties,
     timeForDuties,
+    cancelationReason,
   } = dataDecrypt;
 
   const stepMeet = dataDecrypt.stepMeet;
   const stepTell = dataDecrypt.stepTell;
-  const status = dataDecrypt.state;
+  const status = dataDecrypt.status;
 
   if (subjectForDuties) {
     if (
@@ -385,30 +386,39 @@ const updateSaleById = async (req, res) => {
 
     //*>----------- update model for data  activity sale Duties
     try {
-      await DutiesSale.findOneUpdate(
+      const updateDutiesSale = await DutiesSale.findOneAndUpdate(
         { _id: decryptId },
         {
           subjectForDuties,
           explainForDuties,
           dateForDuties,
           timeForDuties,
-          // status,
         }
-      ).save();
+      );
 
-      res.sendStatus(202);
-    } catch (error) {
+      await updateDutiesSale.save();
+
+      res.sendStatus(200);
+    } catch (err) {
       console.log(err.message);
       return res.status(500).json({ message: err });
     }
   }
 
   //!>---------- update status model of duties by id
-  else if (status) {
+  else if (cancelationReason) {
     try {
-      await DutiesSale.findOneUpdate({ _id: decryptId }, { status }).save();
-      res.sendStatus(202);
-    } catch (error) {
+      const updateStatusDutiesSale = await DutiesSale.findOneAndUpdate(
+        { _id: decryptId },
+        {
+          cancelationReason,
+          status,
+        }
+      );
+      await updateStatusDutiesSale.save();
+
+      res.sendStatus(200);
+    } catch (err) {
       console.log(err.message);
       return res.status(500).json({ message: err });
     }
