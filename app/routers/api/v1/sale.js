@@ -40,11 +40,23 @@ router.delete(
 );
 //*>----------- create route for activity
 
-router.get("/activity", verifyJWT , clueToSaleController.getHandlerActivity);
+router.get("/activity", verifyJWT, clueToSaleController.getHandlerActivity);
 
 router.post("/activity", verifyJWT, clueToSaleController.createHandlerActivity);
 
-router.delete("/activity", verifyJWT,clueToSaleController.deleteSaleById);
+router.put(
+  "/activity",
+  verifyJWT,
+  verifyRoles(ROLES_LIST.SeniorManager, ROLES_LIST.SalesManager),
+  clueToSaleController.updateSaleById
+);
+
+router.delete(
+  "/activity",
+  verifyJWT,
+  verifyRoles(ROLES_LIST.SeniorManager),
+  clueToSaleController.deleteSaleById
+);
 
 //*>----------- create route for invoice
 
@@ -54,7 +66,12 @@ router.post("/invoice", verifyJWT, invoiceController.createHandlerNew);
 
 router.put("/invoice", verifyJWT, invoiceController.putBySaleHandler);
 
-router.delete("/invoice", verifyJWT, invoiceController.deleteOneInvoice);
+router.delete(
+  "/invoice",
+  verifyJWT,
+  verifyRoles(ROLES_LIST.SeniorManager),
+  invoiceController.deleteOneInvoice
+);
 
 //*>---------- create route for inquiryOfPrice
 
@@ -62,7 +79,12 @@ router.get("/inquiryOfPrice", verifyJWT, inquiryOfPrice.getBySaleIdHandler);
 
 router.post("/inquiryOfPrice", verifyJWT, inquiryOfPrice.createHandlerNew);
 
-router.delete("/inquiryOfPrice", verifyJWT, inquiryOfPrice.deleteOneById);
+router.delete(
+  "/inquiryOfPrice",
+  verifyRoles(ROLES_LIST.SeniorManager),
+  verifyJWT,
+  inquiryOfPrice.deleteOneById
+);
 
 router.put("/inquiryOfPrice", verifyJWT, inquiryOfPrice.putBySaleHandler);
 
