@@ -344,7 +344,6 @@ const getByUserHandler = async (req, res) => {
 //*>---------- update method all sale by id
 
 const updateSaleById = async (req, res) => {
-
   const str = req.query.id.toString();
   const strNew = str.replaceAll(" ", "+");
   const decryptId = cerateCipher.decrypt(strNew, Key);
@@ -384,8 +383,8 @@ const updateSaleById = async (req, res) => {
     )
       return res.status(400);
 
+    //*>----------- update model for data  activity sale Duties
     try {
-      //*>----------- update model for data  activity sale Duties
       await DutiesSale.findOneUpdate(
         { _id: decryptId },
         {
@@ -393,10 +392,21 @@ const updateSaleById = async (req, res) => {
           explainForDuties,
           dateForDuties,
           timeForDuties,
-          status,
+          // status,
         }
-      );
+      ).save();
 
+      res.sendStatus(202);
+    } catch (error) {
+      console.log(err.message);
+      return res.status(500).json({ message: err });
+    }
+  }
+
+  //!>---------- update status model of duties by id
+  else if (status) {
+    try {
+      await DutiesSale.findOneUpdate({ _id: decryptId }, { status }).save();
       res.sendStatus(202);
     } catch (error) {
       console.log(err.message);
