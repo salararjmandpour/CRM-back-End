@@ -2,6 +2,7 @@ const User = require("app/models/User");
 const Clues = require("app/models/Clue");
 const ActivityCluesMeetOpen = require("app/models/ActivityCluesMeetOpen");
 const ActivityCluesTellOpen = require("app/models/ActivityCluesTellOpen");
+const DutiesSale = require("app/models/DutiesSale");
 
 //*>---------- encrypt data sending
 
@@ -18,6 +19,25 @@ const getNotifications = async (req, res) => {
 
   try {
     //*>----------- get model for data  activity clue meet open
+
+    let findDutiesSale = await DutiesSale.find(
+      {
+        userId: decryptUserId,
+        "status.isActive": false,
+      },
+      {
+        _id: 0,
+        subjectForDuties: 0,
+        explainForDuties: 0,
+        dateForDuties: 0,
+        timeForDuties: 0,
+        createdAt: 0,
+        isActive: 0,
+        updatedAt: 0,
+        userId: 0,
+        __v: 0,
+      }
+    );
 
     let findClueMeet = await ActivityCluesMeetOpen.find(
       {
@@ -62,8 +82,14 @@ const getNotifications = async (req, res) => {
       JSON.stringify(findClueTell),
       Key
     );
+    const encryptDataDutiesSale = cerateCipher.encrypt(
+      JSON.stringify(findDutiesSale),
+      Key
+    );
 
-    return res.status(200).json({ encryptDataMeet, encryptDataTell });
+    return res
+      .status(200)
+      .json({ encryptDataMeet, encryptDataTell, encryptDataDutiesSale });
   } catch (err) {
     console.log(err.message);
     return res.status(500).json({ message: err });
