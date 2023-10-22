@@ -79,7 +79,6 @@ const contactSchema = new Schema(
     atmCard: {
       type: Number,
       unique: true,
-      default:1111111111111111,
       trim: true,
       minlength: 16,
       maxLength: 20,
@@ -87,7 +86,6 @@ const contactSchema = new Schema(
     fax: {
       type: Number,
       unique: true,
-      default:2111111111,
       trim: true,
       minlength: 9,
       maxLength: 12,
