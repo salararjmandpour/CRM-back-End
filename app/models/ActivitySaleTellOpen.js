@@ -20,15 +20,25 @@ const ActivitySaleTellOpenSchema = new Schema(
       required: true,
       trim: true,
     },
-    stepTell: {
-      isActive: { type: Boolean, default: false },
-      evaluation: { type: Boolean },
-      PreliminaryNegotiations: { type: Boolean },
-    },
     activityTellDate: {
       type: String,
       required: true,
       trim: true,
+    },
+    activityCallType: {
+      type: String,
+      require: true,
+      trim: true,
+    },
+    activityCallPriority: {
+      type: String,
+      require: true,
+      trim: true,
+    },
+    status: {
+      isActive: { type: Boolean, default: false },
+      successful: { type: Boolean },
+      Unsuccessful: { type: Boolean },
     },
     cancelationReason: {
       type: String,
