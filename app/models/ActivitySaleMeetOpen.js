@@ -20,10 +20,25 @@ const ActivitySaleOpenSchema = new Schema(
       required: true,
       trim: true,
     },
-    stepMeet: {
+    activityParticipatingPeople: {
+      type: String,
+      require: true,
+      trim: true,
+    },
+    activityPriority: {
+      type: String,
+      require: true,
+      trim: true,
+    },
+    status: {
       isActive: { type: Boolean, default: false },
-      evaluation: { type: Boolean },
-      PreliminaryNegotiations: { type: Boolean },
+      successful: { type: Boolean },
+      Unsuccessful: { type: Boolean },
+    },
+    cancelationReason: {
+      type: String,
+      default: "",
+      trim: true,
     },
     activityTime: {
       type: String,
@@ -33,11 +48,6 @@ const ActivitySaleOpenSchema = new Schema(
     activityDate: {
       type: String,
       required: true,
-      trim: true,
-    },
-    cancelationReason: {
-      type: String,
-      default: "",
       trim: true,
     },
     saleId: {
