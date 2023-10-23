@@ -90,15 +90,17 @@ const createHandlerActivity = async (req, res) => {
     activityTellSubject,
     activityTellNote,
     activityTellTime,
+    activityCallType,
+    activityCallPriority,
     activityTellDate,
     subjectForDuties,
     explainForDuties,
+    activityParticipatingPeople,
+    activityPriority,
     dateForDuties,
     timeForDuties,
   } = dataDecrypt;
 
-  const stepMeet = dataDecrypt.stepMeet;
-  const stepTell = dataDecrypt.stepTell;
   const status = dataDecrypt.state;
 
   if (noteSubject) {
@@ -124,6 +126,8 @@ const createHandlerActivity = async (req, res) => {
       !activitySubject ||
       !activityNote ||
       !activityLocation ||
+      !activityParticipatingPeople ||
+      !activityPriority ||
       !activityTime ||
       !activityDate ||
       !saleDecrypt ||
@@ -137,10 +141,12 @@ const createHandlerActivity = async (req, res) => {
         activitySubject: activitySubject,
         activityNote: activityNote,
         activityLocation: activityLocation,
+        activityParticipatingPeople: activityParticipatingPeople,
+        activityPriority: activityPriority,
         activityTime: activityTime,
         activityDate: activityDate,
+        status: status,
         userId: expertDecrypt,
-        stepMeet: stepMeet,
         saleId: saleDecrypt,
         saleName: saleName.fullName,
       });
@@ -155,6 +161,8 @@ const createHandlerActivity = async (req, res) => {
       !activityTellSubject ||
       !activityTellNote ||
       !activityTellTime ||
+      !activityCallType ||
+      !activityCallPriority ||
       !saleDecrypt ||
       !activityTellDate ||
       !expertDecrypt
@@ -168,8 +176,10 @@ const createHandlerActivity = async (req, res) => {
         activityTellNote: activityTellNote,
         activityTellTime: activityTellTime,
         activityTellDate: activityTellDate,
+        activityCallType: activityCallType,
+        activityCallPriority: activityCallPriority,
+        status: status,
         userId: expertDecrypt,
-        stepTell: stepTell,
         saleId: saleDecrypt,
         saleName: saleName.fullName,
       });
