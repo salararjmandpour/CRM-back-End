@@ -27,8 +27,8 @@ const getFindAllClue = async (req, res) => {
     let countActivitySalesMeetSuccessful;
     let countActivityCluesTellSuccessful;
     let countActivitySalesTellSuccessful;
-    let RefractiveIndexClue;
-    let successRate;
+    let RefractiveIndexMeetClues;
+    let successRateMeetClues;
     // "$or":
     if (!strIdNew && !strRoleNew) return res.sensStatus(404);
 
@@ -54,36 +54,36 @@ const getFindAllClue = async (req, res) => {
       const allActivityCluesMeetSuccessful =
         await ActivityCluesMeetOpen.countDocuments({
           $and: [
-            { "status.isActive": true },
-            { "status.evaluation": true },
-            { "status.PreliminaryNegotiations": true },
+            { "stepMeet.isActive": true },
+            { "stepMeet.evaluation": true },
+            { "stepMeet.PreliminaryNegotiations": true },
           ],
         });
 
-        const allActivityCluesMeetUnsuccessful =
+      const allActivityCluesMeetUnsuccessful =
         await ActivityCluesMeetOpen.countDocuments({
           $and: [
-            { "status.isActive": true },
-            { "status.evaluation": false },
-            { "status.PreliminaryNegotiations": false },
+            { "stepMeet.isActive": true },
+            { "stepMeet.evaluation": false },
+            { "stepMeet.PreliminaryNegotiations": false },
           ],
         });
 
       const allActivityCluesTellSuccessful =
         await ActivityCluesTellOpen.countDocuments({
           $and: [
-            { "status.isActive": true },
-            { "status.evaluation": true },
-            { "status.PreliminaryNegotiations": true },
+            { "stepTell.isActive": true },
+            { "stepTell.evaluation": true },
+            { "stepTell.PreliminaryNegotiations": true },
           ],
         });
 
-        const allActivityCluesTellUnsuccessful =
+      const allActivityCluesTellUnsuccessful =
         await ActivityCluesTellOpen.countDocuments({
           $and: [
-            { "status.isActive": true },
-            { "status.evaluation": false },
-            { "status.PreliminaryNegotiations": false },
+            { "stepTell.isActive": true },
+            { "stepTell.evaluation": false },
+            { "stepTell.PreliminaryNegotiations": false },
           ],
         });
 
@@ -92,7 +92,7 @@ const getFindAllClue = async (req, res) => {
           $and: [{ "status.isActive": true }, { "status.successful": true }],
         });
 
-        const allActivitySalesMeetUnsuccessful =
+      const allActivitySalesMeetUnsuccessful =
         await ActivitySaleMeetOpen.countDocuments({
           $and: [{ "status.isActive": true }, { "status.Unsuccessful": true }],
         });
@@ -102,10 +102,18 @@ const getFindAllClue = async (req, res) => {
           $and: [{ "status.isActive": true }, { "status.successful": true }],
         });
 
-        const allActivitySalesTellUnsuccessful =
+      const allActivitySalesTellUnsuccessful =
         await ActivitySaleTellOpen.countDocuments({
           $and: [{ "status.isActive": true }, { "status.Unsuccessful": true }],
         });
+
+    RefractiveIndexMeetClues = `${
+    ((allActivityCluesMeetUnsuccessful / allActivityCluesMeet) * 100).toFixed(2)
+      }%`;
+
+      console.log(RefractiveIndexMeetClues);
+      console.log(allActivityCluesMeetUnsuccessful);
+      console.log(allActivityCluesMeetSuccessful);
 
       countClues = allClue;
       countActivityCluesMeet = allActivityCluesMeet;
@@ -140,9 +148,9 @@ const getFindAllClue = async (req, res) => {
         await ActivityCluesMeetOpen.countDocuments({
           $and: [
             { userId: decryptUserId },
-            { "status.isActive": true },
-            { "status.evaluation": true },
-            { "status.PreliminaryNegotiations": true },
+            { "stepMeet.isActive": true },
+            { "stepMeet.evaluation": true },
+            { "stepMeet.PreliminaryNegotiations": true },
           ],
         });
 
@@ -150,9 +158,9 @@ const getFindAllClue = async (req, res) => {
         await ActivityCluesTellOpen.countDocuments({
           $and: [
             { userId: decryptUserId },
-            { "status.isActive": true },
-            { "status.evaluation": true },
-            { "status.PreliminaryNegotiations": true },
+            { "stepTell.isActive": true },
+            { "stepTell.evaluation": true },
+            { "stepTell.PreliminaryNegotiations": true },
           ],
         });
 
@@ -195,6 +203,7 @@ const getFindAllClue = async (req, res) => {
         countActivitySalesMeetSuccessful,
         countActivityCluesTellSuccessful,
         countActivitySalesTellSuccessful,
+        RefractiveIndexMeetClues,
       };
       const encryptCountAllData = cerateCipher.encrypt(
         JSON.stringify(countAll),
