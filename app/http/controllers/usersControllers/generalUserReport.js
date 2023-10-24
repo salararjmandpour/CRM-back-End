@@ -17,6 +17,10 @@ const getFindAllClue = async (req, res) => {
     const strRole = req.query.role.toString();
     const strRoleNew = strRole.replaceAll(" ", "+");
     const strIdNew = strId.replaceAll(" ", "+");
+
+    //*>---------- value 
+
+
     let countAll;
     let countClues;
     let countActivityCluesMeet;
@@ -32,7 +36,12 @@ const getFindAllClue = async (req, res) => {
     let RefractiveIndexTellClues;
     let RefractiveIndexTellSales;
     let successRateMeetClues;
-    // "$or":
+    let successRateMeetSales;
+    let successRateTellClues;
+    let successRateTellSales;
+
+    //*>----------- get find all data for report
+
     if (!strIdNew && !strRoleNew) return res.sensStatus(404);
 
     const decryptUserRole = cerateCipher.decrypt(strRoleNew, Key);
@@ -145,7 +154,7 @@ const getFindAllClue = async (req, res) => {
       countActivitySalesTellSuccessful = allActivitySalesTellSuccessful;
     }
 
-    //*>----------  get find by user data
+    //*>----------  get find by user data for report
     else {
       const userClue = await Clues.countDocuments({ expert: decryptUserId });
 
