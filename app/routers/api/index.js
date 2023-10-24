@@ -69,6 +69,9 @@ router.use("/api/v1/sale", saleRouter);
 const campaignRouter = require("./v1/campaign");
 router.use("/api/v1/campaign", campaignRouter);
 
+const dashboardRouter = require("./v1/dashboard");
+router.use("/api/v1/dashboard", dashboardRouter);
+
 const mailRouter = require("./v1/mail");
 router.use("/api/v1/mail", mailRouter);
 
