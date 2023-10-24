@@ -173,7 +173,7 @@ const getFindAllClue = async (req, res) => {
           ],
         });
 
-        const userActivityCluesMeetUnsuccessful =
+      const userActivityCluesMeetUnsuccessful =
         await ActivityCluesMeetOpen.countDocuments({
           $and: [
             { userId: decryptUserId },
@@ -193,7 +193,7 @@ const getFindAllClue = async (req, res) => {
           ],
         });
 
-        const userActivityCluesTellUnsuccessful =
+      const userActivityCluesTellUnsuccessful =
         await ActivityCluesTellOpen.countDocuments({
           $and: [
             { userId: decryptUserId },
@@ -212,7 +212,7 @@ const getFindAllClue = async (req, res) => {
           ],
         });
 
-        const userActivitySalesMeetUnsuccessful =
+      const userActivitySalesMeetUnsuccessful =
         await ActivitySaleMeetOpen.countDocuments({
           $and: [
             { userId: decryptUserId },
@@ -230,7 +230,7 @@ const getFindAllClue = async (req, res) => {
           ],
         });
 
-        const userActivitySalesTellUnsuccessful =
+      const userActivitySalesTellUnsuccessful =
         await ActivitySaleTellOpen.countDocuments({
           $and: [
             { userId: decryptUserId },
@@ -238,7 +238,6 @@ const getFindAllClue = async (req, res) => {
             { "status.Unsuccessful": true },
           ],
         });
-
 
       //*>---------- Coefficient
 
@@ -262,6 +261,7 @@ const getFindAllClue = async (req, res) => {
         100
       ).toFixed(2)}%`;
 
+      //*>--------- value
 
       countClues = userClue;
       countActivityCluesMeet = userActivityCluesMeet;
