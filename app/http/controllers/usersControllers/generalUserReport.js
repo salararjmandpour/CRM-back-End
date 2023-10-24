@@ -28,6 +28,9 @@ const getFindAllClue = async (req, res) => {
     let countActivityCluesTellSuccessful;
     let countActivitySalesTellSuccessful;
     let RefractiveIndexMeetClues;
+    let RefractiveIndexMeetSales;
+    let RefractiveIndexTellClues;
+    let RefractiveIndexTellSales;
     let successRateMeetClues;
     // "$or":
     if (!strIdNew && !strRoleNew) return res.sensStatus(404);
@@ -107,13 +110,29 @@ const getFindAllClue = async (req, res) => {
           $and: [{ "status.isActive": true }, { "status.Unsuccessful": true }],
         });
 
-    RefractiveIndexMeetClues = `${
-    ((allActivityCluesMeetUnsuccessful / allActivityCluesMeet) * 100).toFixed(2)
-      }%`;
+      //*>---------- Coefficient
 
-      console.log(RefractiveIndexMeetClues);
-      console.log(allActivityCluesMeetUnsuccessful);
-      console.log(allActivityCluesMeetSuccessful);
+      RefractiveIndexMeetClues = `${(
+        (allActivityCluesMeetUnsuccessful / allActivityCluesMeet) *
+        100
+      ).toFixed(2)}%`;
+
+      RefractiveIndexMeetSales = `${(
+        (allActivitySalesMeetUnsuccessful / allActivitySalesMeet) *
+        100
+      ).toFixed(2)}%`;
+
+      RefractiveIndexTellClues = `${(
+        (allActivityCluesTellUnsuccessful / allActivityCluesTellOpen) *
+        100
+      ).toFixed(2)}%`;
+
+      RefractiveIndexTellSales = `${(
+        (allActivitySalesTellUnsuccessful / allActivitySalesTellOpen) *
+        100
+      ).toFixed(2)}%`;
+
+      //*>--------- value
 
       countClues = allClue;
       countActivityCluesMeet = allActivityCluesMeet;
@@ -154,6 +173,16 @@ const getFindAllClue = async (req, res) => {
           ],
         });
 
+        const userActivityCluesMeetUnsuccessful =
+        await ActivityCluesMeetOpen.countDocuments({
+          $and: [
+            { userId: decryptUserId },
+            { "stepMeet.isActive": true },
+            { "stepMeet.evaluation": false },
+            { "stepMeet.PreliminaryNegotiations": false },
+          ],
+        });
+
       const userActivityCluesTellSuccessful =
         await ActivityCluesTellOpen.countDocuments({
           $and: [
@@ -161,6 +190,16 @@ const getFindAllClue = async (req, res) => {
             { "stepTell.isActive": true },
             { "stepTell.evaluation": true },
             { "stepTell.PreliminaryNegotiations": true },
+          ],
+        });
+
+        const userActivityCluesTellUnsuccessful =
+        await ActivityCluesTellOpen.countDocuments({
+          $and: [
+            { userId: decryptUserId },
+            { "stepTell.isActive": true },
+            { "stepTell.evaluation": false },
+            { "stepTell.PreliminaryNegotiations": false },
           ],
         });
 
@@ -173,6 +212,15 @@ const getFindAllClue = async (req, res) => {
           ],
         });
 
+        const userActivitySalesMeetUnsuccessful =
+        await ActivitySaleMeetOpen.countDocuments({
+          $and: [
+            { userId: decryptUserId },
+            { "status.isActive": true },
+            { "status.Unsuccessful": true },
+          ],
+        });
+
       const userActivitySalesTellSuccessful =
         await ActivitySaleTellOpen.countDocuments({
           $and: [
@@ -181,6 +229,39 @@ const getFindAllClue = async (req, res) => {
             { "status.successful": true },
           ],
         });
+
+        const userActivitySalesTellUnsuccessful =
+        await ActivitySaleTellOpen.countDocuments({
+          $and: [
+            { userId: decryptUserId },
+            { "status.isActive": true },
+            { "status.Unsuccessful": true },
+          ],
+        });
+
+
+      //*>---------- Coefficient
+
+      RefractiveIndexMeetClues = `${(
+        (userActivityCluesMeetUnsuccessful / userActivityCluesMeet) *
+        100
+      ).toFixed(2)}%`;
+
+      RefractiveIndexMeetSales = `${(
+        (userActivitySalesMeetUnsuccessful / userActivitySalesMeet) *
+        100
+      ).toFixed(2)}%`;
+
+      RefractiveIndexTellClues = `${(
+        (userActivityCluesTellUnsuccessful / userActivityCluesTellOpen) *
+        100
+      ).toFixed(2)}%`;
+
+      RefractiveIndexTellSales = `${(
+        (userActivitySalesTellUnsuccessful / userActivitySalesTellOpen) *
+        100
+      ).toFixed(2)}%`;
+
 
       countClues = userClue;
       countActivityCluesMeet = userActivityCluesMeet;
@@ -204,6 +285,9 @@ const getFindAllClue = async (req, res) => {
         countActivityCluesTellSuccessful,
         countActivitySalesTellSuccessful,
         RefractiveIndexMeetClues,
+        RefractiveIndexMeetSales,
+        RefractiveIndexTellClues,
+        RefractiveIndexTellSales,
       };
       const encryptCountAllData = cerateCipher.encrypt(
         JSON.stringify(countAll),
