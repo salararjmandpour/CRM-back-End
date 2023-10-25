@@ -198,6 +198,8 @@ const getFindAllClue = async (req, res) => {
 
     //*>----------  get find by user data for report
     else {
+      const allUser = await User.find({});
+
       console.log(decryptUserId);
       const userClue = await Clues.countDocuments({ expert: decryptUserId });
 
@@ -339,6 +341,7 @@ const getFindAllClue = async (req, res) => {
 
       //*>--------- value
 
+      allUsers = allUser;
       countClues = userClue;
       countSales = userSale;
       countActivityCluesMeet = userActivityCluesMeet;
