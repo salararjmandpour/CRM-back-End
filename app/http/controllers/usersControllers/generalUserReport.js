@@ -1,9 +1,12 @@
+const User = require("app/models/User");
 const Clues = require("app/models/Clue");
+const CampaignMain = require("app/models/CampaignMain");
 const ActivityCluesMeetOpen = require("app/models/ActivityCluesMeetOpen");
 const ActivityCluesTellOpen = require("app/models/ActivityCluesTellOpen");
 const ActivitySaleMeetOpen = require("app/models/ActivitySaleMeetOpen");
 const ActivitySaleTellOpen = require("app/models/ActivitySaleTellOpen");
-const CampaignMain = require("app/models/CampaignMain");
+const Sale = require("app/models/Sale");
+const InquiryOfPrice = require("app/models/InquiryOfPrice");
 const ROLES_LIST = require("app/config/roles_list");
 
 //*>---------- encrypt data sending
@@ -22,7 +25,9 @@ const getFindAllClue = async (req, res) => {
     //*>---------- value
 
     let countAll;
+    let allUsers;
     let countClues;
+    let countSales;
     let countCampaign;
     let countActivityCluesMeet;
     let countActivitySalesMeet;
@@ -40,6 +45,7 @@ const getFindAllClue = async (req, res) => {
     let successRateMeetSales;
     let successRateTellClues;
     let successRateTellSales;
+    let countInquiryOfPrice;
 
     //*>----------- get find all data for report
 
@@ -47,9 +53,18 @@ const getFindAllClue = async (req, res) => {
 
     const decryptUserRole = cerateCipher.decrypt(strRoleNew, Key);
     const decryptUserId = cerateCipher.decrypt(strIdNew, Key);
+
     if (ROLES_LIST.SeniorManager == decryptUserRole) {
+      console.log(decryptUserRole);
+      console.log(decryptUserId);
+
+      const allUser = await User.find({});
 
       const allClue = await Clues.countDocuments({});
+
+      const allSale = await Sale.countDocuments({});
+
+      const allInquiryOfPrice = await InquiryOfPrice.countDocuments({});
 
       countCampaign = await CampaignMain.countDocuments({});
 
@@ -168,6 +183,8 @@ const getFindAllClue = async (req, res) => {
       //*>--------- value
 
       countClues = allClue;
+      countSales = allSale;
+      allUsers = allUser;
       countActivityCluesMeet = allActivityCluesMeet;
       countActivityCluesTellOpen = allActivityCluesTellOpen;
       countActivitySalesMeet = allActivitySalesMeet;
@@ -176,11 +193,15 @@ const getFindAllClue = async (req, res) => {
       countActivitySalesMeetSuccessful = allActivitySalesMeetSuccessful;
       countActivityCluesTellSuccessful = allActivityCluesTellSuccessful;
       countActivitySalesTellSuccessful = allActivitySalesTellSuccessful;
+      countInquiryOfPrice = allInquiryOfPrice;
     }
 
     //*>----------  get find by user data for report
     else {
+      console.log(decryptUserId);
       const userClue = await Clues.countDocuments({ expert: decryptUserId });
+
+      const userSale = await Sale.countDocuments({ expert: decryptUserId });
 
       countCampaign = await CampaignMain.countDocuments({});
 
@@ -319,6 +340,7 @@ const getFindAllClue = async (req, res) => {
       //*>--------- value
 
       countClues = userClue;
+      countSales = userSale;
       countActivityCluesMeet = userActivityCluesMeet;
       countActivityCluesTellOpen = userActivityCluesTellOpen;
       countActivitySalesMeet = userActivitySalesMeet;
@@ -330,7 +352,9 @@ const getFindAllClue = async (req, res) => {
     }
     try {
       countAll = {
+        allUsers,
         countClues,
+        countSales,
         countCampaign,
         countActivityCluesMeet,
         countActivitySalesMeet,
@@ -348,6 +372,7 @@ const getFindAllClue = async (req, res) => {
         successRateMeetSales,
         successRateTellClues,
         successRateTellSales,
+        countInquiryOfPrice,
       };
       const encryptCountAllData = cerateCipher.encrypt(
         JSON.stringify(countAll),
