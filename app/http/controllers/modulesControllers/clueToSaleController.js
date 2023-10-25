@@ -2,8 +2,8 @@ const Clues = require("app/models/Clue");
 const Sale = require("app/models/Sale");
 const Invoice = require("app/models/Invoice");
 const ActivitySaleMeetOpen = require("app/models/ActivitySaleMeetOpen");
-const NoteSales = require("app/models/NoteSales");
 const ActivitySaleTellOpen = require("app/models/ActivitySaleTellOpen");
+const NoteSales = require("app/models/NoteSales");
 const DutiesSale = require("app/models/DutiesSale");
 const InquiryOfPrice = require("app/models/InquiryOfPrice");
 const ROLES_LIST = require("app/config/roles_list");
@@ -420,24 +420,40 @@ const updateSaleById = async (req, res) => {
   //!>---------- update status model of duties by id
   else if (cancelationReason) {
     try {
-      const updateStatusDutiesSale = await DutiesSale.findOneAndUpdate(
-        { _id: decryptId },
-        {
-          cancelationReason,
-          status,
-        }
-      );
-      await updateStatusDutiesSale.save();
-
-      const updateStatusActivitySaleMeetOpen =
-        await ActivitySaleMeetOpen.findOneAndUpdate(
+      if (await DutiesSale.findOne({ _id: decryptId })) {
+        const updateStatusDutiesSale = await DutiesSale.findOneAndUpdate(
           { _id: decryptId },
           {
             cancelationReason,
             status,
           }
         );
-      await updateStatusActivitySaleMeetOpen.save();
+        await updateStatusDutiesSale.save();
+      }
+      //
+      else if (await ActivitySaleMeetOpen.findOne({ _id: decryptId })) {
+        const updateStatusActivitySaleMeetOpen =
+          await ActivitySaleMeetOpen.findOneAndUpdate(
+            { _id: decryptId },
+            {
+              cancelationReason,
+              status,
+            }
+          );
+        await updateStatusActivitySaleMeetOpen.save();
+      }
+      //
+      else if (await ActivitySaleTellOpen.findOne({ _id: decryptId })) {
+        const updateStatusActivitySaleTellOpen =
+          await ActivitySaleTellOpen.findOneAndUpdate(
+            { _id: decryptId },
+            {
+              cancelationReason,
+              status,
+            }
+          );
+        await updateStatusActivitySaleTellOpen.save();
+      }
 
       res.sendStatus(200);
     } catch (err) {
@@ -530,12 +546,25 @@ const deleteSaleById = async (req, res) => {
     await DutiesSale.findOneAndDelete({
       $or: [{ _id: decryptId }, { saleId: decryptId }],
     });
+
     await NoteSales.findOneAndDelete({
       $or: [{ _id: decryptId }, { saleId: decryptId }],
     });
+
+    await ActivitySaleMeetOpen.findOneAndDelete({
+      $or: [{ _id: decryptId }, { saleId: decryptId }],
+    });
+
+    await ActivitySaleTellOpen.findOneAndDelete({
+      $or: [{ _id: decryptId }, { saleId: decryptId }],
+    });
+
     await Sale.findOneAndDelete({ _id: decryptId });
+
     await Invoice.findOneAndDelete({ sale: decryptId });
+
     await InquiryOfPrice.findOneAndDelete({ sale: decryptId });
+
     return res.status(200).json({ status: 200, message: "با موفقعیت پاک شد" });
   } catch (err) {
     console.log(err.message);
