@@ -368,12 +368,16 @@ const updateSaleById = async (req, res) => {
     activitySubject,
     activityNote,
     activityLocation,
+    activityParticipatingPeople,
+    activityPriority,
     activityTime,
     activityDate,
     activityTellSubject,
     activityTellNote,
     activityTellTime,
     activityTellDate,
+    activityCallType,
+    activityCallPriority,
     subjectForDuties,
     explainForDuties,
     dateForDuties,
@@ -381,8 +385,7 @@ const updateSaleById = async (req, res) => {
     cancelationReason,
   } = dataDecrypt;
 
-  const stepMeet = dataDecrypt.stepMeet;
-  const stepTell = dataDecrypt.stepTell;
+  
   const status = dataDecrypt.status;
 
   if (subjectForDuties) {
