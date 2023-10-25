@@ -3,6 +3,7 @@ const ActivityCluesMeetOpen = require("app/models/ActivityCluesMeetOpen");
 const ActivityCluesTellOpen = require("app/models/ActivityCluesTellOpen");
 const ActivitySaleMeetOpen = require("app/models/ActivitySaleMeetOpen");
 const ActivitySaleTellOpen = require("app/models/ActivitySaleTellOpen");
+const CampaignMain = require("app/models/CampaignMain");
 const ROLES_LIST = require("app/config/roles_list");
 
 //*>---------- encrypt data sending
@@ -18,11 +19,11 @@ const getFindAllClue = async (req, res) => {
     const strRoleNew = strRole.replaceAll(" ", "+");
     const strIdNew = strId.replaceAll(" ", "+");
 
-    //*>---------- value 
-
+    //*>---------- value
 
     let countAll;
     let countClues;
+    let countCampaign;
     let countActivityCluesMeet;
     let countActivitySalesMeet;
     let countActivityCluesTellOpen;
@@ -47,7 +48,10 @@ const getFindAllClue = async (req, res) => {
     const decryptUserRole = cerateCipher.decrypt(strRoleNew, Key);
     const decryptUserId = cerateCipher.decrypt(strIdNew, Key);
     if (ROLES_LIST.SeniorManager == decryptUserRole) {
+
       const allClue = await Clues.countDocuments({});
+
+      countCampaign = await CampaignMain.countDocuments({});
 
       const allActivityCluesMeet = await ActivityCluesMeetOpen.countDocuments(
         {}
@@ -126,8 +130,18 @@ const getFindAllClue = async (req, res) => {
         100
       ).toFixed(2)}%`;
 
+      successRateMeetClues = `${(
+        (allActivityCluesMeetSuccessful / allActivityCluesMeet) *
+        100
+      ).toFixed(2)}%`;
+
       RefractiveIndexMeetSales = `${(
         (allActivitySalesMeetUnsuccessful / allActivitySalesMeet) *
+        100
+      ).toFixed(2)}%`;
+
+      successRateMeetSales = `${(
+        (allActivitySalesMeetSuccessful / allActivitySalesMeet) *
         100
       ).toFixed(2)}%`;
 
@@ -136,8 +150,18 @@ const getFindAllClue = async (req, res) => {
         100
       ).toFixed(2)}%`;
 
+      successRateTellClues = `${(
+        (allActivityCluesTellSuccessful / allActivityCluesTellOpen) *
+        100
+      ).toFixed(2)}%`;
+
       RefractiveIndexTellSales = `${(
         (allActivitySalesTellUnsuccessful / allActivitySalesTellOpen) *
+        100
+      ).toFixed(2)}%`;
+
+      successRateTellSales = `${(
+        (allActivitySalesTellSuccessful / allActivitySalesTellOpen) *
         100
       ).toFixed(2)}%`;
 
@@ -157,6 +181,8 @@ const getFindAllClue = async (req, res) => {
     //*>----------  get find by user data for report
     else {
       const userClue = await Clues.countDocuments({ expert: decryptUserId });
+
+      countCampaign = await CampaignMain.countDocuments({});
 
       const userActivityCluesMeet = await ActivityCluesMeetOpen.countDocuments({
         userId: decryptUserId,
@@ -255,8 +281,18 @@ const getFindAllClue = async (req, res) => {
         100
       ).toFixed(2)}%`;
 
+      successRateMeetClues = `${(
+        (userActivityCluesMeetSuccessful / userActivityCluesMeet) *
+        100
+      ).toFixed(2)}%`;
+
       RefractiveIndexMeetSales = `${(
         (userActivitySalesMeetUnsuccessful / userActivitySalesMeet) *
+        100
+      ).toFixed(2)}%`;
+
+      successRateMeetSales = `${(
+        (userActivitySalesMeetSuccessful / userActivitySalesMeet) *
         100
       ).toFixed(2)}%`;
 
@@ -265,8 +301,18 @@ const getFindAllClue = async (req, res) => {
         100
       ).toFixed(2)}%`;
 
+      successRateTellClues = `${(
+        (userActivityCluesTellSuccessful / userActivityCluesTellOpen) *
+        100
+      ).toFixed(2)}%`;
+
       RefractiveIndexTellSales = `${(
         (userActivitySalesTellUnsuccessful / userActivitySalesTellOpen) *
+        100
+      ).toFixed(2)}%`;
+
+      successRateTellSales = `${(
+        (userActivitySalesTellSuccessful / userActivitySalesTellOpen) *
         100
       ).toFixed(2)}%`;
 
@@ -285,6 +331,7 @@ const getFindAllClue = async (req, res) => {
     try {
       countAll = {
         countClues,
+        countCampaign,
         countActivityCluesMeet,
         countActivitySalesMeet,
         countActivityCluesTellOpen,
@@ -297,6 +344,10 @@ const getFindAllClue = async (req, res) => {
         RefractiveIndexMeetSales,
         RefractiveIndexTellClues,
         RefractiveIndexTellSales,
+        successRateMeetClues,
+        successRateMeetSales,
+        successRateTellClues,
+        successRateTellSales,
       };
       const encryptCountAllData = cerateCipher.encrypt(
         JSON.stringify(countAll),
