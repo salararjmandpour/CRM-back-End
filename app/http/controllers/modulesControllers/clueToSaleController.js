@@ -429,6 +429,16 @@ const updateSaleById = async (req, res) => {
       );
       await updateStatusDutiesSale.save();
 
+      const updateStatusActivitySaleMeetOpen =
+        await ActivitySaleMeetOpen.findOneAndUpdate(
+          { _id: decryptId },
+          {
+            cancelationReason,
+            status,
+          }
+        );
+      await updateStatusActivitySaleMeetOpen.save();
+
       res.sendStatus(200);
     } catch (err) {
       console.log(err.message);
@@ -464,6 +474,40 @@ const updateSaleById = async (req, res) => {
         );
 
       await updateActivitySaleMeetOpen.save();
+
+      res.sendStatus(200);
+    } catch (err) {
+      console.log(err.message);
+      return res.status(500).json({ message: err });
+    }
+  } else if (activityTellSubject) {
+    if (
+      !activityTellSubject ||
+      !activityTellNote ||
+      !activityTellTime ||
+      !activityTellDate ||
+      !activityCallType ||
+      !activityCallPriority
+    )
+      return res.status(400);
+
+    //*>----------- update model for data  activity sale Tell
+    try {
+      const updateActivitySaleTellOpen =
+        await ActivitySaleTellOpen.findOneAndUpdate(
+          { _id: decryptId },
+          {
+            activityTellSubject,
+            activityTellNote,
+            activityTellTime,
+            activityTellDate,
+            activityCallType,
+            activityCallPriority,
+            status,
+          }
+        );
+
+      await updateActivitySaleTellOpen.save();
 
       res.sendStatus(200);
     } catch (err) {
