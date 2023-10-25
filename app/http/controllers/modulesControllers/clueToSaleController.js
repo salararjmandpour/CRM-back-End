@@ -385,7 +385,6 @@ const updateSaleById = async (req, res) => {
     cancelationReason,
   } = dataDecrypt;
 
-  
   const status = dataDecrypt.status;
 
   if (subjectForDuties) {
@@ -429,6 +428,42 @@ const updateSaleById = async (req, res) => {
         }
       );
       await updateStatusDutiesSale.save();
+
+      res.sendStatus(200);
+    } catch (err) {
+      console.log(err.message);
+      return res.status(500).json({ message: err });
+    }
+  } else if (activitySubject) {
+    if (
+      !activitySubject ||
+      !activityNote ||
+      !activityLocation ||
+      !activityParticipatingPeople ||
+      !activityPriority ||
+      !activityTime ||
+      !activityDate
+    )
+      return res.status(400);
+
+    //*>----------- update model for data  activity sale Meet
+    try {
+      const updateActivitySaleMeetOpen =
+        await ActivitySaleMeetOpen.findOneAndUpdate(
+          { _id: decryptId },
+          {
+            activitySubject,
+            activityNote,
+            activityLocation,
+            activityParticipatingPeople,
+            activityPriority,
+            activityTime,
+            activityDate,
+            status,
+          }
+        );
+
+      await updateActivitySaleMeetOpen.save();
 
       res.sendStatus(200);
     } catch (err) {
