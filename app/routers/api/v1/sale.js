@@ -81,8 +81,8 @@ router.post("/inquiryOfPrice", verifyJWT, inquiryOfPrice.createHandlerNew);
 
 router.delete(
   "/inquiryOfPrice",
-  verifyRoles(ROLES_LIST.SeniorManager),
   verifyJWT,
+  verifyRoles(ROLES_LIST.SeniorManager),
   inquiryOfPrice.deleteOneById
 );
 
