@@ -8,7 +8,6 @@ const InquiryOfPriceSchema = new Schema(
       type: String,
       required: true,
       trim: true,
-      unique: true,
       minlength: 2,
       maxLength: 100,
     },
