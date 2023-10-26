@@ -8,6 +8,7 @@ const ActivitySaleTellOpen = require("app/models/ActivitySaleTellOpen");
 const Sale = require("app/models/Sale");
 const InquiryOfPrice = require("app/models/InquiryOfPrice");
 const Invoice = require("app/models/Invoice");
+const DutiesSale = require("app/models/DutiesSale");
 const ROLES_LIST = require("app/config/roles_list");
 
 //*>---------- encrypt data sending
@@ -48,7 +49,10 @@ const getFindAllClue = async (req, res) => {
     let successRateTellSales;
     let countInquiryOfPrice;
     let countInvoice;
-
+    let countDutiesSale;
+    let countDutiesSaleSuccessful;
+    let RefractiveIndexDutiesSale;
+    let successRateDutiesSale;
     //*>----------- get find all data for report
 
     if (!strIdNew && !strRoleNew) return res.sensStatus(404);
@@ -66,6 +70,8 @@ const getFindAllClue = async (req, res) => {
       const allInquiryOfPrice = await InquiryOfPrice.countDocuments({});
 
       const allInvoice = await Invoice.countDocuments({});
+
+      const allDutiesSale = await DutiesSale.countDocuments({});
 
       countCampaign = await CampaignMain.countDocuments({});
 
@@ -139,6 +145,14 @@ const getFindAllClue = async (req, res) => {
           $and: [{ "status.isActive": true }, { "status.Unsuccessful": true }],
         });
 
+      const allDutiesSaleSuccessful = await DutiesSale.countDocuments({
+        $and: [{ "status.isActive": true }, { "status.successful": true }],
+      });
+
+      const allDutiesSaleUnsuccessful = await DutiesSale.countDocuments({
+        $and: [{ "status.isActive": true }, { "status.Unsuccessful": true }],
+      });
+
       //*>---------- Coefficient
 
       RefractiveIndexMeetClues = `${(
@@ -181,6 +195,16 @@ const getFindAllClue = async (req, res) => {
         100
       ).toFixed(2)}%`;
 
+      RefractiveIndexDutiesSale = `${(
+        (allDutiesSaleUnsuccessful / allDutiesSale) *
+        100
+      ).toFixed(2)}%`;
+
+      successRateDutiesSale = `${(
+        (allDutiesSaleSuccessful / allDutiesSale) *
+        100
+      ).toFixed(2)}%`;
+
       //*>--------- value
 
       countClues = allClue;
@@ -196,6 +220,8 @@ const getFindAllClue = async (req, res) => {
       countActivitySalesTellSuccessful = allActivitySalesTellSuccessful;
       countInquiryOfPrice = allInquiryOfPrice;
       countInvoice = allInvoice;
+      countDutiesSale = allDutiesSale;
+      countDutiesSaleSuccessful = allDutiesSaleSuccessful;
     }
 
     //*>----------  get find by user data for report
@@ -214,6 +240,10 @@ const getFindAllClue = async (req, res) => {
 
       const userInvoice = await Invoice.countDocuments({
         expert: decryptUserId,
+      });
+
+      const userDutiesSale = await DutiesSale.countDocuments({
+        userId: decryptUserId,
       });
 
       const userActivityCluesMeet = await ActivityCluesMeetOpen.countDocuments({
@@ -306,6 +336,22 @@ const getFindAllClue = async (req, res) => {
           ],
         });
 
+      const userDutiesSaleSuccessful = await DutiesSale.countDocuments({
+        $and: [
+          { userId: decryptUserId },
+          { "status.isActive": true },
+          { "status.successful": true },
+        ],
+      });
+
+      const userDutiesSaleUnsuccessful = await DutiesSale.countDocuments({
+        $and: [
+          { userId: decryptUserId },
+          { "status.isActive": true },
+          { "status.Unsuccessful": true },
+        ],
+      });
+
       //*>---------- Coefficient
 
       RefractiveIndexMeetClues = `${(
@@ -348,6 +394,16 @@ const getFindAllClue = async (req, res) => {
         100
       ).toFixed(2)}%`;
 
+      RefractiveIndexDutiesSale = `${(
+        (userDutiesSaleUnsuccessful / userDutiesSale) *
+        100
+      ).toFixed(2)}%`;
+
+      successRateDutiesSale = `${(
+        (userDutiesSaleSuccessful / userDutiesSale) *
+        100
+      ).toFixed(2)}%`;
+
       //*>--------- value
 
       allUsers = allUser;
@@ -363,6 +419,8 @@ const getFindAllClue = async (req, res) => {
       countActivitySalesTellSuccessful = userActivitySalesTellSuccessful;
       countInquiryOfPrice = userInquiryOfPrice;
       countInvoice = userInvoice;
+      countDutiesSale = userDutiesSale;
+      countDutiesSaleSuccessful = userDutiesSaleSuccessful;
     }
     try {
       countAll = {
@@ -388,6 +446,9 @@ const getFindAllClue = async (req, res) => {
         successRateTellSales,
         countInquiryOfPrice,
         countInvoice,
+        countDutiesSale,
+        RefractiveIndexDutiesSale,
+        successRateDutiesSale,
       };
       const encryptCountAllData = cerateCipher.encrypt(
         JSON.stringify(countAll),
