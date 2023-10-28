@@ -104,7 +104,7 @@ const getBySaleIdHandler = async (req, res) => {
   const strId = req.query.saleId.toString();
   const strIdNew = strId.replaceAll(" ", "+");
   const decryptSaleId = cerateCipher.decrypt(strIdNew, Key);
-  if (!decryptSaleId) return res.sensStatus(404);
+  if (!decryptSaleId) return res.sendStatus(404);
 
   try {
     const inquiryOfPrice = await InquiryOfPrice.find({ sale: decryptSaleId });
@@ -131,7 +131,7 @@ const putBySaleHandler = async (req, res) => {
   const strId = req.query.inquiryOfPriceId.toString();
   const strIdNew = strId.replaceAll(" ", "+");
   const decryptInquiryOfPriceId = cerateCipher.decrypt(strIdNew, Key);
-  if (!decryptInquiryOfPriceId) return res.sensStatus(404);
+  if (!decryptInquiryOfPriceId) return res.sendStatus(404);
 
   const dataDecrypt = await JSON.parse(
     cerateCipher.decrypt(req.body.dataEncInquiryOfPrice, Key)
