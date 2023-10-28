@@ -224,7 +224,7 @@ const getHandlerActivity = async (req, res) => {
   const strSaleId = req.query.saleId.toString();
   const strSaleIdNew = strSaleId.replaceAll(" ", "+");
 
-  if (!strSaleIdNew) return res.sensStatus(404);
+  if (!strSaleIdNew) return res.sendStatus(404);
 
   const decryptSaleId = cerateCipher.decrypt(strSaleIdNew, Key);
 
@@ -286,7 +286,7 @@ const getByUserHandler = async (req, res) => {
     const strRole = req.query.role.toString();
     const strRoleNew = strRole.replaceAll(" ", "+");
 
-    if (!strIdNew && !strRoleNew) return res.sensStatus(404);
+    if (!strIdNew && !strRoleNew) return res.sendStatus(404);
 
     const decryptUserRole = cerateCipher.decrypt(strRoleNew, Key);
     const decryptUserId = cerateCipher.decrypt(strIdNew, Key);
