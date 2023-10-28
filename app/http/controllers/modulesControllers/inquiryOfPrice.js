@@ -61,15 +61,15 @@ const createHandlerNew = async (req, res, next) => {
 
   //!>----------- End create number of inquiryOfPrice
 
-  const inquiryOfPrice = await InquiryOfPrice.findOne({
-    customerMobile: dataDecrypt.customerMobile,
-  });
+  // const inquiryOfPrice = await InquiryOfPrice.findOne({
+  //   customerMobile: dataDecrypt.customerMobile,
+  // });
 
-  if (inquiryOfPrice) {
-    return res.status(409).json({
-      message: "شماره موبایل  تکراری می باشد لطفا بررسی کنید ):",
-    });
-  }
+  // if (inquiryOfPrice) {
+  //   return res.status(409).json({
+  //     message: "شماره موبایل  تکراری می باشد لطفا بررسی کنید ):",
+  //   });
+  // }
 
   const { persianDate, customerMobile, questionOfPrice } = dataDecrypt;
 
