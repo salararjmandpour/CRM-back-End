@@ -22,7 +22,7 @@ const InquiryOfPriceSchema = new Schema(
     customerMobile: {
       type: Number,
       required: true,
-      trim: true,
+      // trim: true,
       // unique: true,
       minlength: 10,
       maxLength: 12,
