@@ -94,7 +94,7 @@ const getAllHandler = async (req, res) => {
     const strRole = req.query.role.toString();
     const strRoleNew = strRole.replaceAll(" ", "+");
 
-    if (!strIdNew && !strRoleNew) return res.sensStatus(404);
+    if (!strIdNew && !strRoleNew) return res.sendStatus(404);
 
     const decryptUserRole = cerateCipher.decrypt(strRoleNew, Key);
     const decryptUserId = cerateCipher.decrypt(strIdNew, Key);
