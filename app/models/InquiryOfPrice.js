@@ -23,7 +23,7 @@ const InquiryOfPriceSchema = new Schema(
       type: Number,
       required: true,
       trim: true,
-      unique: true,
+      // unique: true,
       minlength: 10,
       maxLength: 12,
     },
