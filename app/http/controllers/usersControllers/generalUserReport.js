@@ -55,12 +55,12 @@ const getFindAllClue = async (req, res) => {
     let successRateDutiesSale;
     //*>----------- get find all data for report
 
-    if (!strIdNew && !strRoleNew) return res.sensStatus(404);
+    if (!strIdNew && !strRoleNew) return res.sendStatus(404);
 
     const decryptUserRole = cerateCipher.decrypt(strRoleNew, Key);
     const decryptUserId = cerateCipher.decrypt(strIdNew, Key);
 
-    if (ROLES_LIST.SeniorManager == decryptUserRole) {
+    if (ROLES_LIST.SeniorManager == decryptUserRole&& req.query.filter===false) {
       const allUser = await User.find({});
 
       const allClue = await Clues.countDocuments({});
