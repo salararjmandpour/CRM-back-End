@@ -215,7 +215,7 @@ const getOneAndAllHandler = async (req, res) => {
     const strRoleNew = strRole.replaceAll(" ", "+");
     const strIdNew = strId.replaceAll(" ", "+");
 
-    if (!strIdNew && !strRoleNew) return res.sensStatus(404);
+    if (!strIdNew && !strRoleNew) return res.sendStatus(404);
 
     const decryptUserRole = cerateCipher.decrypt(strRoleNew, Key);
     const decryptUserId = cerateCipher.decrypt(strIdNew, Key);
