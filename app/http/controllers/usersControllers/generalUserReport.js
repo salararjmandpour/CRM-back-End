@@ -60,7 +60,7 @@ const getFindAllClue = async (req, res) => {
     const decryptUserRole = cerateCipher.decrypt(strRoleNew, Key);
     const decryptUserId = cerateCipher.decrypt(strIdNew, Key);
 
-    if (ROLES_LIST.SeniorManager == decryptUserRole&& req.query.filter===false) {
+    if (ROLES_LIST.SeniorManager == decryptUserRole&& req.query.filter==="false") {
       const allUser = await User.find({});
 
       const allClue = await Clues.countDocuments({});
