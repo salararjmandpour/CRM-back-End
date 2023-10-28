@@ -2,7 +2,10 @@ const InquiryOfPrice = require("app/models/InquiryOfPrice");
 const Invoice = require("app/models/Invoice");
 const User = require("app/models/User");
 
-//*>----------- import middleware
+
+//*>----------- import controllers
+
+const sendSmsForInquiryOfPricesController = require("app/http/controllers/toolsControllers/sendSmsForInquiryOfPricesController");
 
 //*>---------- encrypt data sending
 const cerateCipher = require("../../middleware/cerateCipher");
@@ -90,6 +93,12 @@ const createHandlerNew = async (req, res, next) => {
       expert,
       sale,
     });
+
+    const inquiryOfPricesFindOnd = await InquiryOfPrice.findOne({
+      numberOfInquiryOfPrice: numberOfInquiryOfPrice,
+    });
+
+    await sendSmsForInquiryOfPricesController.sendSms(inquiryOfPricesFindOnd);
 
     res.sendStatus(202);
   } catch (err) {
