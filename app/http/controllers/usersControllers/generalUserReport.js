@@ -163,50 +163,70 @@ const getFindAllClue = async (req, res) => {
         100
       ).toFixed(2)}%`;
 
+      if (RefractiveIndexMeetClues === NaN) RefractiveIndexMeetClues = "0%";
+
       successRateMeetClues = `${(
         (allActivityCluesMeetSuccessful / allActivityCluesMeet) *
         100
       ).toFixed(2)}%`;
+
+      if (successRateMeetClues === NaN) successRateMeetClues = "0%";
 
       RefractiveIndexMeetSales = `${(
         (allActivitySalesMeetUnsuccessful / allActivitySalesMeet) *
         100
       ).toFixed(2)}%`;
 
+      if (RefractiveIndexMeetSales === NaN) RefractiveIndexMeetSales = "0%";
+
       successRateMeetSales = `${(
         (allActivitySalesMeetSuccessful / allActivitySalesMeet) *
         100
       ).toFixed(2)}%`;
+
+      if (successRateMeetSales === NaN) successRateMeetSales = "0%";
 
       RefractiveIndexTellClues = `${(
         (allActivityCluesTellUnsuccessful / allActivityCluesTellOpen) *
         100
       ).toFixed(2)}%`;
 
+      if (RefractiveIndexTellClues === NaN) RefractiveIndexTellClues = "0%";
+
       successRateTellClues = `${(
         (allActivityCluesTellSuccessful / allActivityCluesTellOpen) *
         100
       ).toFixed(2)}%`;
+
+      if (successRateTellClues === NaN) successRateTellClues = "0%";
 
       RefractiveIndexTellSales = `${(
         (allActivitySalesTellUnsuccessful / allActivitySalesTellOpen) *
         100
       ).toFixed(2)}%`;
 
+      if (RefractiveIndexTellSales === NaN) RefractiveIndexTellSales = "0%";
+
       successRateTellSales = `${(
         (allActivitySalesTellSuccessful / allActivitySalesTellOpen) *
         100
       ).toFixed(2)}%`;
+
+      if (successRateTellSales === NaN) successRateTellSales = "0%";
 
       RefractiveIndexDutiesSale = `${(
         (allDutiesSaleUnsuccessful / allDutiesSale) *
         100
       ).toFixed(2)}%`;
 
+      if (RefractiveIndexDutiesSale === NaN) RefractiveIndexDutiesSale = "0%";
+
       successRateDutiesSale = `${(
         (allDutiesSaleSuccessful / allDutiesSale) *
         100
       ).toFixed(2)}%`;
+
+      if (successRateDutiesSale === NaN) successRateDutiesSale = "0%";
 
       //*>--------- value
 
