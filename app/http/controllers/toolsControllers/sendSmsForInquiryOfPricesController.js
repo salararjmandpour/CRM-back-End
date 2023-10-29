@@ -28,24 +28,25 @@ const sendSms = async (body) => {
       url: panelSms[0].url,
       body: {
         op: "pattern",
-        uname: panelSms[0].uname,
+        user: panelSms[0].uname,
         pass: panelSms[0].pass,
-        from: panelSms[0].from,
+        fromNum: panelSms[0].from,
         // message: message,
-        toNum: ["9118121784"],
+        toNum: "9118121784",
         patternCode: "pnp5kebobifu3f1",
         inputData: [
-          { namecustomer: nameCustomer.fullName },
-          { numberofinquiryofprice: body.numberOfInquiryOfPrice },
-          { persiandate: body.persianDate },
-          { nameexpert: nameExpert.fullName },
+          { namecustomer: "pasha" },
+          { numberofinquiryofprice: "hjhjsf" },
+          { persiandate: "kjkhdsf" },
+          { nameexpert: "kjlshjdlkf" },
         ],
       },
       json: true,
     },
     function (error, request, body) {
       if (!error && request.statusCode === 200) {
-        return 200;
+        // return 200;
+        console.log(request.body);
       } else {
         console.log("whatever you want");
       }
