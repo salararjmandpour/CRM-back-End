@@ -27,12 +27,19 @@ const sendSms = async (body) => {
     {
       url: panelSms[0].url,
       body: {
-        op: "send",
+        op: "pattern",
         uname: panelSms[0].uname,
         pass: panelSms[0].pass,
-        message: message,
         from: panelSms[0].from,
-        to: ["9118121784","9121826300"],
+        // message: message,
+        toNum: ["9118121784"],
+        patternCode: "pnp5kebobifu3f1",
+        inputData: [
+          { namecustomer: nameCustomer.fullName },
+          { numberofinquiryofprice: body.numberOfInquiryOfPrice },
+          { persiandate: body.persianDate },
+          { nameexpert: nameExpert.fullName },
+        ],
       },
       json: true,
     },
