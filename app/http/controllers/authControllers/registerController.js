@@ -65,7 +65,6 @@ const editUserPasswordByAdmin = async (req, res) => {
     cerateCipher.decrypt(req.body.dataEnc, Key)
   );
 
-  console.log(fullName, id, password);
   if (!fullName || !id || !password) {
     return res.status(400);
   }
