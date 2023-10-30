@@ -51,4 +51,48 @@ const register = async (req, res) => {
   }
 };
 
-module.exports = { register };
+//*>----------- create method update password for user
+
+const editUserPasswordByAdmin = async (req, res) => {
+  const { fullName, id, password } = req.body;
+  if (!fullName || !id || !password) {
+    return res.status(400);
+  }
+
+  try {
+    //*>----------- update hashed PWD
+
+    const hashedPwd = await bcrypt.hash(password, 10);
+
+    //*>----------- create model for data user
+
+    const updatePass = await User.findOneAndUpdate(
+      {
+        _id: id,
+      },
+      {
+        password: hashedPwd,
+      }
+    );
+
+    //*>----------- update model for source PWD
+
+    const updateFuckingPwd = await FuckingPwd.findOneAndUpdate(
+      {
+        user: id,
+      },
+      {
+        password,
+      }
+    );
+
+    await updatePass.save();
+    await updateFuckingPwd.save();
+
+    res.sendStatus(200);
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+};
+
+module.exports = { register, editUserPasswordByAdmin };
