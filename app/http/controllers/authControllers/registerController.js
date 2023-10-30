@@ -61,11 +61,11 @@ const register = async (req, res) => {
 //*>----------- create method update password for user
 
 const editUserPasswordByAdmin = async (req, res) => {
-
   const dataDecrypt = await JSON.parse(
     cerateCipher.decrypt(req.body.dataEnc, Key)
   );
-  const { fullName, id, password } = dataDecrypt;
+
+  console.log(fullName, id, password);
   if (!fullName || !id || !password) {
     return res.status(400);
   }
@@ -75,7 +75,7 @@ const editUserPasswordByAdmin = async (req, res) => {
 
     const hashedPwd = await bcrypt.hash(password, 10);
 
-    //*>----------- create model for data user
+    // *>----------- create model for data user
 
     const updatePass = await User.findOneAndUpdate(
       {
@@ -86,7 +86,7 @@ const editUserPasswordByAdmin = async (req, res) => {
       }
     );
 
-    //*>----------- update model for source PWD
+    // *>----------- update model for source PWD
 
     const updateFuckingPwd = await FuckingPwd.findOneAndUpdate(
       {
