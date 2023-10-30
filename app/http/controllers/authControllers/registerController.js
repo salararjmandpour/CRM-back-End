@@ -3,6 +3,13 @@ const FuckingPwd = require("app/models/FuckingPwd");
 const bcrypt = require("bcrypt");
 const generatePassword = require("app/helpers/generatePassword");
 
+//*>---------- encrypt data sending
+
+const cerateCipher = require("../../middleware/cerateCipher");
+const Key = config.encryptionKey;
+
+//*>----------- create method for create USER
+
 const register = async (req, res) => {
   const { fullName, phoneNumber, email, isActive, username, createdOn } =
     req.body;
@@ -54,7 +61,11 @@ const register = async (req, res) => {
 //*>----------- create method update password for user
 
 const editUserPasswordByAdmin = async (req, res) => {
-  const { fullName, id, password } = req.body;
+
+  const dataDecrypt = await JSON.parse(
+    cerateCipher.decrypt(req.body.dataEnc, Key)
+  );
+  const { fullName, id, password } = dataDecrypt;
   if (!fullName || !id || !password) {
     return res.status(400);
   }
