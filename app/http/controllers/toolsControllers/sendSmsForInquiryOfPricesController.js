@@ -23,35 +23,57 @@ const sendSms = async (body) => {
 سایت مجموعه : www.arshidateb.com
 `;
 
-  request.post(
-    {
-      url: panelSms[0].url,
-      body: {
-        op: "pattern",
-        user: panelSms[0].uname,
-        pass: panelSms[0].pass,
-        fromNum: panelSms[0].from,
-        // message: message,
-        toNum: "9118121784",
-        patternCode: "pnp5kebobifu3f1",
-        inputData: [
-          { namecustomer: "pasha" },
-          { numberofinquiryofprice: "hjhjsf" },
-          { persiandate: "kjkhdsf" },
-          { nameexpert: "kjlshjdlkf" },
-        ],
-      },
-      json: true,
+  const options = {
+    method: "POST",
+    url: "http://rest.ippanel.com/v1/messages/patterns/send",
+    headers: {
+      Authorization: "AccessKey 6u30xeWXFpOzM5gU_pK3b_BbotkMUhqQWbwVAlRWO2Y=",
+      "Content-Type": "application/json",
     },
-    function (error, request, body) {
-      if (!error && request.statusCode === 200) {
-        // return 200;
-        console.log(request.body);
-      } else {
-        console.log("whatever you want");
-      }
-    }
-  );
+    body: JSON.stringify({
+      pattern_code: "pnp5kebobifu3f1",
+      originator: "+98EVENT",
+      recipient: "+989118121784",
+      values: {
+        "name-customer": "تست",
+        "number-of-inquiry-of-price": "test",
+        "persian-date": "test",
+        "name-expert": "test",
+      },
+    }),
+  };
+  request(options, function (error, response) {
+    if (error) throw new Error(error);
+    console.log(response.body);
+  });
+
+  // request.post(
+  //   {
+  //     url: "http://rest.ippanel.com/v1/messages/patterns/send",
+  //     body: {
+  //       op: "pattern",
+  //       user: "U9121826300",
+  //       pass: "Med0079207510",
+  //       fromNum: "+90009735",
+  //       toNum: "9118121784",
+  //       patternCode: "pnp5kebobifu3f1",
+  //       inputData: [
+  //         { "name-customer": "تست" },
+  //         { "number-of-inquiry-of-price": " test" },
+  //         { "persian-date": "test" },
+  //         { "name-expert": "test" },
+  //       ],
+  //     },
+  //     json: true,
+  //   },
+  //   function (error, request, body) {
+  //     if (!error && request.statusCode === 200) {
+  //       console.log(request.body);
+  //     } else {
+  //       console.log("whatever you want");
+  //     }
+  //   }
+  // );
 };
 
 module.exports = { sendSms };
