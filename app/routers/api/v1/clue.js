@@ -26,6 +26,7 @@ router.post(
     ROLES_LIST.AccountingManager,
     ROLES_LIST.Accountant,
     ROLES_LIST.CRMManager,
+    ROLES_LIST.Assistant,
   ),
   clueController.createHandler
 );
@@ -40,7 +41,8 @@ router.put(
     ROLES_LIST.FinanceManager,
     ROLES_LIST.AccountingManager,
     ROLES_LIST.Accountant,
-    ROLES_LIST.CRMManager
+    ROLES_LIST.CRMManager,
+    ROLES_LIST.Assistant,
   ),
   clueController.updateOneClue
 );
