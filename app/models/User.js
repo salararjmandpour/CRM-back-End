@@ -82,6 +82,7 @@ const userSchema = new Schema(
       insert: { type: Boolean, default: false },
       fullAccess: { type: Boolean, default: false },
     },
+    recruitment:{type:Boolean,default:false},
     refreshToken: [String],
   },
   { timestamps: true, toJSON: { virtuals: true } }
