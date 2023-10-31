@@ -6,6 +6,7 @@ const fs = require("fs");
 const xlsx = require("xlsx");
 const User = require("app/models/User");
 const Clues = require("app/models/Clue");
+const MedicalStorage = require("app/models/medicalStorage");
 
 //*>---------- encrypt data sending
 
@@ -89,51 +90,101 @@ const importFile = async (req, res, next) => {
             address,
             qualityCustomer,
             callTime,
+            nameProduct,
+            sku,
+            productId,
+            amount,
+            unit,
+            IRC,
+            expirationDate,
+            type,
+            brand,
           } = data[index];
 
-          if (
-            !subject ||
-            !fullName ||
-            !role ||
-            !mobile ||
-            !industry ||
-            !expertDecrypt ||
-            !expertFullName ||
-            !company ||
-            !phonNumber ||
-            !state ||
-            !cities ||
-            !address ||
-            !callTime ||
-            !qualityCustomer
-          ) {
-            return res
-              .status(400)
-              .json({ message: "فایل مورد نظر دارای یک فیلد خالی می باشد " });
+          if (subject && mobile && company) {
+            if (
+              !subject ||
+              !fullName ||
+              !role ||
+              !mobile ||
+              !industry ||
+              !expertDecrypt ||
+              !expertFullName ||
+              !company ||
+              !phonNumber ||
+              !state ||
+              !cities ||
+              !address ||
+              !callTime ||
+              !qualityCustomer
+            ) {
+              return res
+                .status(400)
+                .json({ message: "فایل مورد نظر دارای یک فیلد خالی می باشد " });
+            }
+
+            const duplicate = await Clues.findOne({
+              $or: [{ mobile }, { phonNumber }],
+            }).exec();
+
+            if (duplicate) return res.status(409);
+
+            await Clues.create({
+              subject: subject,
+              fullName: fullName,
+              role: role,
+              mobile: mobile,
+              industry: industry,
+              expert: expertDecrypt,
+              expertFullName: expertFullName,
+              company: company,
+              phonNumber: phonNumber,
+              state: state,
+              cities: cities,
+              address: address,
+              qualityCustomer: qualityCustomer,
+              callTime: callTime,
+            });
           }
 
-          const duplicate = await Clues.findOne({
-            $or: [{ mobile }, { phonNumber }],
-          }).exec();
+          //*>---------- import model medical storage
+          else if (sku && expirationDate && brand) {
+            if (
+              !nameProduct ||
+              !sku ||
+              !productId ||
+              !amount ||
+              !unit ||
+              !expirationDate ||
+              !IRC||
+              !type ||
+              !brand ||
+              !expertDecrypt
+            ) {
+              return res
+                .status(400)
+                .json({ message: "فایل مورد نظر دارای یک فیلد خالی می باشد " });
+            }
 
-          if (duplicate) return res.status(409);
+            const duplicate = await MedicalStorage.findOne({ sku }).exec();
 
-          await Clues.create({
-            subject: subject,
-            fullName: fullName,
-            role: role,
-            mobile: mobile,
-            industry: industry,
-            expert: expertDecrypt,
-            expertFullName: expertFullName,
-            company: company,
-            phonNumber: phonNumber,
-            state: state,
-            cities: cities,
-            address: address,
-            qualityCustomer: qualityCustomer,
-            callTime: callTime,
-          });
+            if (duplicate) return res.status(409);
+
+            await MedicalStorage.create({
+              nameProduct,
+              sku,
+              productId,
+              inventory: {
+                amount,
+                unit,
+              },
+              expirationDate,
+              type,
+              brand,
+              IRC,
+              expert: expertDecrypt,
+            });
+          }
         }
 
         fs.unlinkSync(fullNameFile);
