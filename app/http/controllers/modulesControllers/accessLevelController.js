@@ -596,7 +596,22 @@ const putAccessLevelForUser = async (req, res) => {
             },
           }
         );
+        await userUpdate.save();
 
+        res.sendStatus(202);
+      } catch (err) {
+        console.log(err.message);
+        return res.status(500).json({ message: err });
+      }
+      break;
+    case "access":
+      try {
+        const userUpdate = await User.findOneAndUpdate(
+          { _id: userId },
+          {
+            recruitment: true,
+          }
+        );
         await userUpdate.save();
 
         res.sendStatus(202);
@@ -616,6 +631,9 @@ const putAccessLevelForUser = async (req, res) => {
               insert: false,
               fullAccess: false,
             },
+          },
+          {
+            recruitment: false,
           }
         );
 
