@@ -45,6 +45,11 @@ const medicalStorageSchema = new Schema(
       required: true,
       trim: true,
     },
+    IRC: {
+      type: String,
+      required: true,
+      trim: true,
+    },
     type: {
       type: String,
       required: true,
