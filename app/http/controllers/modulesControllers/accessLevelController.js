@@ -47,7 +47,13 @@ const getUserRole = async (req, res) => {
           SeniorManager: 1001,
         };
         try {
-          const usersRole = await User.find({ roles: Role });
+          const usersRole = await User.find(
+            { roles: Role },
+            {
+              password: 0,
+              refreshToken: 0,
+            }
+          );
           const encryptData = cerateCipher.encrypt(
             JSON.stringify(usersRole),
             Key
@@ -65,7 +71,13 @@ const getUserRole = async (req, res) => {
           Assistant: 1002,
         };
         try {
-          const usersRole = await User.find({ roles: Role });
+          const usersRole = await User.find(
+            { roles: Role },
+            {
+              password: 0,
+              refreshToken: 0,
+            }
+          );
           const encryptData = cerateCipher.encrypt(
             JSON.stringify(usersRole),
             Key
@@ -83,7 +95,13 @@ const getUserRole = async (req, res) => {
           LogisticsManager: 1003,
         };
         try {
-          const usersRole = await User.find({ roles: Role });
+          const usersRole = await User.find(
+            { roles: Role },
+            {
+              password: 0,
+              refreshToken: 0,
+            }
+          );
           const encryptData = cerateCipher.encrypt(
             JSON.stringify(usersRole),
             Key
@@ -101,7 +119,13 @@ const getUserRole = async (req, res) => {
           LogisticsSpecialist: 1004,
         };
         try {
-          const usersRole = await User.find({ roles: Role });
+          const usersRole = await User.find(
+            { roles: Role },
+            {
+              password: 0,
+              refreshToken: 0,
+            }
+          );
           const encryptData = cerateCipher.encrypt(
             JSON.stringify(usersRole),
             Key
@@ -119,7 +143,13 @@ const getUserRole = async (req, res) => {
           ContentManager: 1005,
         };
         try {
-          const usersRole = await User.find({ roles: Role });
+          const usersRole = await User.find(
+            { roles: Role },
+            {
+              password: 0,
+              refreshToken: 0,
+            }
+          );
           const encryptData = cerateCipher.encrypt(
             JSON.stringify(usersRole),
             Key
@@ -137,7 +167,13 @@ const getUserRole = async (req, res) => {
           SalesManager: 1007,
         };
         try {
-          const usersRole = await User.find({ roles: Role });
+          const usersRole = await User.find(
+            { roles: Role },
+            {
+              password: 0,
+              refreshToken: 0,
+            }
+          );
           const encryptData = cerateCipher.encrypt(
             JSON.stringify(usersRole),
             Key
@@ -155,7 +191,13 @@ const getUserRole = async (req, res) => {
           SalesSpecialist: 1008,
         };
         try {
-          const usersRole = await User.find({ roles: Role });
+          const usersRole = await User.find(
+            { roles: Role },
+            {
+              password: 0,
+              refreshToken: 0,
+            }
+          );
           const encryptData = cerateCipher.encrypt(
             JSON.stringify(usersRole),
             Key
@@ -173,7 +215,13 @@ const getUserRole = async (req, res) => {
           FinanceManager: 1009,
         };
         try {
-          const usersRole = await User.find({ roles: Role });
+          const usersRole = await User.find(
+            { roles: Role },
+            {
+              password: 0,
+              refreshToken: 0,
+            }
+          );
           const encryptData = cerateCipher.encrypt(
             JSON.stringify(usersRole),
             Key
@@ -191,7 +239,13 @@ const getUserRole = async (req, res) => {
           AccountingManager: 1010,
         };
         try {
-          const usersRole = await User.find({ roles: Role });
+          const usersRole = await User.find(
+            { roles: Role },
+            {
+              password: 0,
+              refreshToken: 0,
+            }
+          );
           const encryptData = cerateCipher.encrypt(
             JSON.stringify(usersRole),
             Key
@@ -209,7 +263,13 @@ const getUserRole = async (req, res) => {
           AccountingAssistant: 1011,
         };
         try {
-          const usersRole = await User.find({ roles: Role });
+          const usersRole = await User.find(
+            { roles: Role },
+            {
+              password: 0,
+              refreshToken: 0,
+            }
+          );
           const encryptData = cerateCipher.encrypt(
             JSON.stringify(usersRole),
             Key
@@ -227,7 +287,13 @@ const getUserRole = async (req, res) => {
           Accountant: 1012,
         };
         try {
-          const usersRole = await User.find({ roles: Role });
+          const usersRole = await User.find(
+            { roles: Role },
+            {
+              password: 0,
+              refreshToken: 0,
+            }
+          );
           const encryptData = cerateCipher.encrypt(
             JSON.stringify(usersRole),
             Key
@@ -245,7 +311,13 @@ const getUserRole = async (req, res) => {
           CRMSpecialist: 1013,
         };
         try {
-          const usersRole = await User.find({ roles: Role });
+          const usersRole = await User.find(
+            { roles: Role },
+            {
+              password: 0,
+              refreshToken: 0,
+            }
+          );
           const encryptData = cerateCipher.encrypt(
             JSON.stringify(usersRole),
             Key
@@ -263,7 +335,13 @@ const getUserRole = async (req, res) => {
           CRMManager: 1014,
         };
         try {
-          const usersRole = await User.find({ roles: Role });
+          const usersRole = await User.find(
+            { roles: Role },
+            {
+              password: 0,
+              refreshToken: 0,
+            }
+          );
           const encryptData = cerateCipher.encrypt(
             JSON.stringify(usersRole),
             Key
@@ -281,7 +359,13 @@ const getUserRole = async (req, res) => {
           BusinessManager: 1015,
         };
         try {
-          const usersRole = await User.find({ roles: Role });
+          const usersRole = await User.find(
+            { roles: Role },
+            {
+              password: 0,
+              refreshToken: 0,
+            }
+          );
           const encryptData = cerateCipher.encrypt(
             JSON.stringify(usersRole),
             Key
@@ -299,7 +383,13 @@ const getUserRole = async (req, res) => {
           BusinessSpecialist: 1016,
         };
         try {
-          const usersRole = await User.find({ roles: Role });
+          const usersRole = await User.find(
+            { roles: Role },
+            {
+              password: 0,
+              refreshToken: 0,
+            }
+          );
           const encryptData = cerateCipher.encrypt(
             JSON.stringify(usersRole),
             Key
@@ -317,7 +407,13 @@ const getUserRole = async (req, res) => {
           WarehouseManager: 1017,
         };
         try {
-          const usersRole = await User.find({ roles: Role });
+          const usersRole = await User.find(
+            { roles: Role },
+            {
+              password: 0,
+              refreshToken: 0,
+            }
+          );
           const encryptData = cerateCipher.encrypt(
             JSON.stringify(usersRole),
             Key
@@ -335,7 +431,13 @@ const getUserRole = async (req, res) => {
           WarehouseSpecialist: 1018,
         };
         try {
-          const usersRole = await User.find({ roles: Role });
+          const usersRole = await User.find(
+            { roles: Role },
+            {
+              password: 0,
+              refreshToken: 0,
+            }
+          );
           const encryptData = cerateCipher.encrypt(
             JSON.stringify(usersRole),
             Key
@@ -353,7 +455,13 @@ const getUserRole = async (req, res) => {
           HrManager: 1019,
         };
         try {
-          const usersRole = await User.find({ roles: Role });
+          const usersRole = await User.find(
+            { roles: Role },
+            {
+              password: 0,
+              refreshToken: 0,
+            }
+          );
           const encryptData = cerateCipher.encrypt(
             JSON.stringify(usersRole),
             Key
@@ -371,7 +479,13 @@ const getUserRole = async (req, res) => {
           HrSpecialist: 1020,
         };
         try {
-          const usersRole = await User.find({ roles: Role });
+          const usersRole = await User.find(
+            { roles: Role },
+            {
+              password: 0,
+              refreshToken: 0,
+            }
+          );
           const encryptData = cerateCipher.encrypt(
             JSON.stringify(usersRole),
             Key
