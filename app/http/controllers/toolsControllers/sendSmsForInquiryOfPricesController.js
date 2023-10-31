@@ -19,10 +19,6 @@ const sendSms = async (body) => {
   const nameExpert = await User.findOne({ _id: body.expert });
   const nameCustomer = await Sale.findOne({ _id: body.sale });
 
-  const message = `مشتری گرامی ${nameCustomer.fullName} در شرکت آرشیدا طب یک استعلام بها به شماره : ${body.numberOfInquiryOfPrice} در تاریخ : ${body.persianDate} توسط کارشناس این مجموعه ${nameExpert.fullName} ثبت شده است .
-سایت مجموعه : www.arshidateb.com
-`;
-
   const options = {
     method: "POST",
     url: "https://ippanel.com/api/select",
