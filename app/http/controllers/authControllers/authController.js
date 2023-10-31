@@ -16,9 +16,14 @@ const handleLogin = async (req, res) => {
   if (!foundUser) {
     return res.sendStatus(401);
   }
+  const recruitment = await foundUser.recruitment;
+  await console.log(recruitment);
 
+  if (!recruitment) {
+    return res.sendStatus(423);
+  }
   const match = await bcrypt.compare(password, foundUser.password);
-  if (!match) return res.sendStatus(401);
+    if (!match) return res.sendStatus(401);
 
   const roles = Object.values(foundUser.roles).filter(Boolean);
 
@@ -62,7 +67,10 @@ const handleLogin = async (req, res) => {
     fullName: cerateCipher.encrypt(foundUser.fullName, Key),
     isActive: cerateCipher.encrypt(foundUser.isActive.toString(), Key),
     _id: cerateCipher.encrypt(foundUser._id.toString(), Key),
-    accessLevel: cerateCipher.encrypt(JSON.stringify(foundUser.accessLevel), Key),
+    accessLevel: cerateCipher.encrypt(
+      JSON.stringify(foundUser.accessLevel),
+      Key
+    ),
   };
 
   res.cookie("jwt", newRefreshToken, {
