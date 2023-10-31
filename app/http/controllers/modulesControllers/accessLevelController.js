@@ -620,6 +620,22 @@ const putAccessLevelForUser = async (req, res) => {
         return res.status(500).json({ message: err });
       }
       break;
+      case !"access":
+        try {
+          const userUpdate = await User.findOneAndUpdate(
+            { _id: userId },
+            {
+              recruitment: false,
+            }
+          );
+          await userUpdate.save();
+  
+          res.sendStatus(202);
+        } catch (err) {
+          console.log(err.message);
+          return res.status(500).json({ message: err });
+        }
+        break;
     default:
       try {
         const userUpdate = await User.findOneAndUpdate(
