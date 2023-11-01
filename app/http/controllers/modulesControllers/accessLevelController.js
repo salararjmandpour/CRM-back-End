@@ -515,153 +515,303 @@ const putAccessLevelForUser = async (req, res) => {
 
   const newAccessLevel = (obj) => Object.keys(obj).find((i) => obj[i] === true);
 
-  switch (newAccessLevel(accessLevel)) {
-    case "edit":
-      try {
-        const userUpdate = await User.findOneAndUpdate(
-          { _id: userId },
-          {
-            accessLevel: {
-              edit: true,
-              delete: false,
-              insert: false,
-              fullAccess: false,
-            },
+
+  checkArrayValues = async (arr) => {
+    for (let i = 0; i < arr.length; i++) {
+      switch (arr[i]) {
+        //*>---------- edit
+        case "edit":
+          try {
+            const userUpdate = await User.findOneAndUpdate(
+              { _id: userId },
+              {
+                accessLevel: {
+                  edit: true,
+                },
+              }
+            );
+            await userUpdate.save();
+
+            res.sendStatus(202);
+          } catch (err) {
+            console.log(err.message);
+            return res.status(500).json({ message: err });
           }
-        );
+          break;
+        //*>---------- noEdit
+        case "noEdit":
+          try {
+            const userUpdate = await User.findOneAndUpdate(
+              { _id: userId },
+              {
+                accessLevel: {
+                  edit: false,
+                },
+              }
+            );
+            await userUpdate.save();
 
-        await userUpdate.save();
-
-        res.sendStatus(202);
-      } catch (err) {
-        console.log(err.message);
-        return res.status(500).json({ message: err });
-      }
-
-      break;
-    case "delete":
-      try {
-        const userUpdate = await User.findOneAndUpdate(
-          { _id: userId },
-          {
-            accessLevel: {
-              edit: false,
-              delete: true,
-              insert: false,
-              fullAccess: false,
-            },
+            res.sendStatus(202);
+          } catch (err) {
+            console.log(err.message);
+            return res.status(500).json({ message: err });
           }
-        );
+          break;
+        //*>---------- delete
+        case "delete":
+          try {
+            const userUpdate = await User.findOneAndUpdate(
+              { _id: userId },
+              {
+                accessLevel: {
+                  delete: true,
+                },
+              }
+            );
+            await userUpdate.save();
 
-        await userUpdate.save();
-
-        res.sendStatus(202);
-      } catch (err) {
-        console.log(err.message);
-        return res.status(500).json({ message: err });
-      }
-      break;
-    case "insert":
-      try {
-        const userUpdate = await User.findOneAndUpdate(
-          { _id: userId },
-          {
-            accessLevel: {
-              edit: false,
-              delete: false,
-              insert: true,
-              fullAccess: false,
-            },
+            res.sendStatus(202);
+          } catch (err) {
+            console.log(err.message);
+            return res.status(500).json({ message: err });
           }
-        );
+          break;
+        //*>---------- noDelete
+        case "noDelete":
+          try {
+            const userUpdate = await User.findOneAndUpdate(
+              { _id: userId },
+              {
+                accessLevel: {
+                  delete: false,
+                },
+              }
+            );
+            await userUpdate.save();
 
-        await userUpdate.save();
-
-        res.sendStatus(202);
-      } catch (err) {
-        console.log(err.message);
-        return res.status(500).json({ message: err });
-      }
-      break;
-    case "fullAccess":
-      try {
-        const userUpdate = await User.findOneAndUpdate(
-          { _id: userId },
-          {
-            accessLevel: {
-              edit: false,
-              delete: false,
-              insert: false,
-              fullAccess: true,
-            },
+            res.sendStatus(202);
+          } catch (err) {
+            console.log(err.message);
+            return res.status(500).json({ message: err });
           }
-        );
-        await userUpdate.save();
+          break;
+        //*>---------- insert
+        case "insert":
+          try {
+            const userUpdate = await User.findOneAndUpdate(
+              { _id: userId },
+              {
+                accessLevel: {
+                  insert: true,
+                },
+              }
+            );
+            await userUpdate.save();
 
-        res.sendStatus(202);
-      } catch (err) {
-        console.log(err.message);
-        return res.status(500).json({ message: err });
-      }
-      break;
-    case "access":
-      try {
-        const userUpdate = await User.findOneAndUpdate(
-          { _id: userId },
-          {
-            recruitment: true,
+            res.sendStatus(202);
+          } catch (err) {
+            console.log(err.message);
+            return res.status(500).json({ message: err });
           }
-        );
-        await userUpdate.save();
+          break;
+        //*>---------- noInsert
+        case "noInsert":
+          try {
+            const userUpdate = await User.findOneAndUpdate(
+              { _id: userId },
+              {
+                accessLevel: {
+                  insert: false,
+                },
+              }
+            );
+            await userUpdate.save();
 
-        res.sendStatus(202);
-      } catch (err) {
-        console.log(err.message);
-        return res.status(500).json({ message: err });
-      }
-      break;
-      case !"access":
-        try {
-          const userUpdate = await User.findOneAndUpdate(
-            { _id: userId },
-            {
-              recruitment: false,
-            }
-          );
-          await userUpdate.save();
-  
-          res.sendStatus(202);
-        } catch (err) {
-          console.log(err.message);
-          return res.status(500).json({ message: err });
-        }
-        break;
-    default:
-      try {
-        const userUpdate = await User.findOneAndUpdate(
-          { _id: userId },
-          {
-            accessLevel: {
-              edit: false,
-              delete: false,
-              insert: false,
-              fullAccess: false,
-            },
-          },
-          {
-            recruitment: false,
+            res.sendStatus(202);
+          } catch (err) {
+            console.log(err.message);
+            return res.status(500).json({ message: err });
           }
-        );
-
-        await userUpdate.save();
-
-        res.sendStatus(202);
-      } catch (err) {
-        console.log(err.message);
-        return res.status(500).json({ message: err });
+          break;
+        default:
+          console.log("Value is Null");
       }
-      break;
-  }
+    }
+  };
+
+  checkArrayValues(accessLevel);
+
+  // switch (accessLevel) {
+  //   case  accessLevel.includes("edit"):
+  //     try {
+
+  //     await  console.log("edit");
+
+  //       const userUpdate = await User.findOneAndUpdate(
+  //         { _id: userId },
+  //         {
+  //           accessLevel: {
+  //             edit: true,
+  //           },
+  //         }
+  //       );
+  //       await userUpdate.save();
+
+  //       res.sendStatus(202);
+  //     } catch (err) {
+  //       console.log(err.message);
+  //       return res.status(500).json({ message: err });
+  //     }
+
+  //     break;
+  //     case ! accessLevel.includes("edit"):
+  //       try {
+
+  //       await  console.log("edit");
+
+  //         const userUpdate = await User.findOneAndUpdate(
+  //           { _id: userId },
+  //           {
+  //             accessLevel: {
+  //               edit: false,
+  //             },
+  //           }
+  //         );
+  //         await userUpdate.save();
+
+  //         res.sendStatus(202);
+  //       } catch (err) {
+  //         console.log(err.message);
+  //         return res.status(500).json({ message: err });
+  //       }
+
+  //       break;
+  //   case "delete":
+  //     try {
+  //       console.log("delete");
+
+  //       const userUpdate = await User.findOneAndUpdate(
+  //         { _id: userId },
+  //         {
+  //           accessLevel: {
+  //             edit: false,
+  //             delete: true,
+  //             insert: false,
+  //             fullAccess: false,
+  //           },
+  //         }
+  //       );
+
+  //       await userUpdate.save();
+
+  //       res.sendStatus(202);
+  //     } catch (err) {
+  //       console.log(err.message);
+  //       return res.status(500).json({ message: err });
+  //     }
+  //     break;
+  //   case "insert":
+  //     try {
+  //       const userUpdate = await User.findOneAndUpdate(
+  //         { _id: userId },
+  //         {
+  //           accessLevel: {
+  //             edit: false,
+  //             delete: false,
+  //             insert: true,
+  //             fullAccess: false,
+  //           },
+  //         }
+  //       );
+
+  //       await userUpdate.save();
+
+  //       res.sendStatus(202);
+  //     } catch (err) {
+  //       console.log(err.message);
+  //       return res.status(500).json({ message: err });
+  //     }
+  //     break;
+  //   case "fullAccess":
+  //     try {
+  //       const userUpdate = await User.findOneAndUpdate(
+  //         { _id: userId },
+  //         {
+  //           accessLevel: {
+  //             edit: false,
+  //             delete: false,
+  //             insert: false,
+  //             fullAccess: true,
+  //           },
+  //         }
+  //       );
+  //       await userUpdate.save();
+
+  //       res.sendStatus(202);
+  //     } catch (err) {
+  //       console.log(err.message);
+  //       return res.status(500).json({ message: err });
+  //     }
+  //     break;
+  //   case "access":
+  //     try {
+  //       const userUpdate = await User.findOneAndUpdate(
+  //         { _id: userId },
+  //         {
+  //           recruitment: true,
+  //         }
+  //       );
+  //       await userUpdate.save();
+
+  //       res.sendStatus(202);
+  //     } catch (err) {
+  //       console.log(err.message);
+  //       return res.status(500).json({ message: err });
+  //     }
+  //     break;
+  //     case "noAccess":
+  //       try {
+  //         const userUpdate = await User.findOneAndUpdate(
+  //           { _id: userId },
+  //           {
+  //             recruitment: false,
+  //           }
+  //         );
+  //         await userUpdate.save();
+  //         await console.log("noAccess");
+
+  //         res.sendStatus(202);
+  //       } catch (err) {
+  //         console.log(err.message);
+  //         return res.status(500).json({ message: err });
+  //       }
+  //       break;
+  //   default:
+  //     try {
+  //       const userUpdate = await User.findOneAndUpdate(
+  //         { _id: userId },
+  //         {
+  //           accessLevel: {
+  //             edit: false,
+  //             delete: false,
+  //             insert: false,
+  //             fullAccess: false,
+  //           },
+  //         },
+  //         {
+  //           recruitment: false,
+  //         }
+  //       );
+
+  //       await userUpdate.save();
+
+  //       res.sendStatus(202);
+  //     } catch (err) {
+  //       console.log(err.message);
+  //       return res.status(500).json({ message: err });
+  //     }
+  //     break;
+  // }
 };
 
 //*>------------ export method
