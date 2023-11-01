@@ -162,6 +162,30 @@ const getUserRole = async (req, res) => {
 
         break;
 
+      case "ContentSpecialist":
+        Role = {
+          ContentManager: 1006,
+        };
+        try {
+          const usersRole = await User.find(
+            { roles: Role },
+            {
+              password: 0,
+              refreshToken: 0,
+            }
+          );
+          const encryptData = cerateCipher.encrypt(
+            JSON.stringify(usersRole),
+            Key
+          );
+          res.status(200).json({ encryptData });
+        } catch (err) {
+          console.log(err.message);
+          return res.status(500).json({ message: err });
+        }
+
+        break;
+
       case "SalesManager":
         Role = {
           SalesManager: 1007,
@@ -282,7 +306,9 @@ const getUserRole = async (req, res) => {
 
         break;
 
-      case "Accountant":
+        AccountingSpecialist;
+
+      case "AccountingSpecialist":
         Role = {
           Accountant: 1012,
         };
@@ -306,9 +332,33 @@ const getUserRole = async (req, res) => {
 
         break;
 
+      case "Accountant":
+        Role = {
+          Accountant: 1013,
+        };
+        try {
+          const usersRole = await User.find(
+            { roles: Role },
+            {
+              password: 0,
+              refreshToken: 0,
+            }
+          );
+          const encryptData = cerateCipher.encrypt(
+            JSON.stringify(usersRole),
+            Key
+          );
+          res.status(200).json({ encryptData });
+        } catch (err) {
+          console.log(err.message);
+          return res.status(500).json({ message: err });
+        }
+
+        break;
+
       case "CRMSpecialist":
         Role = {
-          CRMSpecialist: 1013,
+          CRMSpecialist: 1014,
         };
         try {
           const usersRole = await User.find(
@@ -332,7 +382,7 @@ const getUserRole = async (req, res) => {
 
       case "CRMManager":
         Role = {
-          CRMManager: 1014,
+          CRMManager: 1015,
         };
         try {
           const usersRole = await User.find(
@@ -356,7 +406,7 @@ const getUserRole = async (req, res) => {
 
       case "BusinessManager":
         Role = {
-          BusinessManager: 1015,
+          BusinessManager: 1016,
         };
         try {
           const usersRole = await User.find(
@@ -380,7 +430,7 @@ const getUserRole = async (req, res) => {
 
       case "BusinessSpecialist":
         Role = {
-          BusinessSpecialist: 1016,
+          BusinessSpecialist: 1017,
         };
         try {
           const usersRole = await User.find(
@@ -404,7 +454,7 @@ const getUserRole = async (req, res) => {
 
       case "WarehouseManager":
         Role = {
-          WarehouseManager: 1017,
+          WarehouseManager: 1018,
         };
         try {
           const usersRole = await User.find(
@@ -428,7 +478,7 @@ const getUserRole = async (req, res) => {
 
       case "WarehouseSpecialist":
         Role = {
-          WarehouseSpecialist: 1018,
+          WarehouseSpecialist: 1019,
         };
         try {
           const usersRole = await User.find(
@@ -452,7 +502,7 @@ const getUserRole = async (req, res) => {
 
       case "HrManager":
         Role = {
-          HrManager: 1019,
+          HrManager: 1020,
         };
         try {
           const usersRole = await User.find(
@@ -476,7 +526,7 @@ const getUserRole = async (req, res) => {
 
       case "HrSpecialist":
         Role = {
-          HrSpecialist: 1020,
+          HrSpecialist: 1021,
         };
         try {
           const usersRole = await User.find(
@@ -528,8 +578,8 @@ const putAccessLevelForUser = async (req, res) => {
           insert: accessLevel.insert,
           delete: accessLevel.delete,
         },
-        recruitment: accessLevel.access ,
-      },
+        recruitment: accessLevel.access,
+      }
     );
 
     await updateAccessLevel.save();
