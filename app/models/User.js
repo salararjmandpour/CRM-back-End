@@ -50,6 +50,8 @@ const userSchema = new Schema(
       SalesManager: Number,
       SalesSpecialist: Number,
       FinanceManager: Number,
+      ContentSpecialist: Number,
+      AccountingSpecialist: Number,
       AccountingManager: Number,
       AccountingAssistant: Number,
       Accountant: Number,
@@ -81,7 +83,7 @@ const userSchema = new Schema(
       delete: { type: Boolean, default: false },
       insert: { type: Boolean, default: false },
     },
-    recruitment:{type:Boolean,default:false},
+    recruitment: { type: Boolean, default: false },
     refreshToken: [String],
   },
   { timestamps: true, toJSON: { virtuals: true } }
