@@ -80,7 +80,6 @@ const userSchema = new Schema(
       edit: { type: Boolean, default: false },
       delete: { type: Boolean, default: false },
       insert: { type: Boolean, default: false },
-      fullAccess: { type: Boolean, default: false },
     },
     recruitment:{type:Boolean,default:false},
     refreshToken: [String],

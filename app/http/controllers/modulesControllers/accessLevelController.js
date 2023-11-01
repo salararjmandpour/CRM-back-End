@@ -528,8 +528,8 @@ const putAccessLevelForUser = async (req, res) => {
           insert: accessLevel.insert,
           delete: accessLevel.delete,
         },
+        recruitment: accessLevel.access ,
       },
-      { recruitment: accessLevel.access }
     );
 
     await updateAccessLevel.save();
