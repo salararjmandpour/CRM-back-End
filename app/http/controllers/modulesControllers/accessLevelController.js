@@ -515,7 +515,6 @@ const putAccessLevelForUser = async (req, res) => {
 
   const newAccessLevel = (obj) => Object.keys(obj).find((i) => obj[i] === true);
 
-
   checkArrayValues = async (arr) => {
     for (let i = 0; i < arr.length; i++) {
       switch (arr[i]) {
@@ -532,7 +531,7 @@ const putAccessLevelForUser = async (req, res) => {
             );
             await userUpdate.save();
 
-            res.sendStatus(202);
+            // res.sendStatus(202);
           } catch (err) {
             console.log(err.message);
             return res.status(500).json({ message: err });
@@ -551,7 +550,7 @@ const putAccessLevelForUser = async (req, res) => {
             );
             await userUpdate.save();
 
-            res.sendStatus(202);
+            // res.sendStatus(202);
           } catch (err) {
             console.log(err.message);
             return res.status(500).json({ message: err });
@@ -570,7 +569,7 @@ const putAccessLevelForUser = async (req, res) => {
             );
             await userUpdate.save();
 
-            res.sendStatus(202);
+            // res.sendStatus(202);
           } catch (err) {
             console.log(err.message);
             return res.status(500).json({ message: err });
@@ -589,7 +588,7 @@ const putAccessLevelForUser = async (req, res) => {
             );
             await userUpdate.save();
 
-            res.sendStatus(202);
+            // res.sendStatus(202);
           } catch (err) {
             console.log(err.message);
             return res.status(500).json({ message: err });
@@ -608,7 +607,7 @@ const putAccessLevelForUser = async (req, res) => {
             );
             await userUpdate.save();
 
-            res.sendStatus(202);
+            // res.sendStatus(202);
           } catch (err) {
             console.log(err.message);
             return res.status(500).json({ message: err });
@@ -627,19 +626,53 @@ const putAccessLevelForUser = async (req, res) => {
             );
             await userUpdate.save();
 
-            res.sendStatus(202);
+            // res.sendStatus(202);
+          } catch (err) {
+            console.log(err.message);
+            return res.status(500).json({ message: err });
+          }
+          break;
+        //*>---------- access
+        case "access":
+          try {
+            const userUpdate = await User.findOneAndUpdate(
+              { _id: userId },
+              {
+                recruitment: true,
+              }
+            );
+            await userUpdate.save();
+
+            // res.sendStatus(202);
+          } catch (err) {
+            console.log(err.message);
+            return res.status(500).json({ message: err });
+          }
+          break;
+        //*>---------- noAccess
+        case "NoAccess":
+          try {
+            const userUpdate = await User.findOneAndUpdate(
+              { _id: userId },
+              {
+                recruitment: false,
+              }
+            );
+            await userUpdate.save();
+
+            // res.sendStatus(202);
           } catch (err) {
             console.log(err.message);
             return res.status(500).json({ message: err });
           }
           break;
         default:
-          console.log("Value is Null");
+          res.sendStatus(202);
       }
     }
   };
 
-  checkArrayValues(accessLevel);
+  await checkArrayValues(accessLevel);
 
   // switch (accessLevel) {
   //   case  accessLevel.includes("edit"):
