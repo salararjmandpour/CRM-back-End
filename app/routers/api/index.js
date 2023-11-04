@@ -87,6 +87,9 @@ router.use("/api/v1/notifications", notificationsRouter);
 const contactRouter = require("./v1/contacts");
 router.use("/api/v1/contacts", contactRouter);
 
+const searchRouter = require("./v1/search");
+router.use("/api/v1/search", searchRouter);
+
 //*>---------- not found route
 
 app.all("*", (req, res) => {
