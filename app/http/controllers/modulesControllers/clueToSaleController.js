@@ -291,9 +291,9 @@ const getByUserHandler = async (req, res) => {
     const decryptUserRole = cerateCipher.decrypt(strRoleNew, Key);
     const decryptUserId = cerateCipher.decrypt(strIdNew, Key);
 
-    //!>----------- get all  model for data  by role seniorManager
+    //!>----------- get all  model for data  by role seniorManager or SalesManager
 
-    if (ROLES_LIST.SeniorManager == decryptUserRole) {
+    if (ROLES_LIST.SeniorManager == decryptUserRole || ROLES_LIST.SalesManager == decryptUserRole) {
       try {
         const saleAll = await Sale.find({});
         if (saleAll.length == 0)
