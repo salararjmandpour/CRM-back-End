@@ -12,14 +12,21 @@ const InquiryOfPriceSchema = new Schema(
       minlength: 2,
       maxLength: 100,
     },
-    persianDate: {
+    fullName: {
       type: String,
       required: true,
       trim: true,
       minlength: 2,
       maxLength: 100,
     },
-    customerMobile: {
+    date: {
+      type: String,
+      required: true,
+      trim: true,
+      minlength: 2,
+      maxLength: 100,
+    },
+    customerNumber: {
       type: Number,
       required: true,
       // trim: true,
