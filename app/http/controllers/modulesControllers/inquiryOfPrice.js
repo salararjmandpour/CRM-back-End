@@ -2,7 +2,6 @@ const InquiryOfPrice = require("app/models/InquiryOfPrice");
 const Invoice = require("app/models/Invoice");
 const User = require("app/models/User");
 
-
 //*>----------- import controllers
 
 const sendSmsForInquiryOfPricesController = require("app/http/controllers/toolsControllers/sendSmsForInquiryOfPricesController");
@@ -38,8 +37,9 @@ const createHandlerNew = async (req, res, next) => {
     cerateCipher.decrypt(req.body.dataEncInquiryOfPrice, Key)
   );
 
-  const userId = cerateCipher.decrypt(dataDecrypt.userId, Key);
-  const saleId = cerateCipher.decrypt(dataDecrypt.saleId, Key);
+
+  const userId = dataDecrypt.userId;
+  const saleId = dataDecrypt.saleId;
 
   let oldNumberOfInquiryOfPriceNew = 0;
   if (!dataDecrypt) return res.sendStatus(404);
@@ -74,7 +74,7 @@ const createHandlerNew = async (req, res, next) => {
   //   });
   // }
 
-  const { persianDate, customerMobile, questionOfPrice } = dataDecrypt;
+  const { date, customerNumber, fullName, questionOfPrice } = dataDecrypt;
 
   const expert = userId;
   const sale = saleId;
@@ -87,8 +87,9 @@ const createHandlerNew = async (req, res, next) => {
     //*>----------- create model for data InquiryOfPrice
     await InquiryOfPrice.create({
       numberOfInquiryOfPrice: numberOfInquiryOfPrice,
-      persianDate,
-      customerMobile,
+      date,
+      fullName,
+      customerNumber,
       questionOfPrice,
       expert,
       sale,
@@ -156,14 +157,14 @@ const putBySaleHandler = async (req, res) => {
     });
   }
 
-  const { persianDate, questionOfPrice } = dataDecrypt;
+  const { date, questionOfPrice } = dataDecrypt;
 
   try {
     //*>----------- update model for data InquiryOfPrice
     const updateInquiryOfPrice = await InquiryOfPrice.findOneAndUpdate(
       { _id: decryptInquiryOfPriceId },
       {
-        persianDate,
+        date,
         questionOfPrice,
       }
     );
