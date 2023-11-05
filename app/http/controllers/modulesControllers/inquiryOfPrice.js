@@ -141,21 +141,13 @@ const putBySaleHandler = async (req, res) => {
   const strId = req.query.inquiryOfPriceId.toString();
   const strIdNew = strId.replaceAll(" ", "+");
   const decryptInquiryOfPriceId = cerateCipher.decrypt(strIdNew, Key);
+  
   if (!decryptInquiryOfPriceId) return res.sendStatus(404);
 
   const dataDecrypt = await JSON.parse(
     cerateCipher.decrypt(req.body.dataEncInquiryOfPrice, Key)
   );
 
-  const inquiryOfPrice = await InquiryOfPrice.findOne({
-    customerMobile: dataDecrypt.customerMobile,
-  }).exec();
-
-  if (inquiryOfPrice) {
-    return res.status(409).json({
-      message: "شماره موبایل یا ایمیل تکراری می باشد لطفا بررسی کنید ):",
-    });
-  }
 
   const { date, questionOfPrice } = dataDecrypt;
 
