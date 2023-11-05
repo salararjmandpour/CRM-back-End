@@ -17,7 +17,6 @@ const sendSms = async (body) => {
 
   // console.log(body.numberOfInquiryOfPrice);
   // const nameExpert = await User.findOne({ _id: body.expert });
-  // const nameCustomer = await Sale.findOne({ _id: body.sale });
 
   // const options = {
   //   method: "POST",
@@ -31,13 +30,13 @@ const sendSms = async (body) => {
   //     user: panelSms[0].uname,
   //     pass: panelSms[0].pass,
   //     fromNum: panelSms[0].from,
-  //     toNum: ["9118121784","9166230490"],
+  //     toNum: ["9118121784","9221581237"],
   //     patternCode: "pnp5kebobifu3f1",
   //     inputData: [
   //       {
-  //         "name-customer": nameCustomer.fullName,
+  //         "name-customer": body.fullName,
   //         "number-of-inquiry-of-price": body.numberOfInquiryOfPrice,
-  //         "persian-date": body.persianDate,
+  //         "persian-date": body.date,
   //         "name-expert": nameExpert.fullName,
   //       },
   //     ],
