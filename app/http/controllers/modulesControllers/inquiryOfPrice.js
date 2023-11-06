@@ -37,7 +37,6 @@ const createHandlerNew = async (req, res, next) => {
     cerateCipher.decrypt(req.body.dataEncInquiryOfPrice, Key)
   );
 
-
   const userId = dataDecrypt.userId;
   const saleId = dataDecrypt.saleId;
 
@@ -64,15 +63,18 @@ const createHandlerNew = async (req, res, next) => {
 
   //!>----------- End create number of inquiryOfPrice
 
-  // const inquiryOfPrice = await InquiryOfPrice.findOne({
-  //   customerMobile: dataDecrypt.customerMobile,
-  // });
+  const inquiryOfPrice = await InquiryOfPrice.findOne({
+    $and: [
+      { questionOfPrice: dataDecrypt.questionOfPrice },
+      { customerNumber: dataDecrypt.customerNumber },
+    ],
+  });
 
-  // if (inquiryOfPrice) {
-  //   return res.status(409).json({
-  //     message: "شماره موبایل  تکراری می باشد لطفا بررسی کنید ):",
-  //   });
-  // }
+  if (inquiryOfPrice) {
+    return res.status(409).json({
+      message: "مورد تکراری می باشد لطفا بررسی کنید ):",
+    });
+  }
 
   const { date, customerNumber, fullName, questionOfPrice } = dataDecrypt;
 
@@ -141,13 +143,12 @@ const putBySaleHandler = async (req, res) => {
   const strId = req.query.inquiryOfPriceId.toString();
   const strIdNew = strId.replaceAll(" ", "+");
   const decryptInquiryOfPriceId = cerateCipher.decrypt(strIdNew, Key);
-  
+
   if (!decryptInquiryOfPriceId) return res.sendStatus(404);
 
   const dataDecrypt = await JSON.parse(
     cerateCipher.decrypt(req.body.dataEncInquiryOfPrice, Key)
   );
-
 
   const { date, questionOfPrice } = dataDecrypt;
 
