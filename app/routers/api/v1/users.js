@@ -16,7 +16,7 @@ const ROLES_LIST = require("../../../config/roles_list");
 router.post(
   "/",
   verifyJWT,
-  verifyRoles(ROLES_LIST.SeniorManager),
+  verifyRoles(ROLES_LIST.SeniorManager,ROLES_LIST.CRMManager),
   userController.getAllUsers
 );
 
