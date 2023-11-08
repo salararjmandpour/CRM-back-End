@@ -18,7 +18,7 @@ router.post("/", registerController.register);
 router.post(
   "/edit",
   verifyJWT,
-  verifyRoles(ROLES_LIST.SeniorManager),
+  verifyRoles(ROLES_LIST.SeniorManager,ROLES_LIST.CRMManager),
   registerController.editUserPasswordByAdmin
 );
 
