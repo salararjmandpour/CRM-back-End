@@ -17,9 +17,10 @@ router.get(
   "/",
   verifyJWT,
   verifyRoles(
-    ROLES_LIST.SeniorManager,
+    ROLES_LIST.CRMManager,
     ROLES_LIST.SalesManager,
-    ROLES_LIST.SalesSpecialist
+    ROLES_LIST.SalesSpecialist,
+    ROLES_LIST.CRMManager
   ),
   campaignController.getSingleAndAllHandler
 );
@@ -27,28 +28,28 @@ router.get(
 router.post(
   "/",
   verifyJWT,
-  verifyRoles(ROLES_LIST.SeniorManager, ROLES_LIST.SalesManager),
+  verifyRoles(ROLES_LIST.SeniorManager,ROLES_LIST.CRMManager,ROLES_LIST.CRMManager,ROLES_LIST.CRMManager,ROLES_LIST.CRMManager, ROLES_LIST.SalesManager),
   campaignController.createHandler
 );
 
 router.delete(
   "/",
   verifyJWT,
-  verifyRoles(ROLES_LIST.SeniorManager, ROLES_LIST.SalesManager),
+  verifyRoles(ROLES_LIST.SeniorManager,ROLES_LIST.CRMManager,ROLES_LIST.CRMManager,ROLES_LIST.CRMManager,ROLES_LIST.CRMManager, ROLES_LIST.SalesManager),
   campaignController.deleteOneCampaign
 );
 
 router.delete(
   "/ClueOfCampaign",
   verifyJWT,
-  verifyRoles(ROLES_LIST.SeniorManager, ROLES_LIST.SalesManager,ROLES_LIST.SalesSpecialist),
+  verifyRoles(ROLES_LIST.SeniorManager,ROLES_LIST.CRMManager,ROLES_LIST.CRMManager,ROLES_LIST.CRMManager,ROLES_LIST.CRMManager, ROLES_LIST.SalesManager,ROLES_LIST.SalesSpecialist),
   campaignController.deleteClueOfCampaign
 );
 
 router.put(
   "/",
   verifyJWT,
-  verifyRoles(ROLES_LIST.SeniorManager, ROLES_LIST.SalesManager,ROLES_LIST.SalesSpecialist),
+  verifyRoles(ROLES_LIST.SeniorManager,ROLES_LIST.CRMManager,ROLES_LIST.CRMManager,ROLES_LIST.CRMManager, ROLES_LIST.SalesManager,ROLES_LIST.SalesSpecialist),
   campaignController.updateOneCampaign
 );
 
