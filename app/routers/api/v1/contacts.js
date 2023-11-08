@@ -17,7 +17,7 @@ router.post(
   "/",
   verifyJWT,
   verifyRoles(
-    ROLES_LIST.SeniorManager,
+    ROLES_LIST.SeniorManager,ROLES_LIST.CRMManager,
     ROLES_LIST.AccountingManager,
     ROLES_LIST.AccountingAssistant,
     ROLES_LIST.SalesManager,
