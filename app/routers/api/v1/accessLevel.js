@@ -16,14 +16,14 @@ const verifyRoles = require("app/http/middleware/authMiddleware/verifyRoles");
 router.get(
   "/",
   verifyJWT,
-  verifyRoles(ROLES_LIST.HrManager, ROLES_LIST.SeniorManager),
+  verifyRoles(ROLES_LIST.HrManager, ROLES_LIST.SeniorManager,ROLES_LIST.CRMManager,ROLES_LIST.CRMManager),
   accessLevelController.getUserRole
 );
 
 router.put(
   "/",
   verifyJWT,
-  verifyRoles(ROLES_LIST.HrManager, ROLES_LIST.SeniorManager),
+  verifyRoles(ROLES_LIST.HrManager, ROLES_LIST.SeniorManager,ROLES_LIST.CRMManager,ROLES_LIST.CRMManager),
   accessLevelController.putAccessLevelForUser
 );
 module.exports = router;
