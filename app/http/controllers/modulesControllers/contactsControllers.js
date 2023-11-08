@@ -99,7 +99,7 @@ const getAllHandler = async (req, res) => {
     const decryptUserRole = cerateCipher.decrypt(strRoleNew, Key);
     const decryptUserId = cerateCipher.decrypt(strIdNew, Key);
 
-    if (ROLES_LIST.SeniorManager == decryptUserRole) {
+    if (ROLES_LIST.SeniorManager == decryptUserRole|| ROLES_LIST.CRMManager) {
       try {
         //*>----------- get all model data by admin
 
