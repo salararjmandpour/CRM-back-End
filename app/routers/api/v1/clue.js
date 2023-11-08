@@ -19,7 +19,7 @@ router.post(
   "/",
   verifyJWT,
   verifyRoles(
-    ROLES_LIST.SeniorManager,
+    ROLES_LIST.SeniorManager,ROLES_LIST.CRMManager,ROLES_LIST.CRMManager,ROLES_LIST.CRMManager,ROLES_LIST.CRMManager,
     ROLES_LIST.SalesSpecialist,
     ROLES_LIST.SalesManager,
     ROLES_LIST.FinanceManager,
@@ -35,7 +35,7 @@ router.put(
   "/",
   verifyJWT,
   verifyRoles(
-    ROLES_LIST.SeniorManager,
+    ROLES_LIST.SeniorManager,ROLES_LIST.CRMManager,ROLES_LIST.CRMManager,ROLES_LIST.CRMManager,ROLES_LIST.CRMManager,
     ROLES_LIST.SalesManager,
     ROLES_LIST.SalesSpecialist,
     ROLES_LIST.FinanceManager,
@@ -50,14 +50,14 @@ router.put(
 router.delete(
   "/",
   verifyJWT,
-  verifyRoles(ROLES_LIST.SeniorManager, ROLES_LIST.SalesManager),
+  verifyRoles(ROLES_LIST.SeniorManager,ROLES_LIST.CRMManager,ROLES_LIST.CRMManager,ROLES_LIST.CRMManager,ROLES_LIST.CRMManager, ROLES_LIST.SalesManager),
   clueController.deleteOneClue
 );
 
 router.delete(
   "/CampaignOfClue",
   verifyJWT,
-  verifyRoles(ROLES_LIST.SeniorManager, ROLES_LIST.SalesManager,ROLES_LIST.SalesSpecialist),
+  verifyRoles(ROLES_LIST.SeniorManager,ROLES_LIST.CRMManager,ROLES_LIST.CRMManager,ROLES_LIST.CRMManager,ROLES_LIST.CRMManager, ROLES_LIST.SalesManager,ROLES_LIST.SalesSpecialist),
   clueController.deleteCampaignOfClue
 );
 
