@@ -61,7 +61,7 @@ const getFindAllClue = async (req, res) => {
     const decryptUserId = cerateCipher.decrypt(strIdNew, Key);
 
     if (
-      ROLES_LIST.SeniorManager == decryptUserRole ||ROLES_LIST.CRMManager||
+      ROLES_LIST.SeniorManager == decryptUserRole ||ROLES_LIST.CRMManager== decryptUserRole||
       (ROLES_LIST.SalesManager == decryptUserRole &&
         req.query.filter === "false")
     ) {
@@ -164,70 +164,71 @@ const getFindAllClue = async (req, res) => {
         100
       ).toFixed(2)}%`;
 
-      if (RefractiveIndexMeetClues === NaN) RefractiveIndexMeetClues = "0%";
+      if (RefractiveIndexMeetClues === "NaN%") RefractiveIndexMeetClues = "0%";
 
       successRateMeetClues = `${(
         (allActivityCluesMeetSuccessful / allActivityCluesMeet) *
         100
       ).toFixed(2)}%`;
 
-      if (successRateMeetClues === NaN) successRateMeetClues = "0%";
+      if (successRateMeetClues === "NaN%") successRateMeetClues = "0%";
 
       RefractiveIndexMeetSales = `${(
         (allActivitySalesMeetUnsuccessful / allActivitySalesMeet) *
         100
       ).toFixed(2)}%`;
 
-      if (RefractiveIndexMeetSales === NaN) RefractiveIndexMeetSales = "0%";
+      if (RefractiveIndexMeetSales === "NaN%") RefractiveIndexMeetSales = "0%";
 
       successRateMeetSales = `${(
         (allActivitySalesMeetSuccessful / allActivitySalesMeet) *
         100
       ).toFixed(2)}%`;
 
-      if (successRateMeetSales === NaN) successRateMeetSales = "0%";
+      if (successRateMeetSales === "NaN%") successRateMeetSales = "0%";
 
       RefractiveIndexTellClues = `${(
         (allActivityCluesTellUnsuccessful / allActivityCluesTellOpen) *
         100
       ).toFixed(2)}%`;
 
-      if (RefractiveIndexTellClues === NaN) RefractiveIndexTellClues = "0%";
+      if (RefractiveIndexTellClues === "NaN%") RefractiveIndexTellClues = "0%";
 
       successRateTellClues = `${(
         (allActivityCluesTellSuccessful / allActivityCluesTellOpen) *
         100
       ).toFixed(2)}%`;
 
-      if (successRateTellClues === NaN) successRateTellClues = "0%";
+      if (successRateTellClues === "NaN%") successRateTellClues = "0%";
 
       RefractiveIndexTellSales = `${(
         (allActivitySalesTellUnsuccessful / allActivitySalesTellOpen) *
         100
       ).toFixed(2)}%`;
 
-      if (RefractiveIndexTellSales === NaN) RefractiveIndexTellSales = "0%";
+      if (RefractiveIndexTellSales === "NaN%") RefractiveIndexTellSales = "0%";
 
       successRateTellSales = `${(
         (allActivitySalesTellSuccessful / allActivitySalesTellOpen) *
         100
       ).toFixed(2)}%`;
 
-      if (successRateTellSales === NaN) successRateTellSales = "0%";
+      if (successRateTellSales === "NaN%") successRateTellSales = "0%";
 
       RefractiveIndexDutiesSale = `${(
         (allDutiesSaleUnsuccessful / allDutiesSale) *
         100
       ).toFixed(2)}%`;
+      
 
-      if (RefractiveIndexDutiesSale === NaN) RefractiveIndexDutiesSale = "0%";
+      if (RefractiveIndexDutiesSale === "NaN%") RefractiveIndexDutiesSale = "0%";
 
       successRateDutiesSale = `${(
         (allDutiesSaleSuccessful / allDutiesSale) *
         100
       ).toFixed(2)}%`;
 
-      if (successRateDutiesSale === NaN) successRateDutiesSale = "0%";
+      if (successRateDutiesSale === "NaN%") successRateDutiesSale = "0%";
 
       //*>--------- value
 
@@ -383,70 +384,72 @@ const getFindAllClue = async (req, res) => {
         100
       ).toFixed(2)}%`;
 
-      if (RefractiveIndexMeetClues === NaN) RefractiveIndexMeetClues = "0%";
+      if (RefractiveIndexMeetClues === "NaN%") RefractiveIndexMeetClues = "0%";
 
       successRateMeetClues = `${(
         (userActivityCluesMeetSuccessful / userActivityCluesMeet) *
         100
       ).toFixed(2)}%`;
 
-      if (successRateMeetClues === NaN) successRateMeetClues = "0%";
+      console.log(successRateMeetClues);
+
+      if (successRateMeetClues === "NaN%") successRateMeetClues = "0%";
 
       RefractiveIndexMeetSales = `${(
         (userActivitySalesMeetUnsuccessful / userActivitySalesMeet) *
         100
       ).toFixed(2)}%`;
 
-      if (RefractiveIndexMeetSales === NaN) RefractiveIndexMeetSales = "0%";
+      if (RefractiveIndexMeetSales === "NaN%") RefractiveIndexMeetSales = "0%";
 
       successRateMeetSales = `${(
         (userActivitySalesMeetSuccessful / userActivitySalesMeet) *
         100
       ).toFixed(2)}%`;
 
-      if (successRateMeetSales === NaN) successRateMeetSales = "0%";
+      if (successRateMeetSales === "NaN%") successRateMeetSales = "0%";
 
       RefractiveIndexTellClues = `${(
         (userActivityCluesTellUnsuccessful / userActivityCluesTellOpen) *
         100
       ).toFixed(2)}%`;
 
-      if (RefractiveIndexTellClues === NaN) RefractiveIndexTellClues = "0%";
+      if (RefractiveIndexTellClues === "NaN%") RefractiveIndexTellClues = "0%";
 
       successRateTellClues = `${(
         (userActivityCluesTellSuccessful / userActivityCluesTellOpen) *
         100
       ).toFixed(2)}%`;
 
-      if (successRateTellClues === NaN) successRateTellClues = "0%";
+      if (successRateTellClues === "NaN%") successRateTellClues = "0%";
 
       RefractiveIndexTellSales = `${(
         (userActivitySalesTellUnsuccessful / userActivitySalesTellOpen) *
         100
       ).toFixed(2)}%`;
 
-      if (RefractiveIndexTellSales === NaN) RefractiveIndexTellSales = "0%";
+      if (RefractiveIndexTellSales === "NaN%") RefractiveIndexTellSales = "0%";
 
       successRateTellSales = `${(
         (userActivitySalesTellSuccessful / userActivitySalesTellOpen) *
         100
       ).toFixed(2)}%`;
 
-      if (successRateTellSales === NaN) successRateTellSales = "0%";
+      if (successRateTellSales === "NaN%") successRateTellSales = "0%";
 
       RefractiveIndexDutiesSale = `${(
         (userDutiesSaleUnsuccessful / userDutiesSale) *
         100
       ).toFixed(2)}%`;
 
-      if (RefractiveIndexDutiesSale === NaN) RefractiveIndexDutiesSale = "0%";
+      if (RefractiveIndexDutiesSale === "NaN%") RefractiveIndexDutiesSale = "0%";
 
       successRateDutiesSale = `${(
         (userDutiesSaleSuccessful / userDutiesSale) *
         100
       ).toFixed(2)}%`;
 
-      if (successRateDutiesSale === NaN) successRateDutiesSale = "0%";
+      if (successRateDutiesSale === "NaN%") successRateDutiesSale = "0%";
 
       //*>--------- value
 
@@ -496,7 +499,7 @@ const getFindAllClue = async (req, res) => {
         countDutiesSaleSuccessful,
       };
 
-      console.log(countAll);
+      // console.log(countAll);
       const encryptCountAllData = cerateCipher.encrypt(
         JSON.stringify(countAll),
         Key
