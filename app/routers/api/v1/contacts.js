@@ -17,11 +17,12 @@ router.post(
   "/",
   verifyJWT,
   verifyRoles(
-    ROLES_LIST.SeniorManager,ROLES_LIST.CRMManager,
+    ROLES_LIST.SeniorManager,
+    ROLES_LIST.CRMManager,
     ROLES_LIST.AccountingManager,
     ROLES_LIST.AccountingAssistant,
     ROLES_LIST.SalesManager,
-    ROLES_LIST.SalesSpecialist,
+    ROLES_LIST.SalesSpecialist
   ),
   ContactController.createHandler
 );
