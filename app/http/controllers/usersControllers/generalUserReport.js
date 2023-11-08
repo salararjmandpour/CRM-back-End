@@ -61,7 +61,7 @@ const getFindAllClue = async (req, res) => {
     const decryptUserId = cerateCipher.decrypt(strIdNew, Key);
 
     if (
-      ROLES_LIST.SeniorManager == decryptUserRole ||
+      ROLES_LIST.SeniorManager == decryptUserRole ||ROLES_LIST.CRMManager||
       (ROLES_LIST.SalesManager == decryptUserRole &&
         req.query.filter === "false")
     ) {
@@ -495,6 +495,8 @@ const getFindAllClue = async (req, res) => {
         successRateDutiesSale,
         countDutiesSaleSuccessful,
       };
+
+      console.log(countAll);
       const encryptCountAllData = cerateCipher.encrypt(
         JSON.stringify(countAll),
         Key
