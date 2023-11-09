@@ -21,14 +21,14 @@ router.post(
   "/",
   verifyJWT,
   verifyRoles(
-    ROLES_LIST.SeniorManager,ROLES_LIST.CRMManager,
+    ROLES_LIST.SeniorManager,
+    ROLES_LIST.CRMManager,
     ROLES_LIST.SalesSpecialist,
     ROLES_LIST.SalesManager,
     ROLES_LIST.FinanceManager,
     ROLES_LIST.AccountingManager,
     ROLES_LIST.Accountant,
-    ROLES_LIST.CRMManager,
-    ROLES_LIST.Assistant,
+    ROLES_LIST.Assistant
   ),
   clueToSaleController.createHandlerNew
 );
@@ -36,7 +36,7 @@ router.post(
 router.delete(
   "/",
   verifyJWT,
-  verifyRoles(ROLES_LIST.SeniorManager,ROLES_LIST.CRMManager),
+  verifyRoles(ROLES_LIST.SeniorManager, ROLES_LIST.CRMManager),
   clueToSaleController.deleteSaleById
 );
 //*>----------- create route for activity
@@ -48,14 +48,18 @@ router.post("/activity", verifyJWT, clueToSaleController.createHandlerActivity);
 router.put(
   "/activity",
   verifyJWT,
-  verifyRoles(ROLES_LIST.SeniorManager,ROLES_LIST.CRMManager, ROLES_LIST.SalesManager),
+  verifyRoles(
+    ROLES_LIST.SeniorManager,
+    ROLES_LIST.CRMManager,
+    ROLES_LIST.SalesManager
+  ),
   clueToSaleController.updateSaleById
 );
 
 router.delete(
   "/activity",
   verifyJWT,
-  verifyRoles(ROLES_LIST.SeniorManager,ROLES_LIST.CRMManager),
+  verifyRoles(ROLES_LIST.SeniorManager, ROLES_LIST.CRMManager),
   clueToSaleController.deleteSaleById
 );
 
@@ -70,7 +74,7 @@ router.put("/invoice", verifyJWT, invoiceController.putBySaleHandler);
 router.delete(
   "/invoice",
   verifyJWT,
-  verifyRoles(ROLES_LIST.SeniorManager,ROLES_LIST.CRMManager),
+  verifyRoles(ROLES_LIST.SeniorManager, ROLES_LIST.CRMManager),
   invoiceController.deleteOneInvoice
 );
 
@@ -83,7 +87,7 @@ router.post("/inquiryOfPrice", verifyJWT, inquiryOfPrice.createHandlerNew);
 router.delete(
   "/inquiryOfPrice",
   verifyJWT,
-  verifyRoles(ROLES_LIST.SeniorManager,ROLES_LIST.CRMManager),
+  verifyRoles(ROLES_LIST.SeniorManager, ROLES_LIST.CRMManager),
   inquiryOfPrice.deleteOneById
 );
 
