@@ -16,14 +16,22 @@ const verifyRoles = require("app/http/middleware/authMiddleware/verifyRoles");
 router.get(
   "/",
   verifyJWT,
-  verifyRoles(ROLES_LIST.HrManager,ROLES_LIST.SeniorManager,ROLES_LIST.CRMManager),
+  verifyRoles(
+    ROLES_LIST.HrManager,
+    ROLES_LIST.SeniorManager,
+    ROLES_LIST.CRMManager
+  ),
   createSideController.getUserRole
 );
 
 router.put(
   "/",
   verifyJWT,
-  verifyRoles(ROLES_LIST.HrManager,ROLES_LIST.SeniorManager,ROLES_LIST.CRMManager),
+  verifyRoles(
+    ROLES_LIST.HrManager,
+    ROLES_LIST.SeniorManager,
+    ROLES_LIST.CRMManager
+  ),
   createSideController.createSide
 );
 
