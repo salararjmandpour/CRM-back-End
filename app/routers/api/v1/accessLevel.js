@@ -20,7 +20,7 @@ router.get(
     ROLES_LIST.HrManager,
     ROLES_LIST.SeniorManager,
     ROLES_LIST.CRMManager,
-    ROLES_LIST.CRMManager
+
   ),
   accessLevelController.getUserRole
 );
@@ -32,7 +32,7 @@ router.put(
     ROLES_LIST.HrManager,
     ROLES_LIST.SeniorManager,
     ROLES_LIST.CRMManager,
-    ROLES_LIST.CRMManager
+
   ),
   accessLevelController.putAccessLevelForUser
 );
