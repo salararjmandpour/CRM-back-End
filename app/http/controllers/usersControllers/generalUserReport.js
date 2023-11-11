@@ -392,11 +392,7 @@ const getFindAllClue = async (req, res) => {
         100
       ).toFixed(2)}%`;
 
-      console.log(successRateMeetClues);
-
       if (successRateMeetClues === "NaN%") successRateMeetClues = "0%";
-
-      console.log(successRateMeetClues);
 
       RefractiveIndexMeetSales = `${(
         (userActivitySalesMeetUnsuccessful / userActivitySalesMeet) *
