@@ -61,17 +61,17 @@ const createHandler = async (req, res) => {
       return res.status(400);
     }
 
-    const duplicate = await Clues.findOne({ "$or":[{ mobile },{ phonNumber }]})
+    const duplicate = await Clues.findOne({
+      $or: [{ mobile }, { phonNumber }],
+    });
     if (duplicate) {
       return res.status(409).json({
-        message:
-        "شماره موبایل یا شماره ثابت تکراری می باشد لطفا بررسی کنید ):",
+        message: "شماره موبایل یا شماره ثابت تکراری می باشد لطفا بررسی کنید ):",
       });
     }
-    
+
     //*>----------- create model for data clue
     try {
-
       await Clues.create({
         subject: subject,
         fullName: fullName,
@@ -220,7 +220,12 @@ const getOneAndAllHandler = async (req, res) => {
     const decryptUserRole = cerateCipher.decrypt(strRoleNew, Key);
     const decryptUserId = cerateCipher.decrypt(strIdNew, Key);
 
-    if (ROLES_LIST.SeniorManager == decryptUserRole || ROLES_LIST.SalesManager == decryptUserRole ||ROLES_LIST.CRMManager) {
+    if (
+      ROLES_LIST.SeniorManager == decryptUserRole ||
+      ROLES_LIST.SalesManager == decryptUserRole ||
+      ROLES_LIST.CRMManager == decryptUserRole
+    ) {
+      console.log(decryptUserRole, decryptUserId);
       const clues = await Clues.find({});
       if (clues.length == 0)
         return res.status(404).json({
@@ -251,6 +256,8 @@ const getOneAndAllHandler = async (req, res) => {
   const strId = req.query.id.toString();
   const strIdNew = strId.replaceAll(" ", "+");
   const decryptUserId = cerateCipher.decrypt(strIdNew, Key);
+
+  console.log(decryptUserId);
 
   const clue = await Clues.findOne({ _id: decryptUserId });
 
