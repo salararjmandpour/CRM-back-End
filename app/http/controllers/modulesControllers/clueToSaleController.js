@@ -293,7 +293,11 @@ const getByUserHandler = async (req, res) => {
 
     //!>----------- get all  model for data  by role seniorManager or SalesManager
 
-    if (ROLES_LIST.SeniorManager == decryptUserRole || ROLES_LIST.SalesManager == decryptUserRole || ROLES_LIST.CRMManager) {
+    if (
+      ROLES_LIST.SeniorManager == decryptUserRole ||
+      ROLES_LIST.SalesManager == decryptUserRole ||
+      ROLES_LIST.CRMManager == decryptUserRole
+    ) {
       try {
         const saleAll = await Sale.find({});
         if (saleAll.length == 0)
