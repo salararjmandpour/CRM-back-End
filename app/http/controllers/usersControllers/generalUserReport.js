@@ -61,7 +61,8 @@ const getFindAllClue = async (req, res) => {
     const decryptUserId = cerateCipher.decrypt(strIdNew, Key);
 
     if (
-      ROLES_LIST.SeniorManager == decryptUserRole ||ROLES_LIST.CRMManager== decryptUserRole||
+      ROLES_LIST.SeniorManager == decryptUserRole ||
+      ROLES_LIST.CRMManager == decryptUserRole ||
       (ROLES_LIST.SalesManager == decryptUserRole &&
         req.query.filter === "false")
     ) {
@@ -219,9 +220,9 @@ const getFindAllClue = async (req, res) => {
         (allDutiesSaleUnsuccessful / allDutiesSale) *
         100
       ).toFixed(2)}%`;
-      
 
-      if (RefractiveIndexDutiesSale === "NaN%") RefractiveIndexDutiesSale = "0%";
+      if (RefractiveIndexDutiesSale === "NaN%")
+        RefractiveIndexDutiesSale = "0%";
 
       successRateDutiesSale = `${(
         (allDutiesSaleSuccessful / allDutiesSale) *
@@ -395,6 +396,8 @@ const getFindAllClue = async (req, res) => {
 
       if (successRateMeetClues === "NaN%") successRateMeetClues = "0%";
 
+      console.log(successRateMeetClues);
+
       RefractiveIndexMeetSales = `${(
         (userActivitySalesMeetUnsuccessful / userActivitySalesMeet) *
         100
@@ -442,7 +445,8 @@ const getFindAllClue = async (req, res) => {
         100
       ).toFixed(2)}%`;
 
-      if (RefractiveIndexDutiesSale === "NaN%") RefractiveIndexDutiesSale = "0%";
+      if (RefractiveIndexDutiesSale === "NaN%")
+        RefractiveIndexDutiesSale = "0%";
 
       successRateDutiesSale = `${(
         (userDutiesSaleSuccessful / userDutiesSale) *
