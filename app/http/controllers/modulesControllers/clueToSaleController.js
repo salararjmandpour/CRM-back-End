@@ -544,8 +544,6 @@ const deleteSaleById = async (req, res) => {
   const strIdNew = strId.replaceAll(" ", "+");
   const decryptId = cerateCipher.decrypt(strIdNew, Key);
 
-  console.log(decryptId);
-
   try {
     await DutiesSale.findOneAndDelete({
       $or: [{ _id: decryptId }, { saleId: decryptId }],
