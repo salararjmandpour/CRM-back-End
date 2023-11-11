@@ -225,7 +225,6 @@ const getOneAndAllHandler = async (req, res) => {
       ROLES_LIST.SalesManager == decryptUserRole ||
       ROLES_LIST.CRMManager == decryptUserRole
     ) {
-      console.log(decryptUserRole, decryptUserId);
       const clues = await Clues.find({});
       if (clues.length == 0)
         return res.status(404).json({
