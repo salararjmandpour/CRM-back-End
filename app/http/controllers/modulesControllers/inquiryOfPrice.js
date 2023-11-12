@@ -64,10 +64,10 @@ const createHandlerNew = async (req, res, next) => {
   //!>----------- End create number of inquiryOfPrice
 
   const inquiryOfPrice = await InquiryOfPrice.findOne({
-    $and: [
-      { questionOfPrice: dataDecrypt.questionOfPrice },
-      { customerNumber: dataDecrypt.customerNumber },
-    ],
+    // $and: [
+    //   { questionOfPrice: dataDecrypt.questionOfPrice },
+    //   { customerNumber: dataDecrypt.customerNumber },
+    // ],
   });
 
   if (inquiryOfPrice) {
