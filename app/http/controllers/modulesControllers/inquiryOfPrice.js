@@ -70,11 +70,11 @@ const createHandlerNew = async (req, res, next) => {
     // ],
   });
 
-  if (inquiryOfPrice) {
-    return res.status(409).json({
-      message: "مورد تکراری می باشد لطفا بررسی کنید ):",
-    });
-  }
+  // if (inquiryOfPrice) {
+  //   return res.status(409).json({
+  //     message: "مورد تکراری می باشد لطفا بررسی کنید ):",
+  //   });
+  // }
 
   const { date, customerNumber, fullName, questionOfPrice } = dataDecrypt;
 
