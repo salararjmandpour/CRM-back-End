@@ -58,16 +58,17 @@ const createHandlerNew = async (req, res, next) => {
     oldNumberOfInquiryOfPrice = conv2EnNum(oldNumberOfInquiryOfPrice);
     oldNumberOfInquiryOfPriceNew = parseInt(oldNumberOfInquiryOfPrice);
   }
+
   let userName = await User.findOne({ _id: userId });
   userName = userName.fullName.slice(0, 2);
 
   //!>----------- End create number of inquiryOfPrice
 
   // const inquiryOfPrice = await InquiryOfPrice.findOne({
-    // $and: [
-    //   { questionOfPrice: dataDecrypt.questionOfPrice },
-    //   { customerNumber: dataDecrypt.customerNumber },
-    // ],
+  // $and: [
+  //   { questionOfPrice: dataDecrypt.questionOfPrice },
+  //   { customerNumber: dataDecrypt.customerNumber },
+  // ],
   // });
 
   // if (inquiryOfPrice) {
