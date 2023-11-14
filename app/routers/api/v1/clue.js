@@ -44,7 +44,7 @@ router.put(
     ROLES_LIST.AccountingManager,
     ROLES_LIST.Accountant,
     ROLES_LIST.Assistant,
-    ROLES_LIST.LogisticsManager,
+    ROLES_LIST.LogisticsManager
   ),
   clueController.updateOneClue
 );
