@@ -111,7 +111,7 @@ router.post(
     ROLES_LIST.AccountingManager,
     ROLES_LIST.Accountant,
     ROLES_LIST.Assistant,
-    ROLES_LIST.LogisticsManager
+    ROLES_LIST.LogisticsManager,
   ),
   invoiceController.createHandlerNew
 );
@@ -124,11 +124,6 @@ router.put(
     ROLES_LIST.CRMManager,
     ROLES_LIST.SalesSpecialist,
     ROLES_LIST.SalesManager,
-    ROLES_LIST.FinanceManager,
-    ROLES_LIST.AccountingManager,
-    ROLES_LIST.Accountant,
-    ROLES_LIST.Assistant,
-    ROLES_LIST.LogisticsManager
   ),
   invoiceController.putBySaleHandler
 );
