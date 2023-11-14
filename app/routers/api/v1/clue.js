@@ -26,7 +26,8 @@ router.post(
     ROLES_LIST.FinanceManager,
     ROLES_LIST.AccountingManager,
     ROLES_LIST.Accountant,
-    ROLES_LIST.Assistant
+    ROLES_LIST.Assistant,
+    ROLES_LIST.LogisticsManager
   ),
   clueController.createHandler
 );
@@ -42,7 +43,8 @@ router.put(
     ROLES_LIST.FinanceManager,
     ROLES_LIST.AccountingManager,
     ROLES_LIST.Accountant,
-    ROLES_LIST.Assistant
+    ROLES_LIST.Assistant,
+    ROLES_LIST.LogisticsManager,
   ),
   clueController.updateOneClue
 );
@@ -65,7 +67,8 @@ router.delete(
     ROLES_LIST.SeniorManager,
     ROLES_LIST.CRMManager,
     ROLES_LIST.SalesManager,
-    ROLES_LIST.SalesSpecialist
+    ROLES_LIST.SalesSpecialist,
+    ROLES_LIST.LogisticsManager
   ),
   clueController.deleteCampaignOfClue
 );
