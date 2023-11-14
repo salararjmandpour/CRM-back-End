@@ -22,17 +22,49 @@ router.post(
     ROLES_LIST.AccountingManager,
     ROLES_LIST.AccountingAssistant,
     ROLES_LIST.SalesManager,
-    ROLES_LIST.SalesSpecialist
+    ROLES_LIST.SalesSpecialist,
+    ROLES_LIST.LogisticsManager
   ),
   ContactController.createHandler
 );
 
 router.get("/", verifyJWT, ContactController.getAllHandler);
 
-router.put("/", verifyJWT, ContactController.updateOneContact);
+router.put(
+  "/",
+  verifyJWT,
+  verifyRoles(
+    ROLES_LIST.SeniorManager,
+    ROLES_LIST.CRMManager,
+    ROLES_LIST.AccountingManager,
+    ROLES_LIST.AccountingAssistant,
+    ROLES_LIST.SalesManager,
+    ROLES_LIST.SalesSpecialist,
+    ROLES_LIST.LogisticsManager
+  ),
+  ContactController.updateOneContact
+);
 
-router.delete("/", verifyJWT, ContactController.deleteOneContact);
+router.delete(
+  "/",
+  verifyJWT,
+  verifyRoles(ROLES_LIST.SeniorManager, ROLES_LIST.CRMManager),
+  ContactController.deleteOneContact
+);
 
-router.patch("/", verifyJWT, ContactController.convertorContact);
+router.patch(
+  "/",
+  verifyJWT,
+  verifyRoles(
+    ROLES_LIST.SeniorManager,
+    ROLES_LIST.CRMManager,
+    ROLES_LIST.AccountingManager,
+    ROLES_LIST.AccountingAssistant,
+    ROLES_LIST.SalesManager,
+    ROLES_LIST.SalesSpecialist,
+    ROLES_LIST.LogisticsManager
+  ),
+  ContactController.convertorContact
+);
 
 module.exports = router;
