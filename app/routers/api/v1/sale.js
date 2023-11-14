@@ -28,7 +28,8 @@ router.post(
     ROLES_LIST.FinanceManager,
     ROLES_LIST.AccountingManager,
     ROLES_LIST.Accountant,
-    ROLES_LIST.Assistant
+    ROLES_LIST.Assistant,
+    ROLES_LIST.LogisticsManager
   ),
   clueToSaleController.createHandlerNew
 );
@@ -41,9 +42,39 @@ router.delete(
 );
 //*>----------- create route for activity
 
-router.get("/activity", verifyJWT, clueToSaleController.getHandlerActivity);
+router.get(
+  "/activity",
+  verifyJWT,
+  verifyRoles(
+    ROLES_LIST.SeniorManager,
+    ROLES_LIST.CRMManager,
+    ROLES_LIST.SalesSpecialist,
+    ROLES_LIST.SalesManager,
+    ROLES_LIST.FinanceManager,
+    ROLES_LIST.AccountingManager,
+    ROLES_LIST.Accountant,
+    ROLES_LIST.Assistant,
+    ROLES_LIST.LogisticsManager
+  ),
+  clueToSaleController.getHandlerActivity
+);
 
-router.post("/activity", verifyJWT, clueToSaleController.createHandlerActivity);
+router.post(
+  "/activity",
+  verifyJWT,
+  verifyRoles(
+    ROLES_LIST.SeniorManager,
+    ROLES_LIST.CRMManager,
+    ROLES_LIST.SalesSpecialist,
+    ROLES_LIST.SalesManager,
+    ROLES_LIST.FinanceManager,
+    ROLES_LIST.AccountingManager,
+    ROLES_LIST.Accountant,
+    ROLES_LIST.Assistant,
+    ROLES_LIST.LogisticsManager
+  ),
+  clueToSaleController.createHandlerActivity
+);
 
 router.put(
   "/activity",
@@ -51,6 +82,7 @@ router.put(
   verifyRoles(
     ROLES_LIST.SeniorManager,
     ROLES_LIST.CRMManager,
+    ROLES_LIST.LogisticsManager,
     ROLES_LIST.SalesManager
   ),
   clueToSaleController.updateSaleById
@@ -67,9 +99,39 @@ router.delete(
 
 router.get("/invoice", verifyJWT, invoiceController.getBySaleIdHandler);
 
-router.post("/invoice", verifyJWT, invoiceController.createHandlerNew);
+router.post(
+  "/invoice",
+  verifyJWT,
+  verifyRoles(
+    ROLES_LIST.SeniorManager,
+    ROLES_LIST.CRMManager,
+    ROLES_LIST.SalesSpecialist,
+    ROLES_LIST.SalesManager,
+    ROLES_LIST.FinanceManager,
+    ROLES_LIST.AccountingManager,
+    ROLES_LIST.Accountant,
+    ROLES_LIST.Assistant,
+    ROLES_LIST.LogisticsManager
+  ),
+  invoiceController.createHandlerNew
+);
 
-router.put("/invoice", verifyJWT, invoiceController.putBySaleHandler);
+router.put(
+  "/invoice",
+  verifyJWT,
+  verifyRoles(
+    ROLES_LIST.SeniorManager,
+    ROLES_LIST.CRMManager,
+    ROLES_LIST.SalesSpecialist,
+    ROLES_LIST.SalesManager,
+    ROLES_LIST.FinanceManager,
+    ROLES_LIST.AccountingManager,
+    ROLES_LIST.Accountant,
+    ROLES_LIST.Assistant,
+    ROLES_LIST.LogisticsManager
+  ),
+  invoiceController.putBySaleHandler
+);
 
 router.delete(
   "/invoice",
@@ -82,7 +144,39 @@ router.delete(
 
 router.get("/inquiryOfPrice", verifyJWT, inquiryOfPrice.getBySaleIdHandler);
 
-router.post("/inquiryOfPrice", verifyJWT, inquiryOfPrice.createHandlerNew);
+router.post(
+  "/inquiryOfPrice",
+  verifyJWT,
+  verifyRoles(
+    ROLES_LIST.SeniorManager,
+    ROLES_LIST.CRMManager,
+    ROLES_LIST.SalesSpecialist,
+    ROLES_LIST.SalesManager,
+    ROLES_LIST.FinanceManager,
+    ROLES_LIST.AccountingManager,
+    ROLES_LIST.Accountant,
+    ROLES_LIST.Assistant,
+    ROLES_LIST.LogisticsManager
+  ),
+  inquiryOfPrice.createHandlerNew
+);
+
+router.put(
+  "/inquiryOfPrice",
+  verifyJWT,
+  verifyRoles(
+    ROLES_LIST.SeniorManager,
+    ROLES_LIST.CRMManager,
+    ROLES_LIST.SalesSpecialist,
+    ROLES_LIST.SalesManager,
+    ROLES_LIST.FinanceManager,
+    ROLES_LIST.AccountingManager,
+    ROLES_LIST.Accountant,
+    ROLES_LIST.Assistant,
+    ROLES_LIST.LogisticsManager
+  ),
+  inquiryOfPrice.putBySaleHandler
+);
 
 router.delete(
   "/inquiryOfPrice",
@@ -90,7 +184,5 @@ router.delete(
   verifyRoles(ROLES_LIST.SeniorManager, ROLES_LIST.CRMManager),
   inquiryOfPrice.deleteOneById
 );
-
-router.put("/inquiryOfPrice", verifyJWT, inquiryOfPrice.putBySaleHandler);
 
 module.exports = router;
