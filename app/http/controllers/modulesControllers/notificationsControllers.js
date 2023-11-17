@@ -1,5 +1,6 @@
 const User = require("app/models/User");
 const Clues = require("app/models/Clue");
+const Sale = require("app/models/Sale");
 const ActivityCluesMeetOpen = require("app/models/ActivityCluesMeetOpen");
 const ActivityCluesTellOpen = require("app/models/ActivityCluesTellOpen");
 const DutiesSale = require("app/models/DutiesSale");
@@ -39,6 +40,13 @@ const getNotifications = async (req, res) => {
         __v: 0,
       }
     );
+
+    const nameSale = await Sale.findOne({ id: findDutiesSale.saleId });
+
+    const findFullDutiesSale = {
+      findDutiesSale,
+      nameSale,
+    };
 
     let findSaleMeet = await ActivitySaleMeetOpen.find(
       {
@@ -122,7 +130,7 @@ const getNotifications = async (req, res) => {
       Key
     );
     const encryptDataDutiesSale = cerateCipher.encrypt(
-      JSON.stringify(findDutiesSale),
+      JSON.stringify(findFullDutiesSale),
       Key
     );
     const encryptDataSaleMeet = cerateCipher.encrypt(
@@ -134,15 +142,13 @@ const getNotifications = async (req, res) => {
       Key
     );
 
-    return res
-      .status(200)
-      .json({
-        encryptDataMeet,
-        encryptDataTell,
-        encryptDataDutiesSale,
-        encryptDataSaleMeet,
-        encryptDataSaleTell,
-      });
+    return res.status(200).json({
+      encryptDataMeet,
+      encryptDataTell,
+      encryptDataDutiesSale,
+      encryptDataSaleMeet,
+      encryptDataSaleTell,
+    });
   } catch (err) {
     console.log(err.message);
     return res.status(500).json({ message: err });
