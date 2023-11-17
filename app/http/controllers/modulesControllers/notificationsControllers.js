@@ -42,10 +42,11 @@ const getNotifications = async (req, res) => {
     );
 
     const nameSale = await Sale.findOne({ id: findDutiesSale.saleId });
+    const fullName = nameSale.fullName;
 
     const findFullDutiesSale = {
       findDutiesSale,
-      nameSale,
+      fullName,
     };
 
     let findSaleMeet = await ActivitySaleMeetOpen.find(
