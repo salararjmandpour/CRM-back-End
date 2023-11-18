@@ -29,8 +29,8 @@ const DutiesSaleSchema = new Schema(
     },
     status: {
       isActive: { type: Boolean, default: false },
-      successful:{type:Boolean,},
-      Unsuccessful:{type:Boolean,},
+      successful: { type: Boolean },
+      Unsuccessful: { type: Boolean },
     },
     saleId: {
       type: String,
@@ -42,11 +42,16 @@ const DutiesSaleSchema = new Schema(
       required: true,
       trim: true,
     },
-    cancelationReason:{
-      type:String,
-      default:"",
-      trim:true,
-    }
+    saleName: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    cancelationReason: {
+      type: String,
+      default: "",
+      trim: true,
+    },
   },
   { timestamps: true, toJSON: { virtuals: true } }
 );
