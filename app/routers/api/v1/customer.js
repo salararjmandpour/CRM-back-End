@@ -14,5 +14,6 @@ const createCustomer = require("app/http/controllers/toolsControllers/customerCo
 
 router.post("/", createCustomer.createCustomer);
 
+router.get("/", createCustomer.getCustomer);
 
 module.exports = router;
