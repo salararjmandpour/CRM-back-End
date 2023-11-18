@@ -208,6 +208,7 @@ const createHandlerActivity = async (req, res) => {
         status,
         userId: expertDecrypt,
         saleId: saleDecrypt,
+        saleName: saleName.fullName,
       });
 
       res.sendStatus(201);
