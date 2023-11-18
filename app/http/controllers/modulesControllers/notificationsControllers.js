@@ -41,14 +41,6 @@ const getNotifications = async (req, res) => {
       }
     );
 
-    const nameSale = await Sale.findOne({ id: findDutiesSale.saleId });
-    const fullName = nameSale.fullName;
-
-    const findFullDutiesSale = {
-      findDutiesSale,
-      fullName,
-    };
-
     let findSaleMeet = await ActivitySaleMeetOpen.find(
       {
         userId: decryptUserId,
@@ -131,7 +123,7 @@ const getNotifications = async (req, res) => {
       Key
     );
     const encryptDataDutiesSale = cerateCipher.encrypt(
-      JSON.stringify(findFullDutiesSale),
+      JSON.stringify(findDutiesSale),
       Key
     );
     const encryptDataSaleMeet = cerateCipher.encrypt(
