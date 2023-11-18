@@ -34,8 +34,8 @@ router.use("/api/v1/getallUni", getUniRouter);
 const phoneCodeRouter = require("./v1/phoneCode");
 router.use("/api/v1/phoneCode", phoneCodeRouter);
 
-const testRouter = require("./v1/test");
-router.use("/api/v1/test", testRouter);
+const customerRouter = require("./v1/customer");
+router.use("/api/v1/customer", customerRouter);
 
 //!>---------- protected routes
 
