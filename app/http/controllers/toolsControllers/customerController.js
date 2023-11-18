@@ -50,4 +50,4 @@ const getCustomer = async(req,res)=>{
   }
 }
 
-module.exports = { createCustomer };
+module.exports = { createCustomer,getCustomer };
