@@ -13,6 +13,8 @@ const ROLES_LIST = require("../../../config/roles_list");
 
 //*>----------- create route for clue
 
+router.get("/", verifyJWT, ContactController.getAllHandler);
+
 router.post(
   "/",
   verifyJWT,
@@ -23,12 +25,11 @@ router.post(
     ROLES_LIST.AccountingAssistant,
     ROLES_LIST.SalesManager,
     ROLES_LIST.SalesSpecialist,
-    ROLES_LIST.LogisticsManager
+    ROLES_LIST.LogisticsManager,
+    ROLES_LIST.ContentManager
   ),
   ContactController.createHandler
 );
-
-router.get("/", verifyJWT, ContactController.getAllHandler);
 
 router.put(
   "/",
@@ -40,7 +41,8 @@ router.put(
     ROLES_LIST.AccountingAssistant,
     ROLES_LIST.SalesManager,
     ROLES_LIST.SalesSpecialist,
-    ROLES_LIST.LogisticsManager
+    ROLES_LIST.LogisticsManager,
+    ROLES_LIST.ContentManager
   ),
   ContactController.updateOneContact
 );
@@ -62,7 +64,8 @@ router.patch(
     ROLES_LIST.AccountingAssistant,
     ROLES_LIST.SalesManager,
     ROLES_LIST.SalesSpecialist,
-    ROLES_LIST.LogisticsManager
+    ROLES_LIST.LogisticsManager,
+    ROLES_LIST.ContentManager
   ),
   ContactController.convertorContact
 );
