@@ -29,7 +29,8 @@ router.post(
     ROLES_LIST.AccountingManager,
     ROLES_LIST.Accountant,
     ROLES_LIST.Assistant,
-    ROLES_LIST.LogisticsManager
+    ROLES_LIST.LogisticsManager,
+    ROLES_LIST.ContentManager,
   ),
   clueToSaleController.createHandlerNew
 );
@@ -54,7 +55,8 @@ router.get(
     ROLES_LIST.AccountingManager,
     ROLES_LIST.Accountant,
     ROLES_LIST.Assistant,
-    ROLES_LIST.LogisticsManager
+    ROLES_LIST.LogisticsManager,
+    ROLES_LIST.ContentManager
   ),
   clueToSaleController.getHandlerActivity
 );
@@ -71,7 +73,8 @@ router.post(
     ROLES_LIST.AccountingManager,
     ROLES_LIST.Accountant,
     ROLES_LIST.Assistant,
-    ROLES_LIST.LogisticsManager
+    ROLES_LIST.LogisticsManager,
+    ROLES_LIST.ContentManager
   ),
   clueToSaleController.createHandlerActivity
 );
@@ -83,7 +86,8 @@ router.put(
     ROLES_LIST.SeniorManager,
     ROLES_LIST.CRMManager,
     ROLES_LIST.LogisticsManager,
-    ROLES_LIST.SalesManager
+    ROLES_LIST.SalesManager,
+    ROLES_LIST.ContentManager
   ),
   clueToSaleController.updateSaleById
 );
@@ -112,6 +116,7 @@ router.post(
     ROLES_LIST.Accountant,
     ROLES_LIST.Assistant,
     ROLES_LIST.LogisticsManager,
+    ROLES_LIST.ContentManager
   ),
   invoiceController.createHandlerNew
 );
@@ -124,6 +129,7 @@ router.put(
     ROLES_LIST.CRMManager,
     ROLES_LIST.SalesSpecialist,
     ROLES_LIST.SalesManager,
+    ROLES_LIST.ContentManager
   ),
   invoiceController.putBySaleHandler
 );
@@ -151,7 +157,8 @@ router.post(
     ROLES_LIST.AccountingManager,
     ROLES_LIST.Accountant,
     ROLES_LIST.Assistant,
-    ROLES_LIST.LogisticsManager
+    ROLES_LIST.LogisticsManager,
+    ROLES_LIST.ContentManager
   ),
   inquiryOfPrice.createHandlerNew
 );
@@ -168,7 +175,8 @@ router.put(
     ROLES_LIST.AccountingManager,
     ROLES_LIST.Accountant,
     ROLES_LIST.Assistant,
-    ROLES_LIST.LogisticsManager
+    ROLES_LIST.LogisticsManager,
+    ROLES_LIST.ContentManager
   ),
   inquiryOfPrice.putBySaleHandler
 );
