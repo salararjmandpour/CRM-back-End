@@ -1,0 +1,54 @@
+Project-Developer/
+|-- Back-End/
+|   |-- Node.js/
+|       |-- CRM-Arshida/
+|           |-- app/
+|               |-- config/
+|                   |-- allowedOrigins.js
+|                   |-- corsOptions.js
+|                   |-- database.js
+|                   |-- index.js
+|                   |-- layout.js
+|                   |-- roles_list.js
+|               |-- helpers/
+|                   |-- generatePassword.js
+|                   |-- generatorNumber.js
+|               |-- http/
+|                   |-- controllers/
+|                       |-- authControllers/
+|                           |-- authController.js
+|                           |-- logoutController.js
+|                           |-- refreshTokenController.js
+|                           |-- registerController.js
+|                       |-- modulesControllers/
+|                           |-- accessLevelController.js
+|                           |-- accountController.js
+|                           |-- campaignController.js
+|                           |-- clueController.js
+|                           |-- clueToSaleController.js
+|                           |-- contactsControllers.js
+|                           |-- createSideController.js
+|                           |-- inquiryOfPrice.js
+|                           |-- invoiceController.js
+|                           |-- medicalStorageController.js
+|                           |-- notificationsControllers.js
+|                           |-- sendMailControllers.js
+|                           |-- sendSmsController.js
+|                       |-- toolsControllers/
+|                           |-- customerController.js
+|                           |-- sendSmsForInquiryOfPricesController.js
+|                           |-- settingMailController.js
+|                           |-- settingSmsController.js
+|                           |-- xlsxController.js
+|                   |-- middleware/
+|                       |-- credential.js
+|           |-- routers/
+|               |-- api.js
+|               |-- web.js
+|           |-- Application.js
+|           |-- index.js
+|       |-- test/
+|           |-- app.test.js
+|           |-- mocha.opts
+|-- .env
+|-- package.json
