@@ -115,7 +115,7 @@ module.exports = class Application {
 
     app.use(bodyParser.json()); //!adjust the bodyParser
     app.use(bodyParser.urlencoded({ extended: true })); //!set urlencoded : true
-    app.use(validator()); //!set middleware of validator
+    // app.use(validator()); //!set middleware of validator
     app.use(cookieParser(config.cookieSecretKey)); //!set middleware of cookieParser
   }
 };
