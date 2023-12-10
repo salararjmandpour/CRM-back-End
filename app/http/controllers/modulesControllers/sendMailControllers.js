@@ -25,13 +25,13 @@ const sendMail = async (req, res) => {
 
   const transporter = await nodeMailer.createTransport({
     pool: true,
-    host: "mail.0xf0.ir",
-    port: 456,
+    host: userMail[0].host,
+    port: userMail[0].port,
     secure: true,
     // secureConnection: true,
     auth: {
-      user: "codev@0xf0.ir",
-      pass: "3K$p3emA8sAI",
+      user: userMail[0].user,
+      pass: userMail[0].pass,
     },
     tls: {
       rejectUnauthorized: false
